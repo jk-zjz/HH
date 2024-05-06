@@ -25,6 +25,5 @@ int main() {
     HH_LOG_LEVEL_CHAIN(logger,hh::LogLevel::UNKNOW)<<"  asdas"<<"sadasd 00890978";
 
     std::cout<<hh::LogLevel::ToString(hh::LogLevel::DEBUG);
-
     return 0;
 }
