@@ -23,4 +23,4 @@ include_directories("./hh/include/")
 # 添加可执行文件HH，并指定源文件
 add_executable(testmain tests/main.cpp ${CPP_G})
 
-add_executable(testconfig tests/test_config.cpp ${CPP_G})
+add_executable(testconfig tests/main2.cc ${CPP_G})

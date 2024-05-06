@@ -1,7 +1,6 @@
 #include <iostream>
 #include "log.h"
 #include "util.h"
-#include "config.h"
 int main() {
 //
     hh::Logger::ptr logger(new hh::Logger);
