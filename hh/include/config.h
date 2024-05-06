@@ -8,6 +8,7 @@
 #include <sstream>
 #include <boost/lexical_cast.hpp>
 #include "log.h"
+#include "util.h"
 
 namespace hh {
     //配置文件基类
@@ -67,7 +68,20 @@ namespace hh {
                 const std::string& name
                 ,const T& define_t
                 ,const std::string & description = ""){
-
+            //判断又没有
+            auto  it =Lookup<T>(name);
+            if(it!=s_data.end()){
+                return it;
+            }
+            //判断name合不合法
+            if(name.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp._QAZXSWEDCVFRTGBNHYUJMKIOLP0987654321")
+            !=std::string::npos){
+                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"Lookup Name Invalid "<<name<<" exists";
+            }
+            //返回新创建号的
+            typename ConfigVar<T>::ptr v(new ConfigVar<T>(name,define_t,description));
+            s_data[name]=v;
+            return v;
         }
 
         template<class T>

@@ -1,10 +1,11 @@
 //
 // Created by 35148 on 2024/5/4.
 //
-#include <iostream>
-#include <memory>
 #ifndef HH_SINGLETON_H
 #define HH_SINGLETON_H
+#include <iostream>
+#include <memory>
+
 namespace hh{
     template<class T,class X=void,int N=0>
     class Singleton{
