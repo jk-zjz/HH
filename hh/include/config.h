@@ -48,15 +48,39 @@ namespace hh {
         bool fromString(const std::string &var) override{
             try{
                 m_val = boost::lexical_cast<T>(var);
-                return true;
             }catch (std::exception&e){
                 HH_LOG_FAT_ERROR(HH_LOG_ROOT(),"ConfigVar::fromString exception %s convert: %s to string"
                 ,e.what(),typeid(m_val).name())
             }
             return false;
         };
+        const T getValue()const{return m_val;}
+        void setValue(const T &t){m_val=t;}
     private:
         T m_val;
     };
+    class Config{
+    public:
+        typedef std::map<std::string,ConfigVarBase::ptr> ConfigVarMap;
+        template<class T>
+        static typename ConfigVar<T>::ptr Lookup(
+                const std::string& name
+                ,const T& define_t
+                ,const std::string & description = ""){
+
+        }
+
+        template<class T>
+        static typename ConfigVar<T>::ptr Lookup(const std::string &name){
+            auto it = s_data.find(name);
+            if(it==s_data.end()){
+                return nullptr;
+            }
+            return it;
+        }
+    private:
+        static ConfigVarMap s_data;
+    };
+
 }
 #endif //HH_CONFIG_H
