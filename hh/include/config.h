@@ -45,6 +45,7 @@ namespace hh {
                 HH_LOG_FAT_ERROR(HH_LOG_ROOT(),"ConfigVar::toString exception %s convert: %s to string"
                                  ,e.what(),typeid(m_val).name())
             }
+            return "";
         };
         bool fromString(const std::string &var) override{
             try{
@@ -68,29 +69,36 @@ namespace hh {
                 const std::string& name
                 ,const T& define_t
                 ,const std::string & description = ""){
-            //判断又没有
+//            //判断又没有
+
             auto  it =Lookup<T>(name);
-            if(it!=s_data.end()){
+            if(it){
+                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<"Lookup Name = "<<name<<" exists";
                 return it;
             }
             //判断name合不合法
             if(name.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp._QAZXSWEDCVFRTGBNHYUJMKIOLP0987654321")
-            !=std::string::npos){
+                !=std::string::npos){
                 HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"Lookup Name Invalid "<<name<<" exists";
+                throw std::invalid_argument(name);
             }
             //返回新创建号的
             typename ConfigVar<T>::ptr v(new ConfigVar<T>(name,define_t,description));
-            s_data[name]=v;
+            std::cout<<v->getValue()<<std::endl;
+//            ss_data[name]=1;
+            s_data[name] = v;
+            std::cout<<v->getValue()<<std::endl;
             return v;
         }
 
         template<class T>
         static typename ConfigVar<T>::ptr Lookup(const std::string &name){
+            std::cout<<s_data.size()<<std::endl;
             auto it = s_data.find(name);
             if(it==s_data.end()){
                 return nullptr;
             }
-            return it;
+           return std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
         }
     private:
         static ConfigVarMap s_data;

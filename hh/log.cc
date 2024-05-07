@@ -29,7 +29,7 @@ namespace hh {
             m_name(name),
             m_level(LogLevel::UNKNOW){
         //默认的日志格式器
-        m_formotter.reset(new LogFormotter("%d <%t-%F> [%p:%m] <%f:%l> %n"));
+        m_formotter.reset(new LogFormotter("%d <%t-%F> [%p:%m] <%f:%l> %b"));
     }
 
 //添加输出地

@@ -3,6 +3,5 @@
 //
 #include "config.h"
 namespace hh{
-
-
+     Config::ConfigVarMap Config::s_data;
 }
