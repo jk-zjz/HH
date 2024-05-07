@@ -2,6 +2,7 @@
 // Created by 35148 on 2024/5/6.
 //
 #include "config.h"
+#include <yaml-cpp/yaml.h>
 int main(){
     hh::Config c;
     hh::ConfigVar<int>::ptr g_int_value_config = c.Lookup("hh",(int)9876,"hh");
@@ -16,5 +17,6 @@ int main(){
     hh::ConfigVar<int>::ptr g_int_value_config_ =D.Lookup<int>("hh");
     HH_LOG_FAT_INFO(HH_LOG_ROOT(),"%d",g_int_value_config_->getValue());
 
+    YAML::Node config;
     return 0;
 }

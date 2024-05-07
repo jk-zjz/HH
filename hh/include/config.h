@@ -84,16 +84,12 @@ namespace hh {
             }
             //返回新创建号的
             typename ConfigVar<T>::ptr v(new ConfigVar<T>(name,define_t,description));
-            std::cout<<v->getValue()<<std::endl;
-//            ss_data[name]=1;
             s_data[name] = v;
-            std::cout<<v->getValue()<<std::endl;
             return v;
         }
 
         template<class T>
         static typename ConfigVar<T>::ptr Lookup(const std::string &name){
-            std::cout<<s_data.size()<<std::endl;
             auto it = s_data.find(name);
             if(it==s_data.end()){
                 return nullptr;

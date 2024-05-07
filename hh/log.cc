@@ -193,7 +193,20 @@ namespace hh {
                 i = n;
             }
         }
-        //--------------------------------------------------------------------------------------继续
+
+/*
+ * c 日志器名称
+ * p 日志级别
+ * r 启动时间
+ * t 线程号
+ * F 协程号
+ * n 回车
+ * d 时间
+ * f 文件名称
+ * l 行号
+ * b 空格
+ * C 自定义内容
+ * */
         static  std::map<std::string,std::function<LogFormotter::FormatItem::ptr(const std::string& str)> > s_format_times =
                 {
 #define XX(str,C)  \
@@ -201,7 +214,6 @@ namespace hh {
         XX(m,NameFormatItem),
         XX(p,LevelFormatItem),
         XX(r,ElapseFormatItem),
-        XX(c,NameFormatItem),
         XX(t,ThreadFormatItem),
         XX(F,FiberFormatItem),
         XX(n,EndlFormatItem),
