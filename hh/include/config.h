@@ -9,14 +9,19 @@
 #include <boost/lexical_cast.hpp>
 #include "log.h"
 #include "util.h"
-
+#include <yaml-cpp/yaml.h>
+#include <list>
+#include <utility>
 namespace hh {
+    class Config;
     //配置文件基类
     class ConfigVarBase {
     public:
         typedef std::shared_ptr<ConfigVarBase> ptr;
         ConfigVarBase(const std::string & name,const std::string & description = "")
-        :m_name(name),m_description(description){}
+        :m_name(name),m_description(description){
+            std::transform(m_name.begin(),m_name.end(),m_name.begin(),::tolower);
+        }
         ~ConfigVarBase(){};
         const std::string& getName(){return m_name;}
         const std::string& getDescription(){return m_description;}
@@ -28,8 +33,22 @@ namespace hh {
         std::string m_name;         //名称
         std::string m_description;  //描述
     };
+    //转换  F--->T
+    template<class F,class T>
+    class LexicalCast{
+    public:
+        T operator()(const F& v){
+            return boost::lexical_cast<T>(v);
+        }
+    };
 
-    template<class T>
+    //FromStr T operator()(const std::string&)
+        //吧string转为我需要的类型
+    //ToStr std::string operator()(const T&)
+        //吧我的类型转换为string
+    //使用的都是仿函数
+    template<class T,class FromStr=LexicalCast<std::string,T>
+                    ,class ToStr=LexicalCast<T,std::string>>
     class ConfigVar:public ConfigVarBase{
     public:
         typedef std::shared_ptr<ConfigVar> ptr;
@@ -40,7 +59,8 @@ namespace hh {
         }
         std::string toString() override{
             try {
-                return boost::lexical_cast<std::string>(m_val);
+                return ToStr()(m_val);
+                //return boost::lexical_cast<std::string>(m_val);
             }catch (std::exception &e){
                 HH_LOG_FAT_ERROR(HH_LOG_ROOT(),"ConfigVar::toString exception %s convert: %s to string"
                                  ,e.what(),typeid(m_val).name())
@@ -49,7 +69,8 @@ namespace hh {
         };
         bool fromString(const std::string &var) override{
             try{
-                m_val = boost::lexical_cast<T>(var);
+                setValue(FromStr()(var));
+                //m_val = boost::lexical_cast<T>(var);
             }catch (std::exception&e){
                 HH_LOG_FAT_ERROR(HH_LOG_ROOT(),"ConfigVar::fromString exception %s convert: %s to string"
                 ,e.what(),typeid(m_val).name())
@@ -77,7 +98,7 @@ namespace hh {
                 return it;
             }
             //判断name合不合法
-            if(name.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp._QAZXSWEDCVFRTGBNHYUJMKIOLP0987654321")
+            if(name.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp._0987654321")
                 !=std::string::npos){
                 HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"Lookup Name Invalid "<<name<<" exists";
                 throw std::invalid_argument(name);
@@ -96,6 +117,8 @@ namespace hh {
             }
            return std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
         }
+        static void loadFromYaml(const YAML::Node& root);
+        static ConfigVarBase::ptr LookupBase(const std::string& name);
     private:
         static ConfigVarMap s_data;
     };

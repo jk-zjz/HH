@@ -63,6 +63,33 @@ HH_LOG_FAT_INFO(logger,"sbsbahbdah  %s %d","OK",123);
     HH_LOG_INFO(i, "1223");
 ```
 ## 配置系统
+安装 boost库
+    
+    //下载boost库
+    http://www.boost.org/users/download/
+
+    tar -xvf boost_1_63_0.tar.bz2
+    cd ./boost_1_63_0
+    //编译
+    ./bootstrap.sh
+    //安装
+    sudo ./b2 install
+
+
+
+Config 通过 yaml
+安装yaml
+    
+    //拉取仓库
+    git clone https://github.com/jbeder/yaml-cpp.git
+
+    cd yaml-cpp # 进入克隆的文件夹
+    mkdir build
+    cd build
+    cmake ..
+    make
+    sudo make install
+        //默认路径 /usr/local/include/yaml-cpp
 
 
 ## 协程库封装

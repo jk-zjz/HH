@@ -1,0 +1,19 @@
+logs:
+  - name: root
+    level: info
+    formatter: "%d<%f:%l>[%c:%p]"
+    appender:
+      - type: FileLogAppender
+        file: log.txt
+      - type: StdoutLogAppender
+  - name: hh
+    level: debug
+    formatter: "%d<%f:%l>[%c:%p]"
+    appender:
+      - type: FileLogAppender
+        file: log.txt
+      - type: StdoutLogAppender
+hh:
+  port: 8021
+  values: 15
+  ip: 127.0.0.1

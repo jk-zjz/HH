@@ -2,6 +2,7 @@
 // Created by 35148 on 2024/4/18.
 //
 #include "log.h"
+#include "config.h"
 
 namespace hh {
 
