@@ -41,6 +41,34 @@ namespace hh {
             return boost::lexical_cast<T>(v);
         }
     };
+    //特化vector模板
+    template<class T>
+    class LexicalCast<std::string,std::vector<T>> {
+    public:
+        std::vector<T> operator()(const std::string &var) {
+            YAML::Node node = YAML::Load(var);
+            typename std::vector<T> vce;
+            for(auto i:node){
+                std::stringstream ss;
+                ss<<i;
+                vce.push_back(LexicalCast<std::string,T>()(ss.str()));
+            }
+            return vce;
+        }
+    };
+    template<class T>
+    class LexicalCast<std::vector<T>,std::string> {
+    public:
+        std::string operator()(const std::vector<T>& var){
+            YAML::Node node;
+            std::stringstream ss;
+            for(auto &i:var){
+                node.push_back(YAML::Load(LexicalCast<T,std::string>()(i)));
+            }
+            ss<<node;
+            return ss.str();
+        }
+    };
 
     //FromStr T operator()(const std::string&)
         //吧string转为我需要的类型

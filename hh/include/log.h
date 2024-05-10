@@ -145,8 +145,7 @@ namespace hh {
 
             virtual ~FormatItem() {};
 
-            virtual void
-            format(std::shared_ptr<Logger> logger, std::ostream &on, LogLevel::Level level, LogEvent::ptr event) = 0;
+            virtual void format(std::shared_ptr<Logger> logger, std::ostream &on, LogLevel::Level level, LogEvent::ptr event) = 0;
         };
 
         void init();

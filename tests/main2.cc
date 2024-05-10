@@ -36,7 +36,11 @@ void yaml(){
 void Confgi(){
     hh::ConfigVar<int>::ptr g_int_value_config_ = hh::Config::Lookup("hh.values",(int)9876,"hh");
     hh::ConfigVar<std::string>::ptr g_in = hh::Config::Lookup("hh",(std::string)"","");
-
+    hh::ConfigVar<std::vector<int>>::ptr get_vector_int = hh::Config::Lookup<std::vector<int>>("hh.arr",{1,2,3},"sb");
+    auto vec = get_vector_int->getValue();
+    for(auto &i:vec){
+        HH_LOG_INFO(HH_LOG_ROOT(),boost::lexical_cast<std::string>(i));
+    }
 
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<g_int_value_config_->toString();
     YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
@@ -45,10 +49,19 @@ void Confgi(){
 
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<g_int_value_config_->toString();
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<g_in->getValue();
+    vec = get_vector_int->getValue();
+    for(auto &i:vec){
+        HH_LOG_INFO(HH_LOG_ROOT(),boost::lexical_cast<std::string>(i));
+    }
     printf("%s",g_int_value_config_->toString().c_str());
 }
-int main(){
-    Confgi();
+void test(){
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
+    hh::Config::loadFromYaml(root);
 
+}
+int main(){
+    //Confgi();
+    test();
     return 0;
 }
