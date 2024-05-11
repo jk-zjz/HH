@@ -91,6 +91,81 @@ Config 通过 yaml
     sudo make install
         //默认路径 /usr/local/include/yaml-cpp
 
+对普通类型进行解析 特化
+
+    template<class F,class T>
+    class LexicalCast{
+    public:
+        T operator()(const F& v){
+            return boost::lexical_cast<T>(v);
+        }
+    };
+
+    template<class T,class FromStr=LexicalCast<std::string,T>
+    ,class ToStr=LexicalCast<T,std::string>>
+    class ConfigVar:public ConfigVarBase{}
+对vector 进行特化
+    
+    template<class T>
+    class LexicalCast<std::string,std::vector<T>> {
+    public:
+        std::vector<T> operator()(const std::string &var) {
+            YAML::Node node = YAML::Load(var);
+            typename std::vector<T> vce;
+            for(auto i:node){
+                std::stringstream ss;
+                ss<<i;
+                vce.push_back(LexicalCast<std::string,T>()(ss.str()));
+            }
+            return vce;
+        }
+    };
+    template<class T>
+    class LexicalCast<std::vector<T>,std::string> {
+    public:
+        std::string operator()(const std::vector<T>& var){
+            YAML::Node node;
+            std::stringstream ss;
+            for(auto &i:var){
+                node.push_back(YAML::Load(LexicalCast<T,std::string>()(i)));
+            }
+            ss<<node;
+            return ss.str();
+        }
+    };
+yaml 文件解析
+
+      logs:
+        - name: root
+          level: info
+          formatter: "%d<%f:%l>[%c:%p]"
+          appender:
+            - type: FileLogAppender
+              file: log.txt
+            - type: StdoutLogAppender
+        - name: hh
+          level: debug
+          formatter: "%d<%f:%l>[%c:%p]"
+          appender:
+            - type: FileLogAppender
+              file: test.txt
+            - type: StdoutLogAppender
+    如果需要读取
+    logs[1].appender[0].file
+配置文件的主旨   约定>配置  
+需在代码中声明，才会读取配置文件
+
+    hh::ConfigVar<std::string>::ptr str = hh::Config::Lookup<std::string>("logs[1].formatter","asd","asda");
+    std::cout<<str->getValue();
+        //asd
+    YAML::Node root = YAML::LoadFile("./log.yml");
+    hh::Config::loadFromYaml(root);
+    std::cout<<str->getValue();
+        //%d<%f:%l>[%c:%p]
+
+    会根据约定替换配置
+### 注意配置KEY不区分大小写 
+
 
 ## 协程库封装
 

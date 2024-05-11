@@ -1,14 +1,14 @@
 logs:
   - name: root
     level: info
-    formatter: "%d<%f:%l>[%c:%p]"
+    Formatter: "%d<%f:%l>[%c:%p]"
     appender:
       - type: FileLogAppender
         file: log.txt
       - type: StdoutLogAppender
   - name: hh
     level: debug
-    formatter: "%d<%f:%l>[%c:%p]"
+    Formatter: "%d<%f:%l>[%c:%p]"
     appender:
       - type: FileLogAppender
         file: log.txt
@@ -17,4 +17,9 @@ hh:
   port: 8021
   values: 15
   ip: 127.0.0.1
-  arr: [1,4,6]
+#  arr: [1,4,6]
+#  list_arr:
+#    - 10
+#    - 20
+#    - 30
+#  set_arr: [2,3,4,2,3]

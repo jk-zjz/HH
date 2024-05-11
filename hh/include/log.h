@@ -24,13 +24,14 @@
             hh::LogEventWrap(hh::LogEvent::ptr(new hh::LogEvent(logger,level,__FILE__,__LINE__, \
             0,hh::GetThreadID(),hh::GetFiberID(), time(0)))).setSS(Str)
 
+//输出格式如下     Str----logger
 #define HH_LOG_DEBUG(logger,Str) HH_LOG_LEVEL(logger,hh::LogLevel::DEBUG,Str);
 #define HH_LOG_INFO(logger,Str) HH_LOG_LEVEL(logger,hh::LogLevel::INFO,Str);
 #define HH_LOG_WARN(logger,Str) HH_LOG_LEVEL(logger,hh::LogLevel::WARN,Str);
 #define HH_LOG_ERROR(logger,Str) HH_LOG_LEVEL(logger,hh::LogLevel::ERROR,Str);
 #define HH_LOG_FATAL(logger,Str) HH_LOG_LEVEL(logger,hh::LogLevel::FATAL,Str);
 
-
+//输出格式如下     logger 自定义内容,但是需传入级别
 #define HH_LOG_LEVEL_CHAIN(logger,level)   \
         if(logger->getLevel() <= level) \
             hh::LogEventWrap(hh::LogEvent::ptr(new hh::LogEvent(logger,level,__FILE__,__LINE__, \
@@ -41,12 +42,14 @@
             hh::LogEventWrap(hh::LogEvent::ptr(new hh::LogEvent(logger,level,__FILE__,__LINE__, \
             0,hh::GetThreadID(),hh::GetFiberID(), time(0)))).getEvent()->format(fmt,__VA_ARGS__)
 
+//输出格式如下     logger 自定义内容,但是不是使用链式的方式写入<<
 #define HH_LOG_FAT_DEBUG(logger,fmt,...) HH_LOG_FAT_LEVEL(logger,hh::LogLevel::DEBUG,fmt,__VA_ARGS__);
 #define HH_LOG_FAT_INFO(logger,fmt,...) HH_LOG_FAT_LEVEL(logger,hh::LogLevel::INFO,fmt,__VA_ARGS__);
 #define HH_LOG_FAT_WARN(logger,fmt,...) HH_LOG_FAT_LEVEL(logger,hh::LogLevel::WARN,fmt,__VA_ARGS__);
 #define HH_LOG_FAT_ERROR(logger,fmt,...) HH_LOG_FAT_LEVEL(logger,hh::LogLevel::ERROR,fmt,__VA_ARGS__);
 #define HH_LOG_FAT_FATAL(logger,fmt,...) HH_LOG_FAT_LEVEL(logger,hh::LogLevel::FATAL,fmt,__VA_ARGS__);
 
+//获取默认日志器方便
 #define HH_LOG_ROOT() hh::LoggerMgr::GetInstance()->GetRoot()
 
 //声明命名空间，以免名称重复，可 :: 访问
@@ -55,6 +58,7 @@ namespace hh {
     //日志级别
     class LogLevel {
     public:
+        //日志枚举
         enum Level {
             UNKNOW = 0,//异常
             DEBUG = 1,//调试信息
@@ -63,6 +67,7 @@ namespace hh {
             ERROR = 4,//错误
             FATAL = 5 //严重错误
         };
+        //静态获取传入日志
         static const char *ToString(LogLevel::Level level);
     };
     // 日志事件
@@ -99,6 +104,7 @@ namespace hh {
         std::shared_ptr<Logger> getLogger()const {return m_logger;}
         LogLevel::Level getLevel()const {return m_level;}
 
+        //可变参函数   ("%s%d","qw",112)
         void format(const char * fat,...);
         void format(const char * fat,va_list al);
     private:
@@ -113,10 +119,16 @@ namespace hh {
         std::shared_ptr<Logger> m_logger; //获取日志器
         LogLevel::Level m_level; //日志级别
     };
-    //日志事件包装类
+    /*
+     * 日志事件管理类
+     * 基本上给宏使用的
+     * 通过LogEventWrap的析构函数产生log日志
+     * m_logEvent存储了日志器--->通过调用日志器中的日志输出
+     * */
     class LogEventWrap{
     public:
         LogEventWrap(LogEvent::ptr logEvent);
+        //通过析构调用log日志器输出
         ~LogEventWrap();
         void setSS(const std::string& S);
         std::stringstream & getSS(){return m_logEvent->getSS();};
@@ -125,11 +137,15 @@ namespace hh {
         LogEvent::ptr m_logEvent;
     };
 
-    //日志格式器
+    /*
+     * 日志格式器
+     * 最终输出类
+     * */
     class LogFormotter {
     public:
         typedef std::shared_ptr<LogFormotter> ptr;
 
+        //通过输入的pattern 格式化m_items
         LogFormotter(const std::string &pattern);
 
         //格式化 event 返回
@@ -138,7 +154,7 @@ namespace hh {
         std::string get_pattern() const { return m_pattern; }
 
     public:
-        //通过格式，输出
+        //格式输出基类
         class FormatItem {
         public:
             typedef std::shared_ptr<FormatItem> ptr;
@@ -148,6 +164,7 @@ namespace hh {
             virtual void format(std::shared_ptr<Logger> logger, std::ostream &on, LogLevel::Level level, LogEvent::ptr event) = 0;
         };
 
+        //初始化格式到m_items
         void init();
 
     private:
@@ -177,7 +194,7 @@ namespace hh {
         LogLevel::Level m_level = LogLevel::UNKNOW;        //日志级别
     };
 
-    //日志器
+    //日志器--std::enable_shared_from_this<Logger>用于传递自己
     class Logger : public std::enable_shared_from_this<Logger> {
     public:
         typedef std::shared_ptr<Logger> ptr;
@@ -197,9 +214,9 @@ namespace hh {
 
         void fatal(LogEvent::ptr event);
 
-        //添加输出路径
+        //添加输出方式
         void addAppender(LogAppender::ptr appender);
-
+        //删除输出方式
         void delectAppender(LogAppender::ptr appender);
 
         //设置(获取)什么日志记录
@@ -228,6 +245,7 @@ namespace hh {
         void log(Logger::ptr logger, LogLevel::Level level, LogEvent::ptr event) override;
     };
 
+    //输出到文件
     class FileLogAppender : public LogAppender {
     public:
         std::shared_ptr<FileLogAppender> ptr;
@@ -238,7 +256,6 @@ namespace hh {
 
         //文件的重新读取-true为打开
         bool reopen();
-
     private:
         std::string m_filename;     //写入文件
         std::ofstream m_ofstream;   //stream流
@@ -256,7 +273,7 @@ namespace hh {
         }
     };
 
-    //实例化级别
+    //实例化级别 p
     class LevelFormatItem : public LogFormotter::FormatItem {
     public:
         LevelFormatItem(const std::string basicString = "") {
@@ -282,7 +299,7 @@ namespace hh {
         }
     };
 
-    //启动时间
+    //启动时间 r
     class ElapseFormatItem : public LogFormotter::FormatItem {
     public:
         ElapseFormatItem(const std::string basicString = "") {
@@ -295,7 +312,7 @@ namespace hh {
         }
     };
 
-    //日志器名称
+    //日志器名称 c
     class NameFormatItem : public LogFormotter::FormatItem {
     public:
         NameFormatItem(const std::string basicString = "") {
@@ -307,7 +324,7 @@ namespace hh {
         }
     };
 
-    //进程号
+    //进程号t
     class ThreadFormatItem : public LogFormotter::FormatItem {
     public:
         ThreadFormatItem(const std::string basicString = "") {
@@ -320,7 +337,7 @@ namespace hh {
         }
     };
 
-    //协程号
+    //协程号 F
     class FiberFormatItem : public LogFormotter::FormatItem {
     public:
         FiberFormatItem(const std::string basicString = "") {
@@ -333,7 +350,7 @@ namespace hh {
         }
     };
 
-    //时间
+    //时间d
     class DateTimeFormatItem : public LogFormotter::FormatItem {
     public:
         DateTimeFormatItem(const std::string &format) :
@@ -357,7 +374,7 @@ namespace hh {
         std::string datatime;
     };
 
-    //文件名
+    //文件名f
     class FileNameFormatItem : public LogFormotter::FormatItem {
     public:
         FileNameFormatItem(const std::string basicString = "") {
@@ -370,7 +387,7 @@ namespace hh {
         }
     };
 
-    //行号
+    //行号l
     class LineFormatItem : public LogFormotter::FormatItem {
     public:
         LineFormatItem(const std::string basicString = "") {
@@ -383,7 +400,7 @@ namespace hh {
         }
     };
 
-    //空格
+    //空格b
     class SpaceFormatItem : public LogFormotter::FormatItem {
     public:
         SpaceFormatItem(const std::string basicString = "") {
@@ -396,7 +413,7 @@ namespace hh {
         }
     };
 
-    //--》
+    //--》C
     class StringFormatItem : public LogFormotter::FormatItem {
     public:
         StringFormatItem(const std::string &str) :

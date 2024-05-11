@@ -7,6 +7,7 @@
 #include <memory>
 
 namespace hh{
+    //单例模式
     template<class T,class X=void,int N=0>
     class Singleton{
     public:

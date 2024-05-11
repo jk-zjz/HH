@@ -12,6 +12,10 @@
 #include <yaml-cpp/yaml.h>
 #include <list>
 #include <utility>
+#include <set>
+#include <unordered_set>
+#include <map>
+#include <unordered_map>
 namespace hh {
     class Config;
     //配置文件基类
@@ -69,7 +73,148 @@ namespace hh {
             return ss.str();
         }
     };
-
+    //特化list类
+    template<class T>
+    class LexicalCast<std::string,std::list<T>> {
+    public:
+        std::list<T> operator()(const std::string &var) {
+            YAML::Node node = YAML::Load(var);
+            typename std::list<T> vce;
+            for(auto i:node){
+                std::stringstream ss;
+                ss<<i;
+                vce.push_back(LexicalCast<std::string,T>()(ss.str()));
+            }
+            return vce;
+        }
+    };
+    template<class T>
+    class LexicalCast<std::list<T>,std::string> {
+    public:
+        std::string operator()(const std::list<T>& var){
+            YAML::Node node;
+            std::stringstream ss;
+            for(auto &i:var){
+                node.push_back(YAML::Load(LexicalCast<T,std::string>()(i)));
+            }
+            ss<<node;
+            return ss.str();
+        }
+    };
+    //转换set类
+    template<class T>
+    class LexicalCast<std::string,std::set<T>> {
+    public:
+        std::set<T> operator()(const std::string &var) {
+            YAML::Node node = YAML::Load(var);
+            typename std::set<T> vce;
+            for(auto i:node){
+                std::stringstream ss;
+                ss<<i;
+                vce.insert(LexicalCast<std::string,T>()(ss.str()));
+            }
+            return vce;
+        }
+    };
+    template<class T>
+    class LexicalCast<std::set<T>,std::string> {
+    public:
+        std::string operator()(const std::set<T> &var) {
+            YAML::Node node;
+            std::stringstream ss;
+            for (auto &i: var) {
+                node.push_back(YAML::Load(LexicalCast<T, std::string>()(i)));
+            }
+            ss << node;
+            return ss.str();
+        }
+    };
+    //转换unordered_set类
+    template<class T>
+    class LexicalCast<std::string,std::unordered_set<T>> {
+    public:
+        std::unordered_set<T> operator()(const std::string &var) {
+            YAML::Node node = YAML::Load(var);
+            typename std::unordered_set<T> vce;
+            for(auto i:node){
+                std::stringstream ss;
+                ss<<i;
+                vce.insert(LexicalCast<std::string,T>()(ss.str()));
+            }
+            return vce;
+        }
+    };
+    template<class T>
+    class LexicalCast<std::unordered_set<T>,std::string> {
+    public:
+        std::string operator()(const std::unordered_set<T> &var) {
+            YAML::Node node;
+            std::stringstream ss;
+            for (auto &i: var) {
+                node.push_back(YAML::Load(LexicalCast<T, std::string>()(i)));
+            }
+            ss << node;
+            return ss.str();
+        }
+    };
+    //转换map类
+    template<class T>
+    class LexicalCast<std::string,std::map<std::string,T>> {
+    public:
+        std::map<std::string,T> operator()(const std::string &var) {
+            YAML::Node node = YAML::Load(var);
+            typename std::map<std::string,T> vce;
+            for(auto i:node){
+                std::stringstream ss;
+                ss.str("");
+                ss<<i.second;
+                vce.insert({i.first.Scalar(),LexicalCast<std::string,T>()(ss.str())});
+            }
+            return vce;
+        }
+    };
+    template<class T>
+    class LexicalCast<std::map<std::string,T>,std::string> {
+    public:
+        std::string operator()(const std::map<std::string,T> &var) {
+            YAML::Node node;
+            std::stringstream ss;
+            for (auto &i: var) {
+                node[i.first]=YAML::Load(LexicalCast<T,std::string>()(i.second));
+            }
+            ss << node;
+            return ss.str();
+        }
+    };
+    //转换 unordered_map累
+    template<class T>
+    class LexicalCast<std::string,std::unordered_map<std::string,T>> {
+    public:
+        std::unordered_map<std::string,T> operator()(const std::string &var) {
+            YAML::Node node = YAML::Load(var);
+            typename std::unordered_map<std::string,T> vce;
+            for(auto i:node){
+                std::stringstream ss;
+                ss.str("");
+                ss<<i.second;
+                vce.insert({i.first.Scalar(),LexicalCast<std::string,T>()(ss.str())});
+            }
+            return vce;
+        }
+    };
+    template<class T>
+    class LexicalCast<std::unordered_map<std::string,T>,std::string> {
+    public:
+        std::string operator()(const std::unordered_map<std::string,T> &var) {
+            YAML::Node node;
+            std::stringstream ss;
+            for (auto &i: var) {
+                node[i.first]=YAML::Load(LexicalCast<T,std::string>()(i.second));
+            }
+            ss << node;
+            return ss.str();
+        }
+    };
     //FromStr T operator()(const std::string&)
         //吧string转为我需要的类型
     //ToStr std::string operator()(const T&)
@@ -118,22 +263,22 @@ namespace hh {
                 const std::string& name
                 ,const T& define_t
                 ,const std::string & description = ""){
-//            //判断又没有
-
             auto  it =Lookup<T>(name);
             if(it){
                 HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<"Lookup Name = "<<name<<" exists";
                 return it;
             }
             //判断name合不合法
-            if(name.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp._0987654321")
+            std::string m_name(name);
+            std::transform(m_name.begin(),m_name.end(),m_name.begin(),::tolower);
+            if(m_name.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp[]._0987654321")
                 !=std::string::npos){
                 HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"Lookup Name Invalid "<<name<<" exists";
-                throw std::invalid_argument(name);
+                throw std::invalid_argument(m_name);
             }
             //返回新创建号的
-            typename ConfigVar<T>::ptr v(new ConfigVar<T>(name,define_t,description));
-            s_data[name] = v;
+            typename ConfigVar<T>::ptr v(new ConfigVar<T>(m_name,define_t,description));
+            s_data[m_name] = v;
             return v;
         }
 

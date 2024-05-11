@@ -7,7 +7,7 @@
 namespace hh {
 
     const char *LogLevel::ToString(LogLevel::Level level) {
-        std::cout<<level;
+        //宏的返回传入参数，转字符串返回
         switch (level) {
 #define XX(name) \
             case LogLevel::name: \
@@ -208,6 +208,7 @@ namespace hh {
  * b 空格
  * C 自定义内容
  * */
+//是一个lambda表达式通过传入的string 返回一个格式器类每一种格式对应一个输出方式
         static  std::map<std::string,std::function<LogFormotter::FormatItem::ptr(const std::string& str)> > s_format_times =
                 {
 #define XX(str,C)  \
@@ -251,6 +252,7 @@ namespace hh {
                        m_level(level){}
 
     void LogEvent::format(const char *fat, ...) {
+        //绑定可变参
         va_list va;
         va_start(va,fat);
         format(fat,va);
@@ -259,8 +261,10 @@ namespace hh {
 
     void LogEvent::format(const char *fat, va_list al) {
         char * buf= nullptr;
+        //根据大小动态开辟空间
         int len = vasprintf(&buf,fat,al);
         if(len != -1){
+            //写入ss流存储
             m_ss<<std::string(buf,len);
             free(buf);
             buf= nullptr;

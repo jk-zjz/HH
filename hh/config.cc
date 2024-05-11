@@ -12,18 +12,26 @@ namespace hh {
     static void ListAllMember(const std::string &prefix,
                               const YAML::Node &root,
                               std::list<std::pair<std::string, const YAML::Node>> &all_node) {
-        if (prefix.find_first_not_of("qazxswedcvfrtgbnhyujmkiolpQAZXSWEDCVFRTGBNHYUJMKIOLP._0987654321")
+        std::string m_prefix(prefix);
+        std::transform(m_prefix.begin(),m_prefix.end(),m_prefix.begin(),::tolower);
+        if (m_prefix.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp.[]_0987654321")
             != std::string::npos) {
             //不合法
-            HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(), hh::LogLevel::ERROR) << "Config invalid name :" << prefix << " :" << root;
+            HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(), hh::LogLevel::ERROR) << "Config invalid name :" << m_prefix << " :" << root;
             return;
         }
-        all_node.emplace_back(prefix, root);
+        all_node.emplace_back(m_prefix, root);
         if (root.IsMap()) {
             for (auto it = root.begin();
                  it != root.end(); it++) {
-                ListAllMember(prefix.empty() ? it->first.as<std::string>() : prefix + "." + it->first.as<std::string>(),
+                ListAllMember(m_prefix.empty() ? it->first.as<std::string>() : m_prefix + "." + it->first.as<std::string>(),
                               it->second, all_node);
+            }
+        }else if(root.IsSequence()){//-----------------------------------------------------------------
+            for(size_t i=0;i<root.size();i++){
+                std::stringstream  ss;
+                ss<<"["<<boost::lexical_cast<std::string>(i)<<"]";
+                ListAllMember(m_prefix.empty() ? ss.str() : m_prefix +ss.str(),root[i],all_node);
             }
         }
     }

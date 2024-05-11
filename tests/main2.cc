@@ -56,9 +56,41 @@ void Confgi(){
     printf("%s",g_int_value_config_->toString().c_str());
 }
 void test(){
+    hh::ConfigVar<std::string>::ptr str = hh::Config::Lookup<std::string>("Logs[1].formatter","asd","asda");
+    std::cout<<str->getValue()<<std::endl;
+    hh::ConfigVar<std::list<int>>::ptr  int_list = hh::Config::Lookup<std::list<int>>("hh.list_arr",{1,2,3},"");
+    hh::ConfigVar<std::set<int>>::ptr int_set = hh::Config::Lookup<std::set<int>>("hh.set_arr",{2,2,3},"");
+    hh::ConfigVar<std::map<std::string,std::string>>::ptr string_map = hh::Config::Lookup("hh",std::map<std::string,std::string>{{"key","2"}},"");
+    std::list<int>vec = int_list->getValue();
+    std::set<int>m_set= int_set->getValue();
+    std::map<std::string,std::string>m_map =string_map->getValue();
+    for(auto &i:vec){
+        HH_LOG_INFO(HH_LOG_ROOT(),boost::lexical_cast<std::string>(i));
+    }
+    for(auto &i:m_set){
+        HH_LOG_INFO(HH_LOG_ROOT(),boost::lexical_cast<std::string>(i));
+    }
+    for(auto &i:m_map){
+        HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<i.first<<"  "<<i.second;
+    }
+    std::cout<<int_list->toString()<<std::endl;
     YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
     hh::Config::loadFromYaml(root);
-
+    vec = int_list->getValue();
+    m_set= int_set->getValue();
+    m_map =string_map->getValue();
+    for(auto &i:vec){
+        HH_LOG_INFO(HH_LOG_ROOT(),boost::lexical_cast<std::string>(i));
+    }
+    for(auto &i:m_set){
+        HH_LOG_INFO(HH_LOG_ROOT(),boost::lexical_cast<std::string>(i));
+    }
+    for(auto &i:m_map){
+        HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<i.first<<"  "<<i.second;
+    }
+    std::cout<<int_list->toString()<<std::endl;
+    std::cout<<str->getValue();
+    std::cout<<int_set->toString()<<std::endl;
 }
 int main(){
     //Confgi();
