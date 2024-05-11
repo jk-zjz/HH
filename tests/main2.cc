@@ -3,6 +3,8 @@
 //
 #include "config.h"
 #include <yaml-cpp/yaml.h>
+
+#include <utility>
 void printNode(const YAML::Node& node) {
     switch (node.Type()) {
         case YAML::NodeType::Null:
@@ -57,7 +59,10 @@ void Confgi(){
 }
 void test(){
     hh::ConfigVar<std::string>::ptr str = hh::Config::Lookup<std::string>("Logs[1].formatter","asd","asda");
+    hh::ConfigVar<int>::ptr int_port = hh::Config::Lookup<int>("hh.port",1,"asda");
+    hh::ConfigVar<std::string>::ptr string_port = hh::Config::Lookup<std::string>("hh.port","1","asda");
     std::cout<<str->getValue()<<std::endl;
+    std::cout<<int_port->getValue()<<std::endl;
     hh::ConfigVar<std::list<int>>::ptr  int_list = hh::Config::Lookup<std::list<int>>("hh.list_arr",{1,2,3},"");
     hh::ConfigVar<std::set<int>>::ptr int_set = hh::Config::Lookup<std::set<int>>("hh.set_arr",{2,2,3},"");
     hh::ConfigVar<std::map<std::string,std::string>>::ptr string_map = hh::Config::Lookup("hh",std::map<std::string,std::string>{{"key","2"}},"");
@@ -92,8 +97,78 @@ void test(){
     std::cout<<str->getValue();
     std::cout<<int_set->toString()<<std::endl;
 }
+class user{
+public:
+    user(){};
+    void setname(const std::string& m_name){
+        this->name=m_name;
+    }
+    void setage( int m_age){
+        this->age=m_age;
+    }
+
+    const std::string &getName() const {
+        return name;
+    }
+
+    int getAge() const {
+        return age;
+    }
+    std::string ToString(){
+        std::stringstream ss;
+        ss<<"name :"<<name<<"age :"<<age;
+        return ss.str();
+    }
+
+private:
+    std::string name;
+    int age=0;
+};
+template<>
+class hh::LexicalCast<std::string,user>{
+public:
+    user operator()(const std::string& var){
+        YAML::Node node=YAML::Load(var);
+        user u;
+        u.setname(node["name"].as<std::string>());
+        u.setage(node["age"].as<int>());
+        return u;
+    }
+};
+template<>
+class hh::LexicalCast<user,std::string>{
+public:
+    std::string operator()(const user& u){
+        YAML::Node node;
+        node["name"]=u.getName();
+        node["age"]=u.getAge();
+        std::stringstream ss;
+        ss<<node;
+        return ss.str();
+    }
+};
+void T(){
+    hh::ConfigVar<user>::ptr user_ =hh::Config::Lookup("class.user",user(),"");
+    hh::ConfigVar<std::map<std::string,user>>::ptr user_map =hh::Config::Lookup<std::map<std::string,user>>("class.map",{},"");
+    hh::ConfigVar<std::vector<user>>::ptr user_vect =hh::Config::Lookup<std::vector<user>>("class.vector",{},"");
+    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<user_->toString();
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
+    hh::Config::loadFromYaml(root);
+    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<user_->toString();
+    for(auto &i:user_map->getValue()){
+        std::cout<<i.second.getName();
+        std::cout<<i.second.getAge();
+        std::cout<<std::endl;
+    }
+    for(auto &i:user_vect->getValue()){
+        std::cout<<i.getName();
+        std::cout<<i.getAge();
+        std::cout<<std::endl;
+    }
+}
 int main(){
     //Confgi();
-    test();
+    //test();
+    T();
     return 0;
 }

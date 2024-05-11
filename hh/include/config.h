@@ -33,6 +33,7 @@ namespace hh {
         //转字符串
         virtual std::string  toString() = 0;
         virtual bool fromString(const std::string &var) = 0;
+        virtual std::string gettype() =0;
     protected:
         std::string m_name;         //名称
         std::string m_description;  //描述
@@ -245,13 +246,14 @@ namespace hh {
                 setValue(FromStr()(var));
                 //m_val = boost::lexical_cast<T>(var);
             }catch (std::exception&e){
-                HH_LOG_FAT_ERROR(HH_LOG_ROOT(),"ConfigVar::fromString exception %s convert: %s to string"
-                ,e.what(),typeid(m_val).name())
+                HH_LOG_FAT_ERROR(HH_LOG_ROOT(),"ConfigVar::fromString exception %s convert: %s to string /n [%s]"
+                ,e.what(),typeid(m_val).name(),var.c_str())
             }
             return false;
         };
         const T getValue()const{return m_val;}
         void setValue(const T &t){m_val=t;}
+        std::string gettype() override{return typeid(T).name();};
     private:
         T m_val;
     };
@@ -263,14 +265,23 @@ namespace hh {
                 const std::string& name
                 ,const T& define_t
                 ,const std::string & description = ""){
-            auto  it =Lookup<T>(name);
-            if(it){
-                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<"Lookup Name = "<<name<<" exists";
-                return it;
-            }
             //判断name合不合法
             std::string m_name(name);
             std::transform(m_name.begin(),m_name.end(),m_name.begin(),::tolower);
+            auto it = s_data.find(m_name);
+            if(it != s_data.end()){
+                auto tmp = std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
+                if(!tmp){
+                    //转换失败
+                    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"Lookup Name = "
+                        <<name<<" exists type no "
+                        << it->second->gettype()<<" "
+                        << it->second->toString();
+                    return tmp;
+                }
+                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<"Lookup Name = "<<name<<" exists";
+                return tmp;
+            }
             if(m_name.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp[]._0987654321")
                 !=std::string::npos){
                 HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"Lookup Name Invalid "<<name<<" exists";

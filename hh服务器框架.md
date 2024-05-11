@@ -104,7 +104,7 @@ Config 通过 yaml
     template<class T,class FromStr=LexicalCast<std::string,T>
     ,class ToStr=LexicalCast<T,std::string>>
     class ConfigVar:public ConfigVarBase{}
-对vector 进行特化
+对vector 进行特化 (set list 单参数都差不多)
     
     template<class T>
     class LexicalCast<std::string,std::vector<T>> {
@@ -130,6 +130,36 @@ Config 通过 yaml
                 node.push_back(YAML::Load(LexicalCast<T,std::string>()(i)));
             }
             ss<<node;
+            return ss.str();
+        }
+    };
+对map进行特化
+    
+    template<class T>
+    class LexicalCast<std::string,std::map<std::string,T>> {
+    public:
+        std::map<std::string,T> operator()(const std::string &var) {
+            YAML::Node node = YAML::Load(var);
+            typename std::map<std::string,T> vce;
+            for(auto i:node){
+                std::stringstream ss;
+                ss.str("");
+                ss<<i.second;
+                vce.insert({i.first.Scalar(),LexicalCast<std::string,T>()(ss.str())});
+            }
+            return vce;
+        }
+    };
+    template<class T>
+    class LexicalCast<std::map<std::string,T>,std::string> {
+    public:
+        std::string operator()(const std::map<std::string,T> &var) {
+            YAML::Node node;
+            std::stringstream ss;
+            for (auto &i: var) {
+                node[i.first]=YAML::Load(LexicalCast<T,std::string>()(i.second));
+            }
+            ss << node;
             return ss.str();
         }
     };
@@ -165,7 +195,100 @@ yaml 文件解析
 
     会根据约定替换配置
 ### 注意配置KEY不区分大小写 
+实现自定义类型  
+自定义类型需要实现 hh::LexicalCast  
+实现后可与基本stl嵌套 因为上面已经实现了一下基本的stl
+```c++
+class user{
+public:
+    user(){};
+    void setname(const std::string& m_name){
+        this->name=m_name;
+    }
+    void setage( int m_age){
+        this->age=m_age;
+    }
 
+    const std::string &getName() const {
+        return name;
+    }
+
+    int getAge() const {
+        return age;
+    }
+    std::string ToString(){
+        std::stringstream ss;
+        ss<<"name :"<<name<<"age :"<<age;
+        return ss.str();
+    }
+
+private:
+    std::string name;
+    int age=0;
+};
+template<>
+class hh::LexicalCast<std::string,user>{
+public:
+    user operator()(const std::string& var){
+        YAML::Node node=YAML::Load(var);
+        user u;
+        u.setname(node["name"].as<std::string>());
+        u.setage(node["age"].as<int>());
+        return u;
+    }
+};
+template<>
+class hh::LexicalCast<user,std::string>{
+public:
+    std::string operator()(const user& u){
+        YAML::Node node;
+        node["name"]=u.getName();
+        node["age"]=u.getAge();
+        std::stringstream ss;
+        ss<<node;
+        return ss.str();
+    }
+};
+//使用
+void T(){
+    hh::ConfigVar<user>::ptr user_ =hh::Config::Lookup("class.user",user(),"");
+    hh::ConfigVar<std::map<std::string,user>>::ptr user_map =hh::Config::Lookup<std::map<std::string,user>>("class.map",{},"");
+    hh::ConfigVar<std::vector<user>>::ptr user_vect =hh::Config::Lookup<std::vector<user>>("class.vector",{},"");
+    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<user_->toString();
+    YAML::Node root = YAML::LoadFile("./log.yml");
+    hh::Config::loadFromYaml(root);
+    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<user_->toString();
+    for(auto &i:user_map->getValue()){
+        std::cout<<i.second.getName();
+        std::cout<<i.second.getAge();
+        std::cout<<std::endl;
+    }
+    for(auto &i:user_vect->getValue()){
+        std::cout<<i.getName();
+        std::cout<<i.getAge();
+        std::cout<<std::endl;
+    }
+}
+```
+与上面配置的yaml文件格式
+```yaml
+class:
+  user:
+      name: root
+      age: 18
+  map:
+      hh01:
+        name: root
+        age: 18
+      hh02:
+       name: hh
+       age: 20
+  vector:
+    - name: root
+      age: 29
+    - name: hy
+      age: 90
+```
 
 ## 协程库封装
 
