@@ -56,10 +56,15 @@ namespace hh {
 //设置每一个输入地
     void Logger::Log(LogLevel::Level level, LogEvent::ptr event) {
         if (level >= m_level) {
-            //大于日志级别
-            auto p = shared_from_this();
-            for (auto &i: m_appenders) {
-                i->log(p,level, event);
+            //大于日志级别---判断输出地是否为空
+            if (!m_appenders.empty()) {
+                auto p = shared_from_this();
+                for (auto &i: m_appenders) {
+                    i->log(p, level, event);
+                }
+            }else if(m_root){
+                std::cout<<"空"<<std::endl;
+                m_root->Log(level,event);
             }
             std::cout<<std::endl;
         }
@@ -293,7 +298,18 @@ namespace hh {
     }
 
     Logger::ptr LoggerManager::getLogger(std::string &name) {
+        /*
+         * 获取格式器时，判断是否查找
+         * 未存在初始化格式器，使用传递格式器名称
+         * 为新格式器赋值默认格式器用于输出，因为新格式器并不有输出地
+         * */
         auto it = m_logger.find(name);
-        return it==m_logger.end()?m_root:it->second;
+        if(it != m_logger.end()){
+            return it->second;
+        }
+        Logger::ptr logger(new Logger(name));
+        logger->m_root=m_root;
+        m_logger[name]=logger;
+        return logger;
     }
 };

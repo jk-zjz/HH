@@ -51,7 +51,8 @@
 
 //获取默认日志器方便
 #define HH_LOG_ROOT() hh::LoggerMgr::GetInstance()->GetRoot()
-
+//通过name获取格式器
+#define HH_LOG_NAME(name) hh::LoggerMgr::GetInstance()->getLogger(name)
 //声明命名空间，以免名称重复，可 :: 访问
 namespace hh {
     class Logger;
@@ -196,6 +197,7 @@ namespace hh {
 
     //日志器--std::enable_shared_from_this<Logger>用于传递自己
     class Logger : public std::enable_shared_from_this<Logger> {
+    friend class LoggerManager;
     public:
         typedef std::shared_ptr<Logger> ptr;
 
@@ -236,6 +238,7 @@ namespace hh {
         LogLevel::Level m_level;                    //日志级别
         std::list<LogAppender::ptr> m_appenders;    //日志输出地集合
         LogFormotter::ptr m_formotter;              //日志格式器
+        Logger::ptr m_root;                         //存放getlogger默认格式器地
     };
 
     //输出控制台LogAppender
@@ -320,7 +323,11 @@ namespace hh {
 
         void
         format(std::shared_ptr<Logger> logger, std::ostream &on, LogLevel::Level level, LogEvent::ptr event) override {
-            on << logger->getName();
+            /*
+             * 获取最终格式器名称
+             * logenent 会被使用的格式器赋值，所以可以获取到最终格式器名称
+             * */
+            on << event->getLogger()->getName();
         }
     };
 

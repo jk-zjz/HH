@@ -17,7 +17,7 @@ tests  --  测试代码
 
     作用域 hh::
 
-    Logger(定义日志类别)
+    Logger(日志器)
         |
         |------Formotter(日志格式)
         |
@@ -63,6 +63,17 @@ HH_LOG_FAT_INFO(logger,"sbsbahbdah  %s %d","OK",123);
     HH_LOG_INFO(i, "1223");
 ```
 ## 配置系统
+    作用域 hh::
+
+    ConfigVarBase(配置文件基类)
+        |
+        |------ConfigVar:ConfigVarBase(配置器)
+        |
+        |------LexicalCast<std::string,std::list<T>>(配置特化类)
+        |
+        |------......
+        |
+    Config(静态配置器)
 安装 boost库
     
     //下载boost库
@@ -289,6 +300,34 @@ class:
     - name: hy
       age: 90
 ```
+### 配置的事件机制  
+当一个配置发生改变的时候,可以返现通知对应代码或回调
+
+    给单独的 ConfigVar 添加配置  是回调函数
+    user_->addOcb(10,[](const T& old_valuse,const T& new_valuse){
+       std::cout<<old_valuse<<new_valuse<<std::endl;
+    });
+
+yml配置日志格式
+```yaml 
+logs:
+  - name: root
+    level: (unknow,debug,info,warn,error,fatal)
+    Formatter: "%d<%f:%l>[%c:%p]"
+    appender:
+      - type: (FileLogAppender,StdoutLogAppender)
+        level: (unknow,......)
+        file: ./log.txt
+```
+使用
+```c++
+hh::Logger::ptr logger = hh::LoggerMgr::GetInstance()->getLogger(name);
+//或者使用宏的方式 HH_LOG_NAME(name);
+std::string str("init log");
+HH_LOG_INFO(logger,str);
+```
+
+## 日志系统整合配置系统
 
 ## 协程库封装
 

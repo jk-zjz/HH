@@ -31,7 +31,7 @@ void printNode(const YAML::Node& node) {
     }
 }
 void yaml(){
-    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
     printNode(root);
    // HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<root;
 }
@@ -45,7 +45,7 @@ void Confgi(){
     }
 
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<g_int_value_config_->toString();
-    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
     hh::Config::loadFromYaml(root);
 
 
@@ -79,7 +79,7 @@ void test(){
         HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<i.first<<"  "<<i.second;
     }
     std::cout<<int_list->toString()<<std::endl;
-    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
     hh::Config::loadFromYaml(root);
     vec = int_list->getValue();
     m_set= int_set->getValue();
@@ -99,14 +99,15 @@ void test(){
 }
 class user{
 public:
-    user(){};
-    void setname(const std::string& m_name){
-        this->name=m_name;
+    bool operator==(const user& other) const {
+        return this->age==other.getAge()&&this->name==other.getName()? true:false;
     }
     void setage( int m_age){
         this->age=m_age;
     }
-
+    void setname(const std::string basicString) {
+        this->name=basicString;
+    }
     const std::string &getName() const {
         return name;
     }
@@ -114,7 +115,7 @@ public:
     int getAge() const {
         return age;
     }
-    std::string ToString(){
+    std::string ToString() const {
         std::stringstream ss;
         ss<<"name :"<<name<<"age :"<<age;
         return ss.str();
@@ -151,8 +152,11 @@ void T(){
     hh::ConfigVar<user>::ptr user_ =hh::Config::Lookup("class.user",user(),"");
     hh::ConfigVar<std::map<std::string,user>>::ptr user_map =hh::Config::Lookup<std::map<std::string,user>>("class.map",{},"");
     hh::ConfigVar<std::vector<user>>::ptr user_vect =hh::Config::Lookup<std::vector<user>>("class.vector",{},"");
+    user_->addOcb(10,[](const user&od_user,const user& new_user){
+        std::cout<<new_user.ToString()<<"---"<<od_user.ToString()<<"\n";
+    });
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<user_->toString();
-    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
     hh::Config::loadFromYaml(root);
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<user_->toString();
     for(auto &i:user_map->getValue()){
@@ -166,9 +170,22 @@ void T(){
         std::cout<<std::endl;
     }
 }
+void testlogcofig(){
+    std::string sb("asdasd");
+    hh::Logger::ptr logger = HH_LOG_NAME(sb);
+    hh::Logger::ptr root(new hh::Logger("sbsb1234"));
+
+
+    HH_LOG_LEVEL_CHAIN(logger,hh::LogLevel::INFO)<<"sbsb 1234";
+    std::cout<<"---\n";
+    root->addAppender(hh::LogAppender::ptr (new hh::StdoutLogAppender));
+    HH_LOG_LEVEL_CHAIN(root,hh::LogLevel::INFO)<<"sbsb 1234";
+
+}
 int main(){
     //Confgi();
     //test();
-    T();
+    //T();
+    testlogcofig();
     return 0;
 }

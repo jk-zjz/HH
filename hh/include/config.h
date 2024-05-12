@@ -16,6 +16,7 @@
 #include <unordered_set>
 #include <map>
 #include <unordered_map>
+#include <functional>
 namespace hh {
     class Config;
     //配置文件基类
@@ -226,6 +227,7 @@ namespace hh {
     class ConfigVar:public ConfigVarBase{
     public:
         typedef std::shared_ptr<ConfigVar> ptr;
+        typedef std::function<void (const T& old_value,const T& new_value)> on_change_cb;
         ConfigVar(const std::string& name
                   ,const T& define_t
                   ,const std::string & description = ""):
@@ -252,11 +254,44 @@ namespace hh {
             return false;
         };
         const T getValue()const{return m_val;}
-        void setValue(const T &t){m_val=t;}
+        void setValue(const T &t){
+            //判断是否改变值，可让回调函数触发
+            if(t==m_val){
+                return;
+            }
+            for(auto &i:m_ocb){
+                i.second(m_val,t);
+            }
+            m_val=t;
+        }
         std::string gettype() override{return typeid(T).name();};
+
+        //回调函数 新增，删除，清空与查找
+        on_change_cb getOcb(uint64_t key){
+            auto it = m_ocb.find(key);
+            return it==m_ocb.end()? nullptr : it->second;
+        }
+        void addOcb(uint64_t key,on_change_cb ocb){
+            if(m_ocb.count(key)){
+                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<"key exist Callback has been changed";
+            }
+            m_ocb[key]=ocb;
+        }
+        void deleteOcb(uint64_t key){
+            if(!m_ocb.count(key)){
+                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<"delete not exist key";
+                return;
+            }
+            m_ocb.erase(key);
+        }
+        void eraseOcb(){
+            m_ocb.erase();
+        }
     private:
         T m_val;
+        std::map<uint64_t,on_change_cb> m_ocb;
     };
+
     class Config{
     public:
         typedef std::map<std::string,ConfigVarBase::ptr> ConfigVarMap;
