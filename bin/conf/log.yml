@@ -1,41 +1,15 @@
 logs:
   - name: root
     level: info
-    Formatter: "%d<%f:%l>[%c:%p]"
+    formatter: "%d<%f:%l>[%c:%p]"
     appender:
       - type: FileLogAppender
         file: log.txt
       - type: StdoutLogAppender
   - name: hh
     level: debug
-    Formatter: "%d<%f:%l>[%c:%p]"
+    formatter: "%d<%f:%l>[%c:%p]"
     appender:
       - type: FileLogAppender
         file: log.txt
       - type: StdoutLogAppender
-hh:
-  port: 8021
-  values: 15
-  ip: 127.0.0.1
-  arr: [1,4,6]
-  list_arr:
-    - 10
-    - 20
-    - 30
-  set_arr: [2,3,4,2,3]
-class:
-  user:
-      name: root
-      age: 18
-  map:
-      hh01:
-        name: root
-        age: 18
-      hh02:
-       name: hh
-       age: 20
-  vector:
-    - name: root
-      age: 29
-    - name: hy
-      age: 90

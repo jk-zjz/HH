@@ -70,6 +70,7 @@ namespace hh {
         };
         //静态获取传入日志
         static const char *ToString(LogLevel::Level level);
+        static LogLevel::Level FromString(const std::string &str);
     };
     // 日志事件
     class LogEvent {
@@ -154,6 +155,7 @@ namespace hh {
 
         std::string get_pattern() const { return m_pattern; }
 
+        bool is_Error()const {return m_Error;}
     public:
         //格式输出基类
         class FormatItem {
@@ -171,6 +173,7 @@ namespace hh {
     private:
         std::string m_pattern;
         std::vector<FormatItem::ptr> m_items;
+        bool m_Error= false;
     };
 
     //日志输入地(多个输出地-继承)
@@ -220,6 +223,8 @@ namespace hh {
         void addAppender(LogAppender::ptr appender);
         //删除输出方式
         void delectAppender(LogAppender::ptr appender);
+        //清空
+        void clearAppender();
 
         //设置(获取)什么日志记录
         LogLevel::Level getLevel() const { return m_level; }
@@ -230,8 +235,11 @@ namespace hh {
 
         LogFormotter::ptr get_formotter() const { return m_formotter; }
 
-        void set_formotter(LogFormotter::ptr ptr1) {
-            m_formotter=std::move(ptr1); }
+        void setFormatter(LogFormotter::ptr ptr1) {
+            m_formotter=std::move(ptr1);
+        }
+        void setFormatter(const std::string& formatter);
+
 
     private:
         std::string m_name;                         //谁初始化日志

@@ -8,7 +8,6 @@
 //  C:20
 //"A.C",20;
 namespace hh {
-    Config::ConfigVarMap Config::s_data;
     static void ListAllMember(const std::string &prefix,
                               const YAML::Node &root,
                               std::list<std::pair<std::string, const YAML::Node>> &all_node) {
@@ -59,8 +58,8 @@ namespace hh {
     }
 
     ConfigVarBase::ptr Config::LookupBase(const std::string &name) {
-        auto it = s_data.find(name);
-        if (it == s_data.end()) {
+        auto it = getData().find(name);
+        if (it == getData().end()) {
             return nullptr;
         } else {
             return it->second;

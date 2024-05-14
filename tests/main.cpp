@@ -5,8 +5,8 @@ int main() {
 //
     hh::Logger::ptr logger(new hh::Logger);
     logger->setLevel(hh::LogLevel::UNKNOW);
-    logger->set_formotter(
-    std::shared_ptr<hh::LogFormotter>(new hh::LogFormotter("%d{%Y-%m-%d} %b %c %b %t %b jkjk")));
+    logger->setFormatter(
+            std::shared_ptr<hh::LogFormotter>(new hh::LogFormotter("%d{%Y-%m-%d} %b %c %b %t %b jkjk")));
    // logger->addAppender(hh::LogAppender::ptr(new hh::FileLogAppender("bbll.txt")));
     logger->addAppender(hh::LogAppender::ptr(new hh::StdoutLogAppender()));
 

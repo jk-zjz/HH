@@ -287,6 +287,7 @@ namespace hh {
         void eraseOcb(){
             m_ocb.erase();
         }
+        std::map<uint64_t,on_change_cb> getOcb()const {return m_ocb;}
     private:
         T m_val;
         std::map<uint64_t,on_change_cb> m_ocb;
@@ -303,8 +304,8 @@ namespace hh {
             //判断name合不合法
             std::string m_name(name);
             std::transform(m_name.begin(),m_name.end(),m_name.begin(),::tolower);
-            auto it = s_data.find(m_name);
-            if(it != s_data.end()){
+            auto it = getData().find(m_name);
+            if(it != getData().end()){
                 auto tmp = std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
                 if(!tmp){
                     //转换失败
@@ -324,14 +325,14 @@ namespace hh {
             }
             //返回新创建号的
             typename ConfigVar<T>::ptr v(new ConfigVar<T>(m_name,define_t,description));
-            s_data[m_name] = v;
+            getData()[m_name] = v;
             return v;
         }
 
         template<class T>
         static typename ConfigVar<T>::ptr Lookup(const std::string &name){
-            auto it = s_data.find(name);
-            if(it==s_data.end()){
+            auto it = getData().find(name);
+            if(it==getData().end()){
                 return nullptr;
             }
            return std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
@@ -339,7 +340,10 @@ namespace hh {
         static void loadFromYaml(const YAML::Node& root);
         static ConfigVarBase::ptr LookupBase(const std::string& name);
     private:
-        static ConfigVarMap s_data;
+        static ConfigVarMap & getData(){
+            static ConfigVarMap s_data;
+            return s_data;
+        }
     };
 
 }

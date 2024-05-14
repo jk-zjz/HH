@@ -182,10 +182,18 @@ void testlogcofig(){
     HH_LOG_LEVEL_CHAIN(root,hh::LogLevel::INFO)<<"sbsb 1234";
 
 }
+void test4(){
+    std::cout<<"start"<<std::endl;
+
+    HH_LOG_LEVEL_CHAIN(hh::LoggerMgr::GetInstance()->GetRoot(),hh::LogLevel::INFO)<<"sbsb1234";
+
+    std::cout<<"end"<<std::endl;
+}
 int main(){
     //Confgi();
     //test();
     //T();
-    testlogcofig();
+//    testlogcofig();
+    test4();
     return 0;
 }

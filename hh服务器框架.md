@@ -34,7 +34,7 @@ tests  --  测试代码
 //初始化日志器
 hh::Logger::ptr logger(new hh::Logger);
 //更改日志格式器
-logger->set_formotter(new hh::LogFormotter("%d 123123 %m"));
+logger->setFormotter(new hh::LogFormotter("%d 123123 %m"));
 //添加日志输出地
 logger->addAppender(hh::LogAppender::ptr(new hh::FileLogAppender("bbll.txt")));
 //初始化事件
@@ -323,6 +323,8 @@ logs:
 ```c++
 hh::Logger::ptr logger = hh::LoggerMgr::GetInstance()->getLogger(name);
 //或者使用宏的方式 HH_LOG_NAME(name);
+//以前如果name不存在，就会返回m_root，现在返回的是name，但是使用还是m_root
+//会判断name的append是否空，为空使用m_root,当读配置了就会执行name
 std::string str("init log");
 HH_LOG_INFO(logger,str);
 ```
