@@ -312,12 +312,19 @@ yml配置日志格式
 ```yaml 
 logs:
   - name: root
-    level: (unknow,debug,info,warn,error,fatal)
-    Formatter: "%d<%f:%l>[%c:%p]"
+    level: info
+    formatter: "%d<%f:%l>"
     appender:
-      - type: (FileLogAppender,StdoutLogAppender)
-        level: (unknow,......)
+      - type: FileLogAppender
         file: ./log.txt
+      - type: StdoutLogAppender
+  - name: hh
+    level: debug
+    formatter: "%d<%f:%l>[%m:%p]"
+    appender:
+      - type: FileLogAppender
+        file: log.txt
+      - type: StdoutLogAppender
 ```
 使用
 ```c++
@@ -327,6 +334,19 @@ hh::Logger::ptr logger = hh::LoggerMgr::GetInstance()->getLogger(name);
 //会判断name的append是否空，为空使用m_root,当读配置了就会执行name
 std::string str("init log");
 HH_LOG_INFO(logger,str);
+```
+配置系统整合日志系统使用
+```c++
+std::string sb("root");
+auto roots=HH_LOG_NAME(sb);
+HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
+//使用默认的日志
+YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
+hh::Config::loadFromYaml(root);
+roots=HH_LOG_NAME(sb);
+HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
+//使用配置文件中的  name为root的配置
+特化了set<log> && 单log
 ```
 
 ## 日志系统整合配置系统

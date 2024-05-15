@@ -184,10 +184,24 @@ void testlogcofig(){
 }
 void test4(){
     std::cout<<"start"<<std::endl;
-
-    HH_LOG_LEVEL_CHAIN(hh::LoggerMgr::GetInstance()->GetRoot(),hh::LogLevel::INFO)<<"sbsb1234";
-
+    std::string sb("root");
+    auto roots=HH_LOG_NAME(sb);
+    HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
+    hh::Config::loadFromYaml(root);
+    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO);
     std::cout<<"end"<<std::endl;
+    std::cout<<hh::LoggerMgr::GetInstance()->getLoggers().size()<<std::endl;
+    std::string sb1("ot");
+    roots=HH_LOG_NAME(sb);
+    std::cout<<roots->getLevel()<<std::endl;
+    HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
+    HH_LOG_LEVEL_CHAIN(HH_LOG_NAME(sb1),hh::LogLevel::INFO);
+    root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
+    hh::Config::loadFromYaml(root);
+    roots=HH_LOG_NAME(sb);
+    HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
+
 }
 int main(){
     //Confgi();

@@ -53,6 +53,8 @@
 #define HH_LOG_ROOT() hh::LoggerMgr::GetInstance()->GetRoot()
 //通过name获取格式器
 #define HH_LOG_NAME(name) hh::LoggerMgr::GetInstance()->getLogger(name)
+
+#define HH_LOG_SET(name,logger) hh::LoggerMgr::GetInstance()->setlogger(name,logger)
 //声明命名空间，以免名称重复，可 :: 访问
 namespace hh {
     class Logger;
@@ -62,8 +64,8 @@ namespace hh {
         //日志枚举
         enum Level {
             UNKNOW = 0,//异常
-            DEBUG = 1,//调试信息
-            INFO = 2, //一般信息
+            INFO = 1, //一般信息
+            DEBUG = 2,//调试信息
             WARN = 3, //不会影响查询正常运行信息，警告
             ERROR = 4,//错误
             FATAL = 5 //严重错误
@@ -143,7 +145,7 @@ namespace hh {
      * 日志格式器
      * 最终输出类
      * */
-    class LogFormotter {
+    class LogFormotter{
     public:
         typedef std::shared_ptr<LogFormotter> ptr;
 
@@ -185,7 +187,7 @@ namespace hh {
         LogLevel::Level get_level()const {return m_level;}
         //多个输出地，需要虚析构，子类可释放
         virtual ~LogAppender() {};
-
+//        virtual std::string toYamlString() = 0;
         virtual void log(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) = 0;
 
         //设置日志选器
@@ -451,6 +453,11 @@ namespace hh {
         void init();
         Logger::ptr getLogger(std::string & name);
         Logger::ptr GetRoot()const{return m_root;}
+        std::map<std::string,Logger::ptr> getLoggers()const {return m_logger;}
+        void setlogger(std::string key,Logger::ptr loggers){
+            std::cout<<"jkjk-"<<std::endl;
+            m_logger[key]=loggers;
+        }
     private:
         std::map<std::string,Logger::ptr>m_logger;
         Logger::ptr m_root;

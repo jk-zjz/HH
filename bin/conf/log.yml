@@ -1,14 +1,14 @@
 logs:
   - name: root
     level: info
-    formatter: "%d<%f:%l>[%c:%p]"
+    formatter: "%d<%f:%l>"
     appender:
       - type: FileLogAppender
-        file: log.txt
+        file: ./log.txt
       - type: StdoutLogAppender
   - name: hh
     level: debug
-    formatter: "%d<%f:%l>[%c:%p]"
+    formatter: "%d<%f:%l>[%m:%p]"
     appender:
       - type: FileLogAppender
         file: log.txt
