@@ -368,8 +368,69 @@ namespace hh {
             return ss.str();
         }
     };
+    //特化普通LogDefine
+    template<>
+    class LexicalCast<std::string,LogDefine> {
+    public:
+        LogDefine operator()(const std::string &var) {
+            YAML::Node node = YAML::LoadFile(var);
+            LogDefine ld;
+            if(!node["name"].IsDefined()){
+                std::cout<<"log config error: name is null, " << std::endl;
+                return ld;
+            }
+            ld.name = node["name"].as<std::string>();
+            ld.Level=hh::LogLevel::FromString(node["level"].IsDefined()?node["level"].as<std::string>():"UNKNOW");
+            ld.formatter=node["formatter"].IsDefined()?node["formatter"].as<std::string>():"";
+            if(node["appender"].IsDefined()){
+                for(auto i:node["appender"]){
+                    LogAppenderDefine la;
+                    if(!i["type"].IsDefined()){
+                        std::cout<<"log config error: appender type is null, " << std::endl;
+                        continue;
+                    }
+                    std::string type(i["type"].as<std::string>());
+                    if(type=="FileLogAppender"){
+                        la.type=1;
+                        la.file=i["file"].as<std::string>();
+                    }else if(type=="StdoutLogAppender"){
+                        la.type = 2;
+                    }
+                    la.formatter=ld.formatter;
+                    la.Level=ld.Level;
+                    ld.append.push_back(la);
+                }
+            }
+            return ld;
+        }
+    };
+    template<>
+    class LexicalCast<LogDefine, std::string> {
+    public:
+        std::string operator()(const LogDefine &var) {
+            YAML::Node node;
+            std::stringstream ss;
+            node["name"] = var.name;
+            node["level"]=hh::LogLevel::ToString(var.Level);
+            node["formatter"]=var.formatter;
+            for (auto &i: var.append) {
+                YAML::Node n;
+                n["type"] = i.type == 1 ? "FileLogAppender" : "StdoutLogAppender";
+                if (i.type == 1) {
+                    n["file"] = i.file;
+                }
+                n["level"] = hh::LogLevel::ToString(i.Level);
+                if (!i.formatter.empty()) {
+                    n["formatter"] = i.formatter;
+                }
+                node["append"].push_back(n);
+            }
+            ss<<node;
+            return ss.str();
+        }
+    };
 
-    //特化类
+    //特化set<LogDefine>类
     template<>
     class LexicalCast<std::string, std::set<LogDefine>> {
     public:
@@ -521,7 +582,8 @@ namespace hh {
     static LogIniter _init_log;
 
     void LoggerManager::init() {
-    }
+
+       }
 
     Logger::ptr LoggerManager::getLogger(std::string &name) {
         /*

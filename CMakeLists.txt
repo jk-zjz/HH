@@ -11,8 +11,7 @@ set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -g -Wall -Wno-deprecated -Werr
 # 设置生成的可执行文件的输出目录
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-# 读取头文件的目录（此处似乎遗漏了实际读取头文件的代码）
-# 例如：include_directories("./hh/include/")
+# 查找yaml库
 find_package(yaml-cpp REQUIRED)
 
 # 读取./hh 下的源文件
