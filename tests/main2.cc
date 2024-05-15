@@ -5,6 +5,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include <utility>
+//yaml打印
 void printNode(const YAML::Node& node) {
     switch (node.Type()) {
         case YAML::NodeType::Null:
@@ -35,6 +36,7 @@ void yaml(){
     printNode(root);
    // HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<root;
 }
+//日志普通类型测试
 void Confgi(){
     hh::ConfigVar<int>::ptr g_int_value_config_ = hh::Config::Lookup("hh.values",(int)9876,"hh");
     hh::ConfigVar<std::string>::ptr g_in = hh::Config::Lookup("hh",(std::string)"","");
@@ -57,6 +59,7 @@ void Confgi(){
     }
     printf("%s",g_int_value_config_->toString().c_str());
 }
+//日志stl类型测试
 void test(){
     hh::ConfigVar<std::string>::ptr str = hh::Config::Lookup<std::string>("Logs[1].formatter","asd","asda");
     hh::ConfigVar<int>::ptr int_port = hh::Config::Lookup<int>("hh.port",1,"asda");
@@ -148,7 +151,8 @@ public:
         return ss.str();
     }
 };
-void T(){
+//自定义模板测试
+void user_T(){
     hh::ConfigVar<user>::ptr user_ =hh::Config::Lookup("class.user",user(),"");
     hh::ConfigVar<std::map<std::string,user>>::ptr user_map =hh::Config::Lookup<std::map<std::string,user>>("class.map",{},"");
     hh::ConfigVar<std::vector<user>>::ptr user_vect =hh::Config::Lookup<std::vector<user>>("class.vector",{},"");
@@ -170,19 +174,8 @@ void T(){
         std::cout<<std::endl;
     }
 }
-void testlogcofig(){
-    std::string sb("asdasd");
-    hh::Logger::ptr logger = HH_LOG_NAME(sb);
-    hh::Logger::ptr root(new hh::Logger("sbsb1234"));
-
-
-    HH_LOG_LEVEL_CHAIN(logger,hh::LogLevel::INFO)<<"sbsb 1234";
-    std::cout<<"---\n";
-    root->addAppender(hh::LogAppender::ptr (new hh::StdoutLogAppender));
-    HH_LOG_LEVEL_CHAIN(root,hh::LogLevel::INFO)<<"sbsb 1234";
-
-}
-void test4(){
+//日志配置测试
+void logconfigtest(){
     std::cout<<"start"<<std::endl;
     std::string sb("root");
     auto roots=HH_LOG_NAME(sb);
@@ -204,10 +197,6 @@ void test4(){
 
 }
 int main(){
-    //Confgi();
-    //test();
-    //T();
-//    testlogcofig();
-    test4();
+    logconfigtest();
     return 0;
 }

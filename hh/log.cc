@@ -2,6 +2,8 @@
 // Created by 35148 on 2024/4/18.
 //
 #include "log.h"
+
+#include <memory>
 #include "config.h"
 
 namespace hh {
@@ -462,17 +464,15 @@ namespace hh {
                                 continue;
                             }
                             lad.type = 1;
-                            lad.Level = ld.Level;
-                            lad.formatter = ld.formatter;
                             lad.file = it["file"].as<std::string>();
                         } else if (it["type"].as<std::string>() == "StdoutLogAppender") {
                             lad.type = 2;
-                            lad.Level = ld.Level;
-                            lad.formatter = ld.formatter;
                         } else {
                             std::cout << "log config error: appender type is invalid, " << it << std::endl;
                             continue;
                         }
+                        lad.Level =it["level"].IsDefined()?hh::LogLevel::FromString(it["level"].as<std::string>()):ld.Level;
+                        lad.formatter = it["formatter"].IsDefined()?it["formatter"].as<std::string>():ld.formatter;
                         ld.append.push_back(lad);
                     }
                 }
@@ -523,26 +523,23 @@ namespace hh {
         LogIniter() {
             var->addOcb(0xF1E123, [](const std::set<LogDefine> &old_valuse,
                                      const std::set<LogDefine> &new_valuse) {
-                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(), hh::LogLevel::INFO) << "LogIniter init event trigger";
-                std::cout<<"old_valuse:"<<old_valuse.size()<<std::endl;
-                for (auto &ob: old_valuse) {
-                    std::cout << ob.to_string() << std::endl;
-                }
-                std::cout<<"new_valuse:"<<new_valuse.size()<<std::endl;
-                for (auto &nb: new_valuse) {
-                    std::cout << nb.to_string() << std::endl;
-                }
+//                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(), hh::LogLevel::INFO) << "LogIniter init event trigger";
+//                std::cout<<"old_valuse:"<<old_valuse.size()<<std::endl;
+//                for (auto &ob: old_valuse) {
+//                    std::cout << ob.to_string() << std::endl;
+//                }
+//                std::cout<<"new_valuse:"<<new_valuse.size()<<std::endl;
+//                for (auto &nb: new_valuse) {
+//                    std::cout << nb.to_string() << std::endl;
+//                }
                 //新增
                 for (auto &i: new_valuse) {
                     hh::Logger::ptr logger;
                     std::string name(i.name);
                     auto it = old_valuse.find(i);
-                    if (it == old_valuse.end()) {
+                    if (it == old_valuse.end() ||!(*it == i)) {
                         //老的里面没有新的   新增
                         logger= HH_LOG_NAME(name);
-                    } else if (!(*it == i)) {
-                        //老的里面有并且不相同  更改
-                        logger = HH_LOG_NAME(name);
                     }else{
                         continue;
                     }
@@ -552,12 +549,14 @@ namespace hh {
                     }
                     logger->clearAppender();
                     for (auto &app: i.append) {
-                        std::cout<<"1-";
                         hh::LogAppender::ptr logAppender;
                         if (app.type == 1) {
                             logAppender.reset(new FileLogAppender(app.file));
                         } else if (app.type == 2) {
                             logAppender.reset(new StdoutLogAppender);
+                        }
+                        if(logger->get_formotter()->get_pattern()!=app.formatter){
+                            logAppender->setFormotter(std::make_shared<hh::LogFormotter>(app.formatter));
                         }
                         logAppender->set_level(app.Level);
                         logger->addAppender(logAppender);

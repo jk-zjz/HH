@@ -455,7 +455,6 @@ namespace hh {
         Logger::ptr GetRoot()const{return m_root;}
         std::map<std::string,Logger::ptr> getLoggers()const {return m_logger;}
         void setlogger(std::string key,Logger::ptr loggers){
-            std::cout<<"jkjk-"<<std::endl;
             m_logger[key]=loggers;
         }
     private:
