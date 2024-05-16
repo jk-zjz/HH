@@ -22,9 +22,9 @@ namespace hh {
             XX(FATAL);
 #undef  XX
             default:
-                return "UNKNOW";
+                return "UNKNOWN";
         }
-        return "UNKNOW";
+        return "UNKNOWN";
     }
 
     LogLevel::Level LogLevel::FromString(const std::string &str) {
@@ -38,21 +38,21 @@ namespace hh {
         XX(ERROR);
         XX(FATAL);
 #undef XX
-        return LogLevel::UNKNOW;
+        return LogLevel::UNKNOWN;
     }
 /*Logger(日志器)  实现*/
 //Logger 构造
     Logger::Logger(const std::string &name) :
             m_name(name),
-            m_level(LogLevel::UNKNOW) {
+            m_level(LogLevel::UNKNOWN) {
         //默认的日志格式器
-        m_formotter.reset(new LogFormotter("%d <%t-%F> [%p:%m] <%f:%l> %b"));
+        m_Formatter.reset(new LogFormatter("%d <%t-%F> [%p:%m] <%f:%l> %b"));
     }
 
 //添加输出地
     void Logger::addAppender(LogAppender::ptr appender) {
-        if (!appender->getFormotter()) {
-            appender->setFormotter(m_formotter);
+        if (!appender->getFormatter()) {
+            appender->setFormatter(m_Formatter,true);
         }
         appender->set_level(m_level);
         m_appenders.push_back(appender);
@@ -112,12 +112,21 @@ namespace hh {
 
     void Logger::setFormatter(const std::string &formatter) {
         //防止格式器为错误的
-        hh::LogFormotter::ptr new_Val(new hh::LogFormotter(formatter));
+        hh::LogFormatter::ptr new_Val(new hh::LogFormatter(formatter));
         if (new_Val->is_Error()) {
             std::cout << "Formatter error " << formatter << " init error" << std::endl;
             return;
         }
-        m_formotter = new_Val;
+        m_Formatter = new_Val;
+    }
+
+    void Logger::setFormatter(LogFormatter::ptr ptr1) {
+        m_Formatter = std::move(ptr1);
+        for (auto &i: m_appenders) {
+            if (i->is_fatherFormat()) {
+                i->setFormatter(m_Formatter);
+            }
+        }
     }
 
 /*    FileLogAppender(日志输出地) 实现 */
@@ -137,7 +146,7 @@ namespace hh {
     void FileLogAppender::log(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) {
         reopen();
         if (level >= m_level) {
-            m_ofstream << m_formotter->format(logger, level, event) << "\n";
+            m_ofstream << m_Formatter->format(logger, level, event) << "\n";
         }
         m_ofstream.close();
     }
@@ -145,17 +154,17 @@ namespace hh {
 //控制台输出地
     void StdoutLogAppender::log(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) {
         if (level >= m_level) {
-            std::cout << m_formotter->format(logger, level, event);
+            std::cout << m_Formatter->format(logger, level, event);
         }
     }
 
-/*LogFormotter(格式器) 实现*/
-    LogFormotter::LogFormotter(const std::string &pattern)
+/*LogFormatter(格式器) 实现*/
+    LogFormatter::LogFormatter(const std::string &pattern)
             : m_pattern(pattern) {
         init();
     }
 
-    std::string LogFormotter::format(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) {
+    std::string LogFormatter::format(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) {
         std::stringstream ss;
         for (auto &i: m_items) {
             i->format(logger, ss, level, event);
@@ -167,7 +176,7 @@ namespace hh {
 // 格式化输入->方法
 // %s   %d{yyyy}
 //m_pattern   %C %d{YYYY-MM-dd hh:mm:ss} [%m] %n
-    void LogFormotter::init() {
+    void LogFormatter::init() {
         std::vector<std::tuple<std::string, std::string, int>> vec;
         std::string nstr;
         bool type = false;
@@ -239,11 +248,11 @@ namespace hh {
  * C 自定义内容
  * */
 //是一个lambda表达式通过传入的string 返回一个格式器类每一种格式对应一个输出方式
-        static std::map<std::string, std::function<LogFormotter::FormatItem::ptr(
+        static std::map<std::string, std::function<LogFormatter::FormatItem::ptr(
                 const std::string &str)> > s_format_times =
                 {
 #define XX(str, C)  \
-        {#str,[](const std::string& fmt){return LogFormotter::FormatItem::ptr(new C(fmt));}}
+        {#str,[](const std::string& fmt){return LogFormatter::FormatItem::ptr(new C(fmt));}}
                         XX(m, NameFormatItem),
                         XX(p, LevelFormatItem),
                         XX(r, ElapseFormatItem),
@@ -260,12 +269,12 @@ namespace hh {
         for (auto &i: vec) {
             if (std::get<2>(i) == 0) {
                 //字符串
-                m_items.push_back(LogFormotter::FormatItem::ptr(new StringFormatItem(std::get<0>(i))));
+                m_items.push_back(LogFormatter::FormatItem::ptr(new StringFormatItem(std::get<0>(i))));
             } else {
                 auto it = s_format_times.find(std::get<0>(i));
                 if (it == s_format_times.end()) {
                     //error
-                    m_items.push_back(LogFormotter::FormatItem::ptr(
+                    m_items.push_back(LogFormatter::FormatItem::ptr(
                             new StringFormatItem("<<error_format %" + std::get<0>(i) + ">>")));
                     m_Error = true;
                 } else {
@@ -327,7 +336,7 @@ namespace hh {
         int type = 0;//1为file 2为stdout
         std::string file;
         std::string formatter;
-        LogLevel::Level Level = hh::LogLevel::UNKNOW;
+        LogLevel::Level Level = hh::LogLevel::UNKNOWN;
 
         bool operator==(const LogAppenderDefine &out) const {
             return type == out.type &&
@@ -340,7 +349,7 @@ namespace hh {
     class LogDefine {
     public:
         std::string name;
-        LogLevel::Level Level = hh::LogLevel::UNKNOW;
+        LogLevel::Level Level = hh::LogLevel::UNKNOWN;
         std::string formatter;
         std::vector<LogAppenderDefine> append;
 
@@ -370,42 +379,45 @@ namespace hh {
             return ss.str();
         }
     };
+
     //特化普通LogDefine
     template<>
-    class LexicalCast<std::string,LogDefine> {
+    class LexicalCast<std::string, LogDefine> {
     public:
         LogDefine operator()(const std::string &var) {
             YAML::Node node = YAML::LoadFile(var);
             LogDefine ld;
-            if(!node["name"].IsDefined()){
-                std::cout<<"log config error: name is null, " << std::endl;
+            if (!node["name"].IsDefined()) {
+                std::cout << "log config error: name is null, " << std::endl;
                 return ld;
             }
             ld.name = node["name"].as<std::string>();
-            ld.Level=hh::LogLevel::FromString(node["level"].IsDefined()?node["level"].as<std::string>():"UNKNOW");
-            ld.formatter=node["formatter"].IsDefined()?node["formatter"].as<std::string>():"";
-            if(node["appender"].IsDefined()){
-                for(auto i:node["appender"]){
+            ld.Level = hh::LogLevel::FromString(
+                    node["level"].IsDefined() ? node["level"].as<std::string>() : "UNKNOWN");
+            ld.formatter = node["formatter"].IsDefined() ? node["formatter"].as<std::string>() : "";
+            if (node["appender"].IsDefined()) {
+                for (auto i: node["appender"]) {
                     LogAppenderDefine la;
-                    if(!i["type"].IsDefined()){
-                        std::cout<<"log config error: appender type is null, " << std::endl;
+                    if (!i["type"].IsDefined()) {
+                        std::cout << "log config error: appender type is null, " << std::endl;
                         continue;
                     }
                     std::string type(i["type"].as<std::string>());
-                    if(type=="FileLogAppender"){
-                        la.type=1;
-                        la.file=i["file"].as<std::string>();
-                    }else if(type=="StdoutLogAppender"){
+                    if (type == "FileLogAppender") {
+                        la.type = 1;
+                        la.file = i["file"].as<std::string>();
+                    } else if (type == "StdoutLogAppender") {
                         la.type = 2;
                     }
-                    la.formatter=ld.formatter;
-                    la.Level=ld.Level;
+                    la.formatter = ld.formatter;
+                    la.Level = ld.Level;
                     ld.append.push_back(la);
                 }
             }
             return ld;
         }
     };
+
     template<>
     class LexicalCast<LogDefine, std::string> {
     public:
@@ -413,8 +425,8 @@ namespace hh {
             YAML::Node node;
             std::stringstream ss;
             node["name"] = var.name;
-            node["level"]=hh::LogLevel::ToString(var.Level);
-            node["formatter"]=var.formatter;
+            node["level"] = hh::LogLevel::ToString(var.Level);
+            node["formatter"] = var.formatter;
             for (auto &i: var.append) {
                 YAML::Node n;
                 n["type"] = i.type == 1 ? "FileLogAppender" : "StdoutLogAppender";
@@ -427,7 +439,7 @@ namespace hh {
                 }
                 node["append"].push_back(n);
             }
-            ss<<node;
+            ss << node;
             return ss.str();
         }
     };
@@ -448,7 +460,7 @@ namespace hh {
                 ld.name = i["name"].as<std::string>();
                 ld.Level = i["level"].IsDefined() ?
                            hh::LogLevel::FromString(i["level"].as<std::string>()) :
-                           hh::LogLevel::UNKNOW;
+                           hh::LogLevel::UNKNOWN;
                 if (i["formatter"].IsDefined())
                     ld.formatter = i["formatter"].as<std::string>();
                 if (i["appender"].IsDefined()) {
@@ -471,8 +483,9 @@ namespace hh {
                             std::cout << "log config error: appender type is invalid, " << it << std::endl;
                             continue;
                         }
-                        lad.Level =it["level"].IsDefined()?hh::LogLevel::FromString(it["level"].as<std::string>()):ld.Level;
-                        lad.formatter = it["formatter"].IsDefined()?it["formatter"].as<std::string>():ld.formatter;
+                        lad.Level = it["level"].IsDefined() ? hh::LogLevel::FromString(it["level"].as<std::string>())
+                                                            : ld.Level;
+                        lad.formatter = it["formatter"].IsDefined() ? it["formatter"].as<std::string>() : ld.formatter;
                         ld.append.push_back(lad);
                     }
                 }
@@ -518,6 +531,7 @@ namespace hh {
 
     hh::ConfigVar<std::set<LogDefine>>::ptr var =
             hh::Config::Lookup("logs", std::set<LogDefine>(), "log define set");
+
     class LogIniter {
     public:
         LogIniter() {
@@ -537,10 +551,10 @@ namespace hh {
                     hh::Logger::ptr logger;
                     std::string name(i.name);
                     auto it = old_valuse.find(i);
-                    if (it == old_valuse.end() ||!(*it == i)) {
+                    if (it == old_valuse.end() || !(*it == i)) {
                         //老的里面没有新的   新增
-                        logger= HH_LOG_NAME(name);
-                    }else{
+                        logger = HH_LOG_NAME(name);
+                    } else {
                         continue;
                     }
                     logger->setLevel(i.Level);
@@ -555,13 +569,13 @@ namespace hh {
                         } else if (app.type == 2) {
                             logAppender.reset(new StdoutLogAppender);
                         }
-                        if(logger->get_formotter()->get_pattern()!=app.formatter){
-                            logAppender->setFormotter(std::make_shared<hh::LogFormotter>(app.formatter));
+                        if (logger->get_Formatter()->get_pattern() != app.formatter) {
+                            logAppender->setFormatter(std::make_shared<hh::LogFormatter>(app.formatter),false);
                         }
                         logAppender->set_level(app.Level);
                         logger->addAppender(logAppender);
                     }
-                    HH_LOG_SET(i.name,logger);
+                    //HH_LOG_SET(i.name,logger);
                 }
                 for (auto &i: old_valuse) {
                     auto it = new_valuse.find(i);
@@ -571,7 +585,7 @@ namespace hh {
                         hh::Logger::ptr logger = HH_LOG_NAME(name);
                         logger->setLevel((hh::LogLevel::Level) 100);
                         logger->clearAppender();
-                        HH_LOG_SET(name,logger);
+                        //HH_LOG_SET(name,logger);
                     }
                 }
             });
@@ -582,7 +596,7 @@ namespace hh {
 
     void LoggerManager::init() {
 
-       }
+    }
 
     Logger::ptr LoggerManager::getLogger(std::string &name) {
         /*
@@ -598,5 +612,14 @@ namespace hh {
         logger->m_root = m_root;
         m_logger[name] = logger;
         return logger;
+    }
+
+    void LogAppender::setFormatter(LogFormatter::ptr val) {
+        m_Formatter = std::move(val);
+    }
+
+    void LogAppender::setFormatter(LogFormatter::ptr val, bool type) {
+        m_Formatter = std::move(val);
+        m_fatherFormat = type;
     }
 };

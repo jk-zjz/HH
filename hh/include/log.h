@@ -54,6 +54,7 @@
 //通过name获取格式器
 #define HH_LOG_NAME(name) hh::LoggerMgr::GetInstance()->getLogger(name)
 
+//可设置宏
 #define HH_LOG_SET(name,logger) hh::LoggerMgr::GetInstance()->setlogger(name,logger)
 //声明命名空间，以免名称重复，可 :: 访问
 namespace hh {
@@ -63,7 +64,7 @@ namespace hh {
     public:
         //日志枚举
         enum Level {
-            UNKNOW = 0,//异常
+            UNKNOWN = 0,//异常
             INFO = 1, //一般信息
             DEBUG = 2,//调试信息
             WARN = 3, //不会影响查询正常运行信息，警告
@@ -145,12 +146,12 @@ namespace hh {
      * 日志格式器
      * 最终输出类
      * */
-    class LogFormotter{
+    class LogFormatter{
     public:
-        typedef std::shared_ptr<LogFormotter> ptr;
+        typedef std::shared_ptr<LogFormatter> ptr;
 
         //通过输入的pattern 格式化m_items
-        LogFormotter(const std::string &pattern);
+        LogFormatter(const std::string &pattern);
 
         //格式化 event 返回
         std::string format(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event);
@@ -187,17 +188,19 @@ namespace hh {
         LogLevel::Level get_level()const {return m_level;}
         //多个输出地，需要虚析构，子类可释放
         virtual ~LogAppender() {};
-//        virtual std::string toYamlString() = 0;
         virtual void log(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) = 0;
 
         //设置日志选器
-        void setFormotter(LogFormotter::ptr val) { m_formotter = std::move(val); }
+        void setFormatter(LogFormatter::ptr val);
+        void setFormatter(LogFormatter::ptr val,bool type);
 
-        LogFormotter::ptr getFormotter() { return m_formotter; }
-
+        LogFormatter::ptr getFormatter() { return m_Formatter; }
+        bool is_fatherFormat()const {return m_fatherFormat;}
+        void set_fatherFormat(bool val){m_fatherFormat = val;}
     protected:
-        LogFormotter::ptr m_formotter;    //日志格式器选择
-        LogLevel::Level m_level = LogLevel::UNKNOW;        //日志级别
+        LogFormatter::ptr m_Formatter;    //日志格式器选择
+        LogLevel::Level m_level = LogLevel::UNKNOWN;        //日志级别
+        bool m_fatherFormat = false;
     };
 
     //日志器--std::enable_shared_from_this<Logger>用于传递自己
@@ -235,11 +238,9 @@ namespace hh {
 
         const std::string &getName() const { return m_name; }
 
-        LogFormotter::ptr get_formotter() const { return m_formotter; }
+        LogFormatter::ptr get_Formatter() const { return m_Formatter; }
 
-        void setFormatter(LogFormotter::ptr ptr1) {
-            m_formotter=std::move(ptr1);
-        }
+        void setFormatter(LogFormatter::ptr ptr1);
         void setFormatter(const std::string& formatter);
 
 
@@ -247,7 +248,7 @@ namespace hh {
         std::string m_name;                         //谁初始化日志
         LogLevel::Level m_level;                    //日志级别
         std::list<LogAppender::ptr> m_appenders;    //日志输出地集合
-        LogFormotter::ptr m_formotter;              //日志格式器
+        LogFormatter::ptr m_Formatter;              //日志格式器
         Logger::ptr m_root;                         //存放getlogger默认格式器地
     };
 
@@ -275,7 +276,7 @@ namespace hh {
     };
 
     //实例化内容
-    class MassageFormatItem : public LogFormotter::FormatItem {
+    class MassageFormatItem : public LogFormatter::FormatItem {
     public:
         MassageFormatItem(const std::string basicString="") {
 
@@ -287,7 +288,7 @@ namespace hh {
     };
 
     //实例化级别 p
-    class LevelFormatItem : public LogFormotter::FormatItem {
+    class LevelFormatItem : public LogFormatter::FormatItem {
     public:
         LevelFormatItem(const std::string basicString = "") {
 
@@ -300,7 +301,7 @@ namespace hh {
     };
 
     //  /n
-    class EndlFormatItem : public LogFormotter::FormatItem {
+    class EndlFormatItem : public LogFormatter::FormatItem {
     public:
         EndlFormatItem(const std::string basicString = "") {
 
@@ -313,7 +314,7 @@ namespace hh {
     };
 
     //启动时间 r
-    class ElapseFormatItem : public LogFormotter::FormatItem {
+    class ElapseFormatItem : public LogFormatter::FormatItem {
     public:
         ElapseFormatItem(const std::string basicString = "") {
 
@@ -326,7 +327,7 @@ namespace hh {
     };
 
     //日志器名称 c
-    class NameFormatItem : public LogFormotter::FormatItem {
+    class NameFormatItem : public LogFormatter::FormatItem {
     public:
         NameFormatItem(const std::string basicString = "") {
         }
@@ -342,7 +343,7 @@ namespace hh {
     };
 
     //进程号t
-    class ThreadFormatItem : public LogFormotter::FormatItem {
+    class ThreadFormatItem : public LogFormatter::FormatItem {
     public:
         ThreadFormatItem(const std::string basicString = "") {
 
@@ -355,7 +356,7 @@ namespace hh {
     };
 
     //协程号 F
-    class FiberFormatItem : public LogFormotter::FormatItem {
+    class FiberFormatItem : public LogFormatter::FormatItem {
     public:
         FiberFormatItem(const std::string basicString = "") {
 
@@ -368,7 +369,7 @@ namespace hh {
     };
 
     //时间d
-    class DateTimeFormatItem : public LogFormotter::FormatItem {
+    class DateTimeFormatItem : public LogFormatter::FormatItem {
     public:
         DateTimeFormatItem(const std::string &format) :
                 datatime(format) {
@@ -392,7 +393,7 @@ namespace hh {
     };
 
     //文件名f
-    class FileNameFormatItem : public LogFormotter::FormatItem {
+    class FileNameFormatItem : public LogFormatter::FormatItem {
     public:
         FileNameFormatItem(const std::string basicString = "") {
 
@@ -405,7 +406,7 @@ namespace hh {
     };
 
     //行号l
-    class LineFormatItem : public LogFormotter::FormatItem {
+    class LineFormatItem : public LogFormatter::FormatItem {
     public:
         LineFormatItem(const std::string basicString = "") {
 
@@ -418,7 +419,7 @@ namespace hh {
     };
 
     //空格b
-    class SpaceFormatItem : public LogFormotter::FormatItem {
+    class SpaceFormatItem : public LogFormatter::FormatItem {
     public:
         SpaceFormatItem(const std::string basicString = "") {
 
@@ -431,7 +432,7 @@ namespace hh {
     };
 
     //--》C
-    class StringFormatItem : public LogFormotter::FormatItem {
+    class StringFormatItem : public LogFormatter::FormatItem {
     public:
         StringFormatItem(const std::string &str) :
                 m_string(str) {

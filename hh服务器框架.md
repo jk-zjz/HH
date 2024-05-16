@@ -348,7 +348,7 @@ HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
 //使用配置文件中的  name为root的配置
 特化了set<log> && 单log
 ```
-
+问题 解决 使用logger setformatter的时候不会更改apender自定义的formatter
 ## 日志系统整合配置系统
 
 ## 协程库封装

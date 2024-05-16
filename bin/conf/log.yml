@@ -5,6 +5,7 @@ logs:
     appender:
       - type: FileLogAppender
         file: ./log.txt
+        level: UNKNOWN
         formatter: "%d<%f:%l>root[%m:%p]"
       - type: StdoutLogAppender
   - name: hh

@@ -4,9 +4,9 @@
 int main() {
 //
     hh::Logger::ptr logger(new hh::Logger);
-    logger->setLevel(hh::LogLevel::UNKNOW);
+    logger->setLevel(hh::LogLevel::UNKNOWN);
     logger->setFormatter(
-            std::shared_ptr<hh::LogFormotter>(new hh::LogFormotter("%d{%Y-%m-%d} %b %c %b %t %b jkjk")));
+            std::shared_ptr<hh::LogFormatter>(new hh::LogFormatter("%d{%Y-%m-%d} %b %c %b %t %b jkjk")));
    // logger->addAppender(hh::LogAppender::ptr(new hh::FileLogAppender("bbll.txt")));
     logger->addAppender(hh::LogAppender::ptr(new hh::StdoutLogAppender()));
 
@@ -21,7 +21,7 @@ int main() {
     auto i=hh::LoggerMgr::GetInstance()->getLogger(k);
 
 
-    HH_LOG_LEVEL_CHAIN(logger,hh::LogLevel::UNKNOW)<<"  asdas"<<"sadasd 00890978";
+    HH_LOG_LEVEL_CHAIN(logger,hh::LogLevel::UNKNOWN)<<"  asdas"<<"sadasd 00890978";
 
     std::cout<<hh::LogLevel::ToString(hh::LogLevel::DEBUG);
     return 0;

@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.29)
-
+include(cmake/utils.cmake)
 project(HH)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # 读取环境变量中的CXXFLAGS，并设置其他的编译器选项
-set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -g -Wall -Wno-deprecated -Werror -Wno-unused-function")
+set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined")
 
 # 设置生成的可执行文件的输出目录
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
@@ -24,6 +24,8 @@ include_directories("./hh/include/"
 # 添加可执行文件HH，并指定源文件
 add_executable(testmain tests/main.cpp ${CPP_G})
 target_link_libraries(testmain yaml-cpp::yaml-cpp)
+redefine_file_macro(testmain)
 
 add_executable(testconfig tests/main2.cc ${CPP_G})
 target_link_libraries(testconfig yaml-cpp::yaml-cpp)
+redefine_file_macro(testconfig)
