@@ -192,12 +192,14 @@ namespace hh {
 
         //设置日志选器
         void setFormatter(LogFormatter::ptr val);
-        void setFormatter(LogFormatter::ptr val,bool type);
-
+        void setFatherFormatter(LogFormatter::ptr val,bool  type);
         LogFormatter::ptr getFormatter() { return m_Formatter; }
+        bool getFatherFormatter()const {return FatherFormatter;}
+        void setFatherFormatter(bool val){FatherFormatter=val;}
     protected:
-        LogFormatter::ptr m_Formatter;    //日志格式器选择
+        LogFormatter::ptr m_Formatter;                      //日志格式器选择
         LogLevel::Level m_level = LogLevel::UNKNOWN;        //日志级别
+        bool FatherFormatter=true;                         //true为默认，false为父亲
     };
 
     //日志器--std::enable_shared_from_this<Logger>用于传递自己

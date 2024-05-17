@@ -4,6 +4,8 @@ logs:
     formatter: "%d"
     appender:
       - type: StdoutLogAppender
+      - type: FileLogAppender
+        file: log.txt
   - name: hh
     level: debug
     formatter: "%d<%f:%l>[%m:%p]"
