@@ -335,7 +335,7 @@ hh::Logger::ptr logger = hh::LoggerMgr::GetInstance()->getLogger(name);
 std::string str("init log");
 HH_LOG_INFO(logger,str);
 ```
-配置系统整合日志系统使用
+## 配置系统整合日志系统使用
 ```c++
 std::string sb("root");
 auto roots=HH_LOG_NAME(sb);
@@ -348,8 +348,40 @@ HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
 //使用配置文件中的  name为root的配置
 特化了set<log> && 单log
 ```
-问题 解决 使用logger setformatter的时候不会更改apender自定义的formatter
-## 日志系统整合配置系统
+通过静态初始化为全局Config类生成对应配置，全局静态配置 
+yaml logs文件的样例
+```yaml
+logs:
+  - name: root
+    level: info
+    formatter: "%d<%f:%l>"
+    appender:
+      - type: FileLogAppender
+        file: ./log.txt
+        level: UNKNOWN
+        formatter: "%d<%f:%l>root[%m:%p]"
+      - type: StdoutLogAppender
+        formatter: "%d<%f:%l>[%m:%p]"
+  - name: hh
+    level: debug
+    formatter: "%d<%f:%l>[%m:%p]"
+    appender:
+      - type: FileLogAppender
+        file: log.txt
+      - type: StdoutLogAppender
+```
+```c++
+//通过配置文件初始化
+YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
+hh::Config::loadFromYaml(root);
+//通过name root获取格式器使用
+auto root=HH_LOG_NAME("root");
+HH_LOG_LEVEL_CHAIN(root,hh::LogLevel::INFO);
+```
+## 线程库
+Thread(线程类) ，Mutex(锁......)
+
+
 
 ## 协程库封装
 
