@@ -122,11 +122,6 @@ namespace hh {
 
     void Logger::setFormatter(LogFormatter::ptr ptr1) {
         m_Formatter = std::move(ptr1);
-        for (auto &i: m_appenders) {
-            if (i->is_fatherFormat()) {
-                i->setFormatter(m_Formatter);
-            }
-        }
     }
 
 /*    FileLogAppender(日志输出地) 实现 */
@@ -620,6 +615,5 @@ namespace hh {
 
     void LogAppender::setFormatter(LogFormatter::ptr val, bool type) {
         m_Formatter = std::move(val);
-        m_fatherFormat = type;
     }
 };
