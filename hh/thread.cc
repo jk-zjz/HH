@@ -36,8 +36,10 @@ namespace hh{
         }
         t_thread_name = name;
     }
-    hh::Thread::Thread(std::function<void()> cb, const std::string &name) {
-        if(m_name.empty()){
+    Thread::Thread(std::function<void()> cb, const std::string &name):
+    m_name(name)
+    ,m_cb(std::move(cb)){
+        if(name.empty()){
             m_name="UNKNOWN";
         }
         int re = pthread_create(&m_thread,
@@ -50,7 +52,7 @@ namespace hh{
                         <<re<<" name="<<name;
             throw std::logic_error("pthread_create error");
         }
-        //m_cb = std::move(cb);------------------------------------------------------
+        m_semaphore.wait();
     }
 
     hh::Thread::~Thread() {
@@ -76,15 +78,44 @@ namespace hh{
         Thread *thread = (Thread *) arg;
         //设置全局线程变量
         t_thread= thread;
-        t_thread_name = thread->m_name;
+        t_thread_name=thread->m_name;
         //获取线程id
         thread->m_id=hh::GetThreadID();
         //更改线程名 只能接受15个字符
         pthread_setname_np(pthread_self(), thread->m_name.substr(0,15).c_str());
         std::function<void()>cx;
         cx.swap(thread->m_cb);
+        t_thread->m_semaphore.notify();
         cx();
         return 0;
     }
 
+    Semaphore::Semaphore(uint32_t count) {
+        if(sem_init(&m_semaphore,0,count)){
+            throw std::logic_error("sem_init error");
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::ERROR)
+                    <<"sem_init error";
+        }
+
+    }
+
+    Semaphore::~Semaphore() {
+        sem_destroy(&m_semaphore);
+    }
+
+    void Semaphore::wait() {
+        if(sem_wait(&m_semaphore)){
+            throw std::logic_error("sem_wait error");
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::ERROR)
+                    <<"sem_wait error";
+        }
+    }
+
+    void Semaphore::notify() {
+        if(sem_post(&m_semaphore)){
+            throw std::logic_error("sem_post error");
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::ERROR)
+                    <<"sem_post error";
+        }
+    }
 }

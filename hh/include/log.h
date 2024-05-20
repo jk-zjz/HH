@@ -192,7 +192,7 @@ namespace hh {
 
         //设置日志选器
         void setFormatter(LogFormatter::ptr val);
-        void setFatherFormatter(LogFormatter::ptr val,bool  type);
+        void setFatherFormatter(LogFormatter::ptr val,bool type);
         LogFormatter::ptr getFormatter() { return m_Formatter; }
         bool getFatherFormatter()const {return FatherFormatter;}
         void setFatherFormatter(bool val){FatherFormatter=val;}

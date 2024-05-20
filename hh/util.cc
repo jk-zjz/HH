@@ -2,13 +2,15 @@
 // Created by 35148 on 2024/4/30.
 //
 #include "util.h"
-
+#include <sys/syscall.h>
 
 
 namespace hh {
     pid_t GetThreadID() {
-        return getpid();
-
+        //getpid 返回的是进程id
+        //return getpid();
+        //这个返回的是线程id
+        return syscall(SYS_gettid);
     }
 
     uint32_t GetFiberID() {

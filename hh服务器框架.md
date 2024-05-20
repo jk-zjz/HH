@@ -379,9 +379,13 @@ auto root=HH_LOG_NAME("root");
 HH_LOG_LEVEL_CHAIN(root,hh::LogLevel::INFO);
 ```
 ## 线程库
-Thread(线程类) ，Mutex(锁......)
+Thread(线程类) ，Mutex(锁......)  
+使用的为  
+pthread 封装  
+pthread pthread_create 
 
-
+互斥量 mutex
+信号量 semaphore
 
 ## 协程库封装
 
