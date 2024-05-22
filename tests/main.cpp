@@ -6,7 +6,7 @@ int main() {
     hh::Logger::ptr logger(new hh::Logger);
     logger->setLevel(hh::LogLevel::UNKNOWN);
     logger->setFormatter(
-            std::shared_ptr<hh::LogFormatter>(new hh::LogFormatter("%d{%Y-%m-%d} %b %c %b %t %b jkjk")));
+            std::shared_ptr<hh::LogFormatter>(new hh::LogFormatter("%d{%Y-%m-%d} jk")));
    // logger->addAppender(hh::LogAppender::ptr(new hh::FileLogAppender("bbll.txt")));
     logger->addAppender(hh::LogAppender::ptr(new hh::StdoutLogAppender()));
 
@@ -17,7 +17,7 @@ int main() {
                                                 hh::GetFiberID(), time(0)));
     HH_LOG_FAT_INFO(logger, "sbsbahbdah  %s %d", "OK", 123);
     logger->Log(hh::LogLevel::DEBUG,logEvent);
-    std::string k("asdasd");
+    const char *k("asdasd");
     auto i=hh::LoggerMgr::GetInstance()->getLogger(k);
 
 

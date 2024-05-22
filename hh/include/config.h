@@ -7,7 +7,6 @@
 #include <memory>
 #include <sstream>
 #include <boost/lexical_cast.hpp>
-#include "log.h"
 #include "util.h"
 #include <yaml-cpp/yaml.h>
 #include <list>
@@ -17,6 +16,8 @@
 #include <map>
 #include <unordered_map>
 #include <functional>
+#include "thread.h"
+#include "log.h"
 namespace hh {
     class Config;
     //配置文件基类
@@ -227,6 +228,7 @@ namespace hh {
     class ConfigVar:public ConfigVarBase{
     public:
         typedef std::shared_ptr<ConfigVar> ptr;
+        typedef RWMutex RWMutexType;
         typedef std::function<void (const T& old_value,const T& new_value)> on_change_cb;
         ConfigVar(const std::string& name
                   ,const T& define_t
@@ -235,6 +237,7 @@ namespace hh {
         }
         std::string toString() override{
             try {
+                RWMutexType::ReadLock lock(m_mutex);
                 return ToStr()(m_val);
                 //return boost::lexical_cast<std::string>(m_val);
             }catch (std::exception &e){
@@ -253,31 +256,44 @@ namespace hh {
             }
             return false;
         };
-        const T getValue()const{return m_val;}
+        const T getValue(){
+            RWMutexType::ReadLock lock(m_mutex);
+            return m_val;
+        }
         void setValue(const T &t){
-            //判断是否改变值，可让回调函数触发
-            if(t==m_val){
-                return;
+            {
+                RWMutexType::ReadLock lock(m_mutex);
+                //判断是否改变值，可让回调函数触发
+                if(t==m_val){
+                    return;
+                }
+                for(auto &i:m_ocb){
+                    i.second(m_val,t);
+                }
             }
-            for(auto &i:m_ocb){
-                i.second(m_val,t);
-            }
+            RWMutexType::WriteLock lock(m_mutex);
             m_val=t;
         }
         std::string gettype() override{return typeid(T).name();};
 
         //回调函数 新增，删除，清空与查找
         on_change_cb getOcb(uint64_t key){
+            RWMutexType::ReadLock lock(m_mutex);
             auto it = m_ocb.find(key);
             return it==m_ocb.end()? nullptr : it->second;
         }
-        void addOcb(uint64_t key,on_change_cb ocb){
-            if(m_ocb.count(key)){
-                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<"key exist Callback has been changed";
+        uint64_t addOcb(on_change_cb ocb){
+            static uint64_t s_key=0;
+            RWMutexType::WriteLock lock(m_mutex);
+            s_key++;
+            if(!m_ocb.count(s_key)){
+                s_key++;
             }
-            m_ocb[key]=ocb;
+            m_ocb[s_key]=ocb;
+            return s_key;
         }
         void deleteOcb(uint64_t key){
+            RWMutexType::WriteLock lock(m_mutex);
             if(!m_ocb.count(key)){
                 HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<"delete not exist key";
                 return;
@@ -285,44 +301,52 @@ namespace hh {
             m_ocb.erase(key);
         }
         void eraseOcb(){
+            RWMutexType::WriteLock lock(m_mutex);
             m_ocb.erase();
         }
         std::map<uint64_t,on_change_cb> getOcb()const {return m_ocb;}
     private:
         T m_val;
         std::map<uint64_t,on_change_cb> m_ocb;
+        RWMutexType m_mutex;
     };
 
     class Config{
     public:
         typedef std::map<std::string,ConfigVarBase::ptr> ConfigVarMap;
+        typedef RWMutex RWMutexType;
         template<class T>
         static typename ConfigVar<T>::ptr Lookup(
                 const std::string& name
                 ,const T& define_t
                 ,const std::string & description = ""){
-            //判断name合不合法
             std::string m_name(name);
-            std::transform(m_name.begin(),m_name.end(),m_name.begin(),::tolower);
-            auto it = getData().find(m_name);
-            if(it != getData().end()){
-                auto tmp = std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
-                if(!tmp){
-                    //转换失败
-                    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"Lookup Name = "
-                        <<name<<" exists type no "
-                        << it->second->gettype()<<" "
-                        << it->second->toString();
+            {
+                RWMutexType::ReadLock lock(getRWMutex());
+                //判断name合不合法
+                std::transform(m_name.begin(), m_name.end(), m_name.begin(), ::tolower);
+                auto it = getData().find(m_name);
+                if (it != getData().end()) {
+                    auto tmp = std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
+                    if (!tmp) {
+                        //转换失败
+                        HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(), hh::LogLevel::ERROR) << "Lookup Name = "
+                                                                               << name << " exists type no "
+                                                                               << it->second->gettype() << " "
+                                                                               << it->second->toString();
+                        return tmp;
+                    }
+                    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(), hh::LogLevel::INFO) << "Lookup Name = " << name << " exists";
                     return tmp;
                 }
-                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<"Lookup Name = "<<name<<" exists";
-                return tmp;
+                if (m_name.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp[]._0987654321")
+                    != std::string::npos) {
+                    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(), hh::LogLevel::ERROR) << "Lookup Name Invalid " << name
+                                                                           << " exists";
+                    throw std::invalid_argument(m_name);
+                }
             }
-            if(m_name.find_first_not_of("qazxswedcvfrtgbnhyujmkiolp[]._0987654321")
-                !=std::string::npos){
-                HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"Lookup Name Invalid "<<name<<" exists";
-                throw std::invalid_argument(m_name);
-            }
+            RWMutexType::WriteLock lock(getRWMutex());
             //返回新创建号的
             typename ConfigVar<T>::ptr v(new ConfigVar<T>(m_name,define_t,description));
             getData()[m_name] = v;
@@ -331,6 +355,7 @@ namespace hh {
 
         template<class T>
         static typename ConfigVar<T>::ptr Lookup(const std::string &name){
+            RWMutexType::ReadLock lock(getRWMutex());
             auto it = getData().find(name);
             if(it==getData().end()){
                 return nullptr;
@@ -339,10 +364,15 @@ namespace hh {
         }
         static void loadFromYaml(const YAML::Node& root);
         static ConfigVarBase::ptr LookupBase(const std::string& name);
+        static void visit(std::function<void(ConfigVarBase::ptr)> cb);
     private:
         static ConfigVarMap & getData(){
             static ConfigVarMap s_data;
             return s_data;
+        }
+        static  RWMutexType& getRWMutex(){
+            static RWMutexType s_mutex;
+            return s_mutex;
         }
     };
 

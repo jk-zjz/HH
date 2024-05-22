@@ -9,10 +9,10 @@
 #include <pthread.h>
 #include <string>
 #include <memory>
-#include "log.h"
 #include "util.h"
 #include <semaphore.h>
-
+#include <iostream>
+#include <atomic>
 namespace hh {
     class Semaphore {
     public:
@@ -127,6 +127,25 @@ namespace hh {
         T & m_mutex;
         bool m_locked;
     };
+    class SpinLock {
+    public:
+        typedef ScopedLockImpl<SpinLock> Lock;
+        SpinLock(){
+            pthread_spin_init(&m_spinlock, PTHREAD_PROCESS_PRIVATE);
+        }
+        ~SpinLock(){
+            pthread_spin_destroy(&m_spinlock);
+        }
+        void lock(){
+            pthread_spin_lock(&m_spinlock);
+        }
+        void unlock(){
+            pthread_spin_unlock(&m_spinlock);
+        }
+    private:
+        //自旋锁
+        pthread_spinlock_t m_spinlock;
+    };
     class RWMutex {
     public:
         typedef ReadScopedLockImpl<RWMutex> ReadLock;
@@ -164,8 +183,68 @@ namespace hh {
         void unlock(){
             pthread_mutex_unlock(&m_mutex);
         }
+
     private:
         pthread_mutex_t m_mutex;
+    };
+    class NullMutex{
+    public:
+        typedef ScopedLockImpl<NullMutex> Lock;
+        NullMutex(){};
+        ~NullMutex(){};
+        void lock(){};
+        void unlock(){};
+    };
+    class NullRWMutex {
+    public:
+        typedef ReadScopedLockImpl<NullMutex> ReadLock;
+        typedef WriteScopedLockImpl<NullMutex> WriteLock;
+        NullRWMutex(){};
+        ~NullRWMutex(){};
+        void readLock(){};
+        void writeLock(){};
+        void unLock(){};
+    };
+    /**
+     * 类CASlock实现了一个基于原子操作的自旋锁。
+     * 乐观锁
+     */
+    class CASlock{
+    public:
+        CASlock(CASlock& slock) {
+
+        }
+
+        typedef ScopedLockImpl<CASlock> Lock;
+        /**
+         * CASlock构造函数，初始化自旋锁。
+         */
+        CASlock(){
+            m_flag.clear(); // 初始化原子标志为未锁定状态
+        }
+
+        /**
+         * CASlock析构函数，无操作。
+         */
+        ~CASlock(){
+        }
+
+        /**
+         * 尝试获取锁。
+         * 该方法使用CAS（Compare-and-Swap）操作实现锁的获取，如果锁已被其他线程持有，则会自旋等待。
+         */
+        void lock(){
+            while(std::atomic_flag_test_and_set_explicit(&m_flag, std::memory_order_acquire));
+        }
+
+        /**
+         * 释放锁。
+         */
+        void unlock(){
+            std::atomic_flag_clear_explicit(&m_flag, std::memory_order_release);
+        }
+    private:
+        volatile std::atomic_flag m_flag; // 原子标志，用于实现自旋锁
     };
     class Thread {
     public:

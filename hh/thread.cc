@@ -1,15 +1,14 @@
 //
 // Created by 35148 on 2024/5/17.
 //
-#include "thread.h"
-
+#include "log.h"
 #include <utility>
 namespace hh{
     /*
      * 系统库统一日志system
      * */
     static std::string system_name = "system";
-    static  hh::Logger::ptr g_logger = HH_LOG_NAME(system_name);
+    static  hh::Logger::ptr g_logger = HH_LOG_NAME(system_name.c_str());
     /**
      * 在线程局部存储中定义一个Thread类型的指针和一个字符串，
      * 用于标识当前线程和未指定的线程名称。

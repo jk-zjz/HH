@@ -387,6 +387,42 @@ pthread pthread_create
 互斥量 mutex
 信号量 semaphore
 
+更改log日志配置线程安全  
+    
+    appender 线程安全  
+    logger 线程安全
+封装锁  
+Mutex 互斥量  
+RWMutex 读写互斥量  
+SpinLock 自旋锁  
+NullMutex 空互斥锁  
+NullRWMutex 空读写互斥量  
+CASlock 乐观锁
+解决 log写文件文件删除问题 周期性(1秒)的打开日志文件
+
+整合log与config文件完毕 提供静态方法序列化内存中的所以配置
+```c++
+hh:Config::Visit([](hh::ConfigVarBase::ptr var){
+    std::cout<<var->toString()<<std::endl;
+}
+```
+序列化删除格式以便于反序列回文件
+```yaml
+logs:
+  - name: hh
+    level: UNKNOWN
+    appender:
+      - type: FileLogAppender
+        file: log.txt
+      - type: StdoutLogAppender
+  - name: root
+    level: UNKNOWN
+    appender:
+      - type: StdoutLogAppender
+      - type: FileLogAppender
+        file: log.txt
+```
+解决序列化与文件不匹配问题
 ## 协程库封装
 
 ## socket函数库开发

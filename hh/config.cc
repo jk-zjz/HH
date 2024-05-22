@@ -58,11 +58,21 @@ namespace hh {
     }
 
     ConfigVarBase::ptr Config::LookupBase(const std::string &name) {
+        RWMutexType::ReadLock lock(getRWMutex());
         auto it = getData().find(name);
         if (it == getData().end()) {
             return nullptr;
         } else {
             return it->second;
+        }
+    }
+
+    void Config::visit(std::function<void(ConfigVarBase::ptr)> cb) {
+        RWMutexType::ReadLock lock(getRWMutex());
+        ConfigVarMap& m =getData();
+        for(auto i=m.begin();
+            i!=m.end();i++){
+            cb(i->second);
         }
     }
 }

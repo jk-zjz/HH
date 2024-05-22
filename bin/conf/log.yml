@@ -7,8 +7,6 @@ logs:
         file: ./log.txt
         level: UNKNOWN
         formatter: "%d<%f:%l>root[%m:%p]"
-      - type: StdoutLogAppender
-        formatter: "%d<%f:%l>[%m:%p]"
   - name: hh
     level: debug
     formatter: "%d<%f:%l>[%m:%p]"

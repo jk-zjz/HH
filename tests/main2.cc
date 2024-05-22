@@ -156,7 +156,7 @@ void user_T(){
     hh::ConfigVar<user>::ptr user_ =hh::Config::Lookup("class.user",user(),"");
     hh::ConfigVar<std::map<std::string,user>>::ptr user_map =hh::Config::Lookup<std::map<std::string,user>>("class.map",{},"");
     hh::ConfigVar<std::vector<user>>::ptr user_vect =hh::Config::Lookup<std::vector<user>>("class.vector",{},"");
-    user_->addOcb(10,[](const user&od_user,const user& new_user){
+    user_->addOcb([](const user&od_user,const user& new_user){
         std::cout<<new_user.ToString()<<"---"<<od_user.ToString()<<"\n";
     });
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<user_->toString();
@@ -178,7 +178,7 @@ void user_T(){
 void logconfigtest(){
     std::cout<<"start"<<std::endl;
     std::string sb("root");
-    auto roots=HH_LOG_NAME(sb);
+    auto roots=HH_LOG_NAME("root");
     HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
     YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
     hh::Config::loadFromYaml(root);
@@ -186,17 +186,22 @@ void logconfigtest(){
     std::cout<<"end"<<std::endl;
     std::cout<<hh::LoggerMgr::GetInstance()->getLoggers().size()<<std::endl;
     std::string sb1("ot");
-    roots=HH_LOG_NAME(sb);
+    roots=HH_LOG_NAME("root");
     std::cout<<roots->getLevel()<<std::endl;
     HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
-    HH_LOG_LEVEL_CHAIN(HH_LOG_NAME(sb1),hh::LogLevel::INFO);
+    HH_LOG_LEVEL_CHAIN(HH_LOG_NAME("ot"),hh::LogLevel::INFO);
     root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
     hh::Config::loadFromYaml(root);
-    roots=HH_LOG_NAME(sb);
+    roots=HH_LOG_NAME("root");
     HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
 
 }
 int main(){
     logconfigtest();
+    //user_T();
+    std::cout<<std::endl;
+    hh::Config::visit([](hh::ConfigVarBase::ptr var){
+        HH_LOG_INFO(HH_LOG_ROOT(),var->toString());
+    });
     return 0;
 }

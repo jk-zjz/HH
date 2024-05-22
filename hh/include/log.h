@@ -19,6 +19,7 @@
 #include <iomanip>
 #include <cstdarg>
 #include "singleton.h"
+#include "thread.h"
 #define HH_LOG_LEVEL(logger,level,Str)   \
         if(logger->getLevel() <= level) \
             hh::LogEventWrap(hh::LogEvent::ptr(new hh::LogEvent(logger,level,__FILE__,__LINE__, \
@@ -105,6 +106,7 @@ namespace hh {
         uint64_t getTime() const { return m_time; }
 
         std::stringstream &getSS() { return m_ss; }
+        void setSS(const std::string &str) { m_ss<<str;}
 
         std::shared_ptr<Logger> getLogger()const {return m_logger;}
         LogLevel::Level getLevel()const {return m_level;}
@@ -181,10 +183,11 @@ namespace hh {
 
     //日志输入地(多个输出地-继承)
     class LogAppender {
+        friend class Logger;
     public:
         typedef std::shared_ptr<LogAppender> ptr;
-
-        void set_level(LogLevel::Level val) { m_level = val; }
+        typedef Mutex MutexType;
+        void set_level(LogLevel::Level val);
         LogLevel::Level get_level()const {return m_level;}
         //多个输出地，需要虚析构，子类可释放
         virtual ~LogAppender() {};
@@ -193,21 +196,21 @@ namespace hh {
         //设置日志选器
         void setFormatter(LogFormatter::ptr val);
         void setFatherFormatter(LogFormatter::ptr val,bool type);
-        LogFormatter::ptr getFormatter() { return m_Formatter; }
+        LogFormatter::ptr getFormatter();
         bool getFatherFormatter()const {return FatherFormatter;}
         void setFatherFormatter(bool val){FatherFormatter=val;}
     protected:
         LogFormatter::ptr m_Formatter;                      //日志格式器选择
         LogLevel::Level m_level = LogLevel::UNKNOWN;        //日志级别
-        bool FatherFormatter=true;                         //true为默认，false为父亲
+        bool FatherFormatter=true;                          //true为默认，false为父亲
+        MutexType m_mutex;                                  //互斥锁
     };
-
     //日志器--std::enable_shared_from_this<Logger>用于传递自己
     class Logger : public std::enable_shared_from_this<Logger> {
     friend class LoggerManager;
     public:
         typedef std::shared_ptr<Logger> ptr;
-
+        typedef Mutex MutexType;
         Logger(const std::string &name = "root");
 
         void Log(LogLevel::Level level, LogEvent::ptr event);
@@ -249,6 +252,7 @@ namespace hh {
         std::list<LogAppender::ptr> m_appenders;    //日志输出地集合
         LogFormatter::ptr m_Formatter;              //日志格式器
         Logger::ptr m_root;                         //存放getlogger默认格式器地
+        MutexType m_mutex;                              //锁
     };
 
     //输出控制台LogAppender
@@ -272,6 +276,7 @@ namespace hh {
     private:
         std::string m_filename;     //写入文件
         std::ofstream m_ofstream;   //stream流
+        uint64_t m_lastTime = 0;    //检测文件是否被删除
     };
 
     //实例化内容
@@ -282,7 +287,7 @@ namespace hh {
         }
         void
         format(std::shared_ptr<Logger> logger, std::ostream &on, LogLevel::Level level, LogEvent::ptr event) override {
-            on << event->getContent();
+            on <<" "<<event->getContent();
         }
     };
 
@@ -451,7 +456,8 @@ namespace hh {
         LoggerManager();
         //通过配置文件初始化日志器管理
         void init();
-        Logger::ptr getLogger(std::string & name);
+        typedef Mutex MutexType;
+        Logger::ptr getLogger(const char *name);
         Logger::ptr GetRoot()const{return m_root;}
         std::map<std::string,Logger::ptr> getLoggers()const {return m_logger;}
         void setlogger(std::string key,Logger::ptr loggers){
@@ -460,6 +466,7 @@ namespace hh {
     private:
         std::map<std::string,Logger::ptr>m_logger;
         Logger::ptr m_root;
+        MutexType m_mutex;
     };
     typedef hh::Singleton<LoggerManager> LoggerMgr;
 };
