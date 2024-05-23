@@ -536,11 +536,11 @@ namespace hh {
                     } else if (a.type == 2) {
                         na["type"] = "StdoutLogAppender";
                     }
-                    node["level"] = LogLevel::ToString(a.Level);
-                    name["appender"].push_back(na);
-                    if (a.formatter.empty()) {
+                    na["level"] = LogLevel::ToString(a.Level);
+                    if (!a.formatter.empty()) {
                         na["formatter"] = a.formatter;
                     }
+                    name["appender"].push_back(na);
                 }
                 node["logs"].push_back(name);
             }

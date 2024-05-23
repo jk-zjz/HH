@@ -5,12 +5,13 @@ logs:
     appender:
       - type: FileLogAppender
         file: ./log.txt
-        level: UNKNOWN
+        level: ERROR
         formatter: "%d<%f:%l>root[%m:%p]"
   - name: hh
-    level: debug
+    level: DEBUG
     formatter: "%d<%f:%l>[%m:%p]"
     appender:
       - type: FileLogAppender
         file: log.txt
+        formatter: "%d<%f:%l>[%m:%p]"
       - type: StdoutLogAppender

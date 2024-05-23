@@ -182,18 +182,18 @@ void logconfigtest(){
     HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
     YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/log.yml");
     hh::Config::loadFromYaml(root);
-    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO);
-    std::cout<<"end"<<std::endl;
-    std::cout<<hh::LoggerMgr::GetInstance()->getLoggers().size()<<std::endl;
-    std::string sb1("ot");
-    roots=HH_LOG_NAME("root");
-    std::cout<<roots->getLevel()<<std::endl;
-    HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
-    HH_LOG_LEVEL_CHAIN(HH_LOG_NAME("ot"),hh::LogLevel::INFO);
-    root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
-    hh::Config::loadFromYaml(root);
-    roots=HH_LOG_NAME("root");
-    HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
+//    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO);
+//    std::cout<<"end"<<std::endl;
+//    std::cout<<hh::LoggerMgr::GetInstance()->getLoggers().size()<<std::endl;
+//    std::string sb1("ot");
+//    roots=HH_LOG_NAME("root");
+//    std::cout<<roots->getLevel()<<std::endl;
+//    HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
+//    HH_LOG_LEVEL_CHAIN(HH_LOG_NAME("ot"),hh::LogLevel::INFO);
+//    root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
+//    hh::Config::loadFromYaml(root);
+//    roots=HH_LOG_NAME("root");
+//    HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
 
 }
 int main(){
