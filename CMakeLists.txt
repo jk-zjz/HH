@@ -24,19 +24,25 @@ include_directories("./hh/include/"
 
 
 # 添加可执行文件HH，并指定源文件
-add_executable(test tests/main.cpp ${CPP_G})
-target_link_libraries(test yaml-cpp::yaml-cpp
+add_executable(log_test tests/log_test.cpp ${CPP_G})
+target_link_libraries(log_test yaml-cpp::yaml-cpp
                     ${PTHREAD})
-redefine_file_macro(test)
+redefine_file_macro(log_test)
 
-add_executable(config tests/main2.cc ${CPP_G})
-target_link_libraries(config
+add_executable(config_test tests/config_test.cc ${CPP_G})
+target_link_libraries(config_test
                     yaml-cpp::yaml-cpp
                     ${PTHREAD})
-redefine_file_macro(config)
+redefine_file_macro(config_test)
 
 
-add_executable(pthread tests/pthread.cc ${CPP_G})
-target_link_libraries(pthread yaml-cpp::yaml-cpp
+add_executable(pthread_test tests/pthread_test.cc ${CPP_G})
+target_link_libraries(pthread_test yaml-cpp::yaml-cpp
                     ${PTHREAD})
-redefine_file_macro(pthread)
+redefine_file_macro(pthread_test)
+
+
+add_executable(utils_test tests/utils_test.cc ${CPP_G})
+target_link_libraries(utils_test yaml-cpp::yaml-cpp
+        ${PTHREAD})
+redefine_file_macro(utils_test)
