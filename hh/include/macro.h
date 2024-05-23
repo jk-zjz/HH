@@ -7,7 +7,7 @@
 #include <cstring>
 #include "util.h"
 #include "log.h"
-#include <assert.h>
+#include <cassert>
 #define HH_ASSERT(x) \
     if(!(x)){        \
         HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"ASSERTION: " #x \
@@ -15,7 +15,6 @@
         <<hh::BacktraceToString(100,2,"    ");                           \
         assert(x);                 \
     }
-
 #define HH_ASSERT2(x,y) \
     if(!(x)){        \
         HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"ASSERTION: " #x \
