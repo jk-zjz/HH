@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/utils_test.dir/hh/config.cc.o"
   "CMakeFiles/utils_test.dir/hh/config.cc.o.d"
+  "CMakeFiles/utils_test.dir/hh/fiber.cc.o"
+  "CMakeFiles/utils_test.dir/hh/fiber.cc.o.d"
   "CMakeFiles/utils_test.dir/hh/log.cc.o"
   "CMakeFiles/utils_test.dir/hh/log.cc.o.d"
   "CMakeFiles/utils_test.dir/hh/thread.cc.o"

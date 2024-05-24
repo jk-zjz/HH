@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/hh/HH/hh/config.cc" "CMakeFiles/utils_test.dir/hh/config.cc.o" "gcc" "CMakeFiles/utils_test.dir/hh/config.cc.o.d"
+  "/home/hh/HH/hh/fiber.cc" "CMakeFiles/utils_test.dir/hh/fiber.cc.o" "gcc" "CMakeFiles/utils_test.dir/hh/fiber.cc.o.d"
   "/home/hh/HH/hh/log.cc" "CMakeFiles/utils_test.dir/hh/log.cc.o" "gcc" "CMakeFiles/utils_test.dir/hh/log.cc.o.d"
   "/home/hh/HH/hh/thread.cc" "CMakeFiles/utils_test.dir/hh/thread.cc.o" "gcc" "CMakeFiles/utils_test.dir/hh/thread.cc.o.d"
   "/home/hh/HH/hh/util.cc" "CMakeFiles/utils_test.dir/hh/util.cc.o" "gcc" "CMakeFiles/utils_test.dir/hh/util.cc.o.d"

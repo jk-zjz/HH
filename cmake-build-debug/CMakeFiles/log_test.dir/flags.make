@@ -10,11 +10,13 @@ CXX_FLAGS =  -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-u
 
 # Custom defines: CMakeFiles/log_test.dir/tests/log_test.cpp.o_DEFINES = __FILE__="tests/log_test.cpp"
 
-# Custom defines: CMakeFiles/log_test.dir/hh/config.cc.o_DEFINES = __FILE__="hh/config.cc";__FILE__="hh/config.cc";__FILE__="hh/config.cc"
+# Custom defines: CMakeFiles/log_test.dir/hh/config.cc.o_DEFINES = __FILE__="hh/config.cc";__FILE__="hh/config.cc";__FILE__="hh/config.cc";__FILE__="hh/config.cc"
 
-# Custom defines: CMakeFiles/log_test.dir/hh/log.cc.o_DEFINES = __FILE__="hh/log.cc";__FILE__="hh/log.cc";__FILE__="hh/log.cc"
+# Custom defines: CMakeFiles/log_test.dir/hh/fiber.cc.o_DEFINES = __FILE__="hh/fiber.cc";__FILE__="hh/fiber.cc";__FILE__="hh/fiber.cc";__FILE__="hh/fiber.cc"
 
-# Custom defines: CMakeFiles/log_test.dir/hh/thread.cc.o_DEFINES = __FILE__="hh/thread.cc";__FILE__="hh/thread.cc";__FILE__="hh/thread.cc"
+# Custom defines: CMakeFiles/log_test.dir/hh/log.cc.o_DEFINES = __FILE__="hh/log.cc";__FILE__="hh/log.cc";__FILE__="hh/log.cc";__FILE__="hh/log.cc"
 
-# Custom defines: CMakeFiles/log_test.dir/hh/util.cc.o_DEFINES = __FILE__="hh/util.cc";__FILE__="hh/util.cc";__FILE__="hh/util.cc"
+# Custom defines: CMakeFiles/log_test.dir/hh/thread.cc.o_DEFINES = __FILE__="hh/thread.cc";__FILE__="hh/thread.cc";__FILE__="hh/thread.cc";__FILE__="hh/thread.cc"
+
+# Custom defines: CMakeFiles/log_test.dir/hh/util.cc.o_DEFINES = __FILE__="hh/util.cc";__FILE__="hh/util.cc";__FILE__="hh/util.cc";__FILE__="hh/util.cc"
 

@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/HH.dir/main.cpp.o -o HH

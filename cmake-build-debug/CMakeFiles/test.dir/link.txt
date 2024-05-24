@@ -1,1 +1,0 @@
-/usr/bin/c++  -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -g CMakeFiles/test.dir/tests/main.cpp.o CMakeFiles/test.dir/hh/config.cc.o CMakeFiles/test.dir/hh/log.cc.o CMakeFiles/test.dir/hh/thread.cc.o CMakeFiles/test.dir/hh/util.cc.o -o bin/test  /usr/local/lib64/libyaml-cpp.a /usr/lib64/libpthread.a

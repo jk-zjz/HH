@@ -10,6 +10,7 @@
 #include "singleton.h"
 #include "thread.h"
 #include "macro.h"
+#include "fiber.h"
 
 
 #endif //HH_HH_H

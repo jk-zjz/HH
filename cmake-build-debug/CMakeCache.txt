@@ -244,9 +244,6 @@ ProcessorCount_cmd_nproc:FILEPATH=/usr/bin/nproc
 //Path to a program.
 ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
 
-//The directory containing a CMake configuration file for pthread.
-pthread_DIR:PATH=pthread_DIR-NOTFOUND
-
 //The directory containing a CMake configuration file for yaml-cpp.
 yaml-cpp_DIR:PATH=/usr/local/lib64/cmake/yaml-cpp
 

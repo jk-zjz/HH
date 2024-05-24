@@ -100,10 +100,24 @@ CMakeFiles/log_test.dir/hh/config.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/log_test.dir/hh/config.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/config.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hh/HH/hh/config.cc -o CMakeFiles/log_test.dir/hh/config.cc.s
 
+CMakeFiles/log_test.dir/hh/fiber.cc.o: CMakeFiles/log_test.dir/flags.make
+CMakeFiles/log_test.dir/hh/fiber.cc.o: /home/hh/HH/hh/fiber.cc
+CMakeFiles/log_test.dir/hh/fiber.cc.o: CMakeFiles/log_test.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/log_test.dir/hh/fiber.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/fiber.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/log_test.dir/hh/fiber.cc.o -MF CMakeFiles/log_test.dir/hh/fiber.cc.o.d -o CMakeFiles/log_test.dir/hh/fiber.cc.o -c /home/hh/HH/hh/fiber.cc
+
+CMakeFiles/log_test.dir/hh/fiber.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/log_test.dir/hh/fiber.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/fiber.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hh/HH/hh/fiber.cc > CMakeFiles/log_test.dir/hh/fiber.cc.i
+
+CMakeFiles/log_test.dir/hh/fiber.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/log_test.dir/hh/fiber.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/fiber.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hh/HH/hh/fiber.cc -o CMakeFiles/log_test.dir/hh/fiber.cc.s
+
 CMakeFiles/log_test.dir/hh/log.cc.o: CMakeFiles/log_test.dir/flags.make
 CMakeFiles/log_test.dir/hh/log.cc.o: /home/hh/HH/hh/log.cc
 CMakeFiles/log_test.dir/hh/log.cc.o: CMakeFiles/log_test.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/log_test.dir/hh/log.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/log_test.dir/hh/log.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/log.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/log_test.dir/hh/log.cc.o -MF CMakeFiles/log_test.dir/hh/log.cc.o.d -o CMakeFiles/log_test.dir/hh/log.cc.o -c /home/hh/HH/hh/log.cc
 
 CMakeFiles/log_test.dir/hh/log.cc.i: cmake_force
@@ -117,7 +131,7 @@ CMakeFiles/log_test.dir/hh/log.cc.s: cmake_force
 CMakeFiles/log_test.dir/hh/thread.cc.o: CMakeFiles/log_test.dir/flags.make
 CMakeFiles/log_test.dir/hh/thread.cc.o: /home/hh/HH/hh/thread.cc
 CMakeFiles/log_test.dir/hh/thread.cc.o: CMakeFiles/log_test.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/log_test.dir/hh/thread.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/log_test.dir/hh/thread.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/thread.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/log_test.dir/hh/thread.cc.o -MF CMakeFiles/log_test.dir/hh/thread.cc.o.d -o CMakeFiles/log_test.dir/hh/thread.cc.o -c /home/hh/HH/hh/thread.cc
 
 CMakeFiles/log_test.dir/hh/thread.cc.i: cmake_force
@@ -131,7 +145,7 @@ CMakeFiles/log_test.dir/hh/thread.cc.s: cmake_force
 CMakeFiles/log_test.dir/hh/util.cc.o: CMakeFiles/log_test.dir/flags.make
 CMakeFiles/log_test.dir/hh/util.cc.o: /home/hh/HH/hh/util.cc
 CMakeFiles/log_test.dir/hh/util.cc.o: CMakeFiles/log_test.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/log_test.dir/hh/util.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/log_test.dir/hh/util.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/util.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/log_test.dir/hh/util.cc.o -MF CMakeFiles/log_test.dir/hh/util.cc.o.d -o CMakeFiles/log_test.dir/hh/util.cc.o -c /home/hh/HH/hh/util.cc
 
 CMakeFiles/log_test.dir/hh/util.cc.i: cmake_force
@@ -146,6 +160,7 @@ CMakeFiles/log_test.dir/hh/util.cc.s: cmake_force
 log_test_OBJECTS = \
 "CMakeFiles/log_test.dir/tests/log_test.cpp.o" \
 "CMakeFiles/log_test.dir/hh/config.cc.o" \
+"CMakeFiles/log_test.dir/hh/fiber.cc.o" \
 "CMakeFiles/log_test.dir/hh/log.cc.o" \
 "CMakeFiles/log_test.dir/hh/thread.cc.o" \
 "CMakeFiles/log_test.dir/hh/util.cc.o"
@@ -155,6 +170,7 @@ log_test_EXTERNAL_OBJECTS =
 
 bin/log_test: CMakeFiles/log_test.dir/tests/log_test.cpp.o
 bin/log_test: CMakeFiles/log_test.dir/hh/config.cc.o
+bin/log_test: CMakeFiles/log_test.dir/hh/fiber.cc.o
 bin/log_test: CMakeFiles/log_test.dir/hh/log.cc.o
 bin/log_test: CMakeFiles/log_test.dir/hh/thread.cc.o
 bin/log_test: CMakeFiles/log_test.dir/hh/util.cc.o
@@ -162,7 +178,7 @@ bin/log_test: CMakeFiles/log_test.dir/build.make
 bin/log_test: /usr/local/lib64/libyaml-cpp.a
 bin/log_test: /usr/lib64/libpthread.a
 bin/log_test: CMakeFiles/log_test.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable bin/log_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable bin/log_test"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/log_test.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

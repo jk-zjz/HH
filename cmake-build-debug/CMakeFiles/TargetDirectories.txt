@@ -1,3 +1,6 @@
-/tmp/tmp.ZVwVQZO1im/cmake-build-debug/CMakeFiles/HH.dir
-/tmp/tmp.ZVwVQZO1im/cmake-build-debug/CMakeFiles/edit_cache.dir
-/tmp/tmp.ZVwVQZO1im/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/hh/HH/cmake-build-debug/CMakeFiles/log_test.dir
+/home/hh/HH/cmake-build-debug/CMakeFiles/config_test.dir
+/home/hh/HH/cmake-build-debug/CMakeFiles/pthread_test.dir
+/home/hh/HH/cmake-build-debug/CMakeFiles/utils_test.dir
+/home/hh/HH/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/hh/HH/cmake-build-debug/CMakeFiles/rebuild_cache.dir

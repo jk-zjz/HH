@@ -1,1 +1,0 @@
-/usr/bin/c++  -rdynamic -O0 -g -Wall -Wno-deprecated -Werror -Wno-unused-function -g CMakeFiles/testconfig.dir/tests/test_config.cpp.o CMakeFiles/testconfig.dir/hh/config.cc.o CMakeFiles/testconfig.dir/hh/log.cc.o CMakeFiles/testconfig.dir/hh/util.cc.o -o bin/testconfig
