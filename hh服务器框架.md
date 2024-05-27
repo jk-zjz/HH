@@ -437,6 +437,7 @@ Thread ----> Master_Fiber<----->sub_fiber
                    v
                 sub_fiber
 ```
+未析构彻底 --- 研究携程运行方式
 ## socket函数库开发
 
 ## http协议开发

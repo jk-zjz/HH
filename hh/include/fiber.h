@@ -49,13 +49,14 @@ namespace hh {
         static void YieldToReady();
         //执行方法
         static void MainFunc();
+        static uint32_t getFiber_id();
     private:
         std::function<void()> m_cb;         //真正执行的函数
         ucontext_t m_ctx;                   //协程
         State m_state=INIT;                 //协程状态
         uint64_t m_id=0;                    //协程id
         uint32_t m_stackSize=0;              //协程栈空间
-        char* m_stack=nullptr;               //协程栈空间
+        void * m_stack=nullptr;               //协程栈空间
     };
 }
 #endif //HH_FIBER_H

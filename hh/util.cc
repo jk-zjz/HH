@@ -17,7 +17,7 @@ namespace hh {
 
     uint32_t GetFiberID() {
         //现在没有协程暂时
-        return 0;
+        return hh::Fiber::getFiber_id();
     }
 
     /**
