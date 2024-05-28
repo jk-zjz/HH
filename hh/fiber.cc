@@ -75,7 +75,6 @@ namespace hh {
             if(cur==this)
                 SetThis(nullptr);
         }
-        std::cout<<"~Fiber: "<<m_id<<"---"<<s_fiber_id<<std::endl;
     }
 
 

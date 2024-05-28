@@ -46,7 +46,7 @@ namespace hh {
             m_name(name),
             m_level(LogLevel::UNKNOWN) {
         //默认的日志格式器
-        m_Formatter.reset(new LogFormatter("%d <%t-%F> [%p:%m] <%f:%l> %b"));
+        m_Formatter.reset(new LogFormatter("%d <%t-%F-%N> [%p:%m] <%f:%l> %b"));
     }
 
 //添加输出地
@@ -262,6 +262,7 @@ namespace hh {
  * l 行号
  * b 空格
  * C 自定义内容
+ * N 线程name
  * */
 //是一个lambda表达式通过传入的string 返回一个格式器类每一种格式对应一个输出方式
         static std::map<std::string, std::function<LogFormatter::FormatItem::ptr(
@@ -279,7 +280,8 @@ namespace hh {
                         XX(f, FileNameFormatItem),
                         XX(l, LineFormatItem),
                         XX(b, SpaceFormatItem),
-                        XX(C, MassageFormatItem)
+                        XX(C, MassageFormatItem),
+                        XX(N, StringThreadNameItem)
 #undef XX
                 };
         for (auto &i: vec) {
@@ -303,11 +305,11 @@ namespace hh {
 
     LogEvent::LogEvent(std::shared_ptr<Logger> logger, LogLevel::Level level, const char *mFile,
                        uint32_t mLine, uint32_t mElapse, uint32_t mThreadId, uint32_t mFiberId,
-                       uint64_t mTime) :
+                       uint64_t mTime,std::string m_ThreadName) :
             m_file(mFile), m_line(mLine), m_elapse(mElapse),
             m_threadId(mThreadId), m_fiberId(mFiberId),
-            m_time(mTime), m_logger(std::move(logger)),
-            m_level(level) {}
+            m_time(mTime), m_threadName(std::move(m_ThreadName)),
+            m_logger(std::move(logger)),m_level(level) {}
 
     void LogEvent::format(const char *fat, ...) {
         //绑定可变参

@@ -23,7 +23,7 @@
 #define HH_LOG_LEVEL(logger,level,Str)   \
         if(logger->getLevel() <= level) \
             hh::LogEventWrap(hh::LogEvent::ptr(new hh::LogEvent(logger,level,__FILE__,__LINE__, \
-            0,hh::GetThreadID(),hh::GetFiberID(), time(0)))).setSS(Str)
+            0,hh::GetThreadID(),hh::GetFiberID(), time(0),hh::Thread::GetName()))).setSS(Str)
 
 //输出格式如下     Str----logger
 #define HH_LOG_DEBUG(logger,Str) HH_LOG_LEVEL(logger,hh::LogLevel::DEBUG,Str);
@@ -36,12 +36,12 @@
 #define HH_LOG_LEVEL_CHAIN(logger,level)   \
         if(logger->getLevel() <= level) \
             hh::LogEventWrap(hh::LogEvent::ptr(new hh::LogEvent(logger,level,__FILE__,__LINE__, \
-            0,hh::GetThreadID(),hh::GetFiberID(), time(0)))).getEvent()->getSS()
+            0,hh::GetThreadID(),hh::GetFiberID(), time(0),hh::Thread::GetName()))).getEvent()->getSS()
 
 #define HH_LOG_FAT_LEVEL(logger,level,fmt,...)   \
         if(logger->getLevel() <= level) \
             hh::LogEventWrap(hh::LogEvent::ptr(new hh::LogEvent(logger,level,__FILE__,__LINE__, \
-            0,hh::GetThreadID(),hh::GetFiberID(), time(0)))).getEvent()->format(fmt,__VA_ARGS__)
+            0,hh::GetThreadID(),hh::GetFiberID(), time(0),hh::Thread::GetName()))).getEvent()->format(fmt,__VA_ARGS__)
 
 //输出格式如下     logger 自定义内容,但是不是使用链式的方式写入<<
 #define HH_LOG_FAT_DEBUG(logger,fmt,...) HH_LOG_FAT_LEVEL(logger,hh::LogLevel::DEBUG,fmt,__VA_ARGS__);
@@ -89,7 +89,8 @@ namespace hh {
                  uint32_t mElapse,
                  uint32_t mThreadId,
                  uint32_t mFiberId,
-                 uint64_t mTime);
+                 uint64_t mTime,
+                 std::string mThreadName);
         //get方法
         const char *getFile() const { return m_file; }
 
@@ -110,6 +111,8 @@ namespace hh {
 
         std::shared_ptr<Logger> getLogger()const {return m_logger;}
         LogLevel::Level getLevel()const {return m_level;}
+        std::string getThreadName()const {return m_threadName;}
+        void setThreadName(const std::string &name) { m_threadName = name; }
 
         //可变参函数   ("%s%d","qw",112)
         void format(const char * fat,...);
@@ -122,6 +125,7 @@ namespace hh {
         uint32_t m_fiberId = 0;         //协程id
         uint64_t m_time = 0;              //时间戳
         std::stringstream m_ss;          //内容
+        std::string m_threadName;         //线程id
 
         std::shared_ptr<Logger> m_logger; //获取日志器
         LogLevel::Level m_level; //日志级别
@@ -442,7 +446,6 @@ namespace hh {
                 m_string(str) {
 
         }
-
         void format(std::shared_ptr<Logger> logger, std::ostream &on, LogLevel::Level level, LogEvent::ptr event) override {
             on << m_string;
         }
@@ -450,7 +453,15 @@ namespace hh {
     private:
         std::string m_string;
     };
-
+    class StringThreadNameItem : public LogFormatter::FormatItem {
+    public:
+        StringThreadNameItem(const std::string basicString = "") {
+        }
+        void
+        format(std::shared_ptr<Logger> logger, std::ostream &on, LogLevel::Level level, LogEvent::ptr event) override {
+            on << hh::Thread::GetName();
+        }
+    };
     class LoggerManager{
     public:
         LoggerManager();

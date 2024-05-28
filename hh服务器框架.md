@@ -427,7 +427,7 @@ logs:
 进入协程模块的准备  
 封装断言  中使用函数调用栈序列化以便于后期开发的调试高效
 
-###协程管理
+### 协程管理
 一个线程对应一个master协程
 ```
 Thread ----> Master_Fiber<----->sub_fiber
@@ -437,7 +437,72 @@ Thread ----> Master_Fiber<----->sub_fiber
                    v
                 sub_fiber
 ```
-未析构彻底 --- 研究携程运行方式
+### 携程与进程的使用
+```c++
+/c++
+// 定义全局日志记录器
+hh::Logger::ptr g_logger = HH_LOG_ROOT();
+
+/**
+ * 函数func1: 示范了Fiber的使用，通过Fiber::YieldToHold实现协程的挂起和恢复。
+ */
+void func1(){
+    // 开始运行func1
+    HH_LOG_INFO(g_logger,"RUN_IN_ BEGIN");
+    // 挂起当前Fiber
+    hh::Fiber::YieldToHold();
+    // 恢复运行func1
+    HH_LOG_INFO(g_logger,"RUN_IN_ END");
+    // 再次挂起当前Fiber
+    hh::Fiber::YieldToHold();
+    // 错误的重复日志条目，应避免在代码中重复或错误的逻辑。
+    HH_LOG_INFO(g_logger,"RUN_IN_ END")
+}
+
+/**
+ * 函数func2: 创建并切换到一个新的Fiber，演示了如何在主Fiber和新创建的Fiber之间进行切换。
+ */
+void func2(){
+    // 获取当前Fiber实例
+    hh::Fiber::GetThis();
+    // 日志记录：main开始
+    HH_LOG_INFO(g_logger, "main begin")
+    // 创建一个新的Fiber实例func1
+    hh::Fiber::ptr f1(new hh::Fiber(func1));
+    // 第一次切换到f1执行
+    f1->swapIn();
+    // 日志记录：main首次swapIn
+    HH_LOG_INFO(g_logger, "main swapIn")
+    // 第二次切换回f1执行
+    f1->swapIn();
+    // 日志记录存在语法错误，应为"main end}"
+    HH_LOG_INFO(g_logger,"{main end")
+    // 第三次切换回f1执行
+    f1->swapIn();
+}
+
+/**
+ * 主函数：创建并启动多个线程，每个线程执行func2，演示多线程下Fiber的使用。
+ * @return int 返回程序执行结果，始终为0。
+ */
+int main(){
+    // 设置当前主线程名称为"main"
+    hh::Thread::SetName("main");
+    // 存储线程的容器
+    std::vector<hh::Thread::ptr>ps;
+    // 创建并启动3个线程
+    for(int i=0;i<3;i++){
+        ps.push_back(std::make_shared<hh::Thread>(&func2,"name_"+std::to_string(i)));
+    }
+    // 等待所有线程执行完毕
+    for(auto& i:ps){
+        i->join();
+    }
+    return 0;
+}
+
+
+```
 ## socket函数库开发
 
 ## http协议开发
