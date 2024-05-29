@@ -5,6 +5,7 @@
 
 #include "hh.h"
 #include "fiber.h"
+#include "scheduler.h"
 hh::Logger::ptr g_logger = HH_LOG_ROOT();
 void func1(){
     HH_LOG_INFO(g_logger,"RUN_IN_ BEGIN");
