@@ -50,6 +50,8 @@ namespace hh {
         //执行方法
         static void MainFunc();
         static uint32_t getFiber_id();
+        State getState() const { return m_state; }
+        void setState(State state) { m_state = state; }
     private:
         std::function<void()> m_cb;         //真正执行的函数
         ucontext_t m_ctx;                   //协程

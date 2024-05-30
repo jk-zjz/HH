@@ -12,10 +12,10 @@
 #include <string>
 #include "fiber.h"
 namespace hh {
-    //线程
+    //当前线程
     pid_t GetThreadID();
 
-    //携程
+    //当前携程
     uint32_t GetFiberID();
 
     //函数调用栈序列化

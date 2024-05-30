@@ -248,6 +248,7 @@ namespace hh {
     };
     class Thread {
     public:
+
         typedef std::shared_ptr<Thread> ptr;
 
         Thread(std::function<void()> cb, const std::string &name);
