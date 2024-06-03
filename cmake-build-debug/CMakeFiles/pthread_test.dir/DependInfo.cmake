@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/hh/HH/hh/config.cc" "CMakeFiles/pthread_test.dir/hh/config.cc.o" "gcc" "CMakeFiles/pthread_test.dir/hh/config.cc.o.d"
   "/home/hh/HH/hh/fiber.cc" "CMakeFiles/pthread_test.dir/hh/fiber.cc.o" "gcc" "CMakeFiles/pthread_test.dir/hh/fiber.cc.o.d"
   "/home/hh/HH/hh/log.cc" "CMakeFiles/pthread_test.dir/hh/log.cc.o" "gcc" "CMakeFiles/pthread_test.dir/hh/log.cc.o.d"
+  "/home/hh/HH/hh/scheduler.cc" "CMakeFiles/pthread_test.dir/hh/scheduler.cc.o" "gcc" "CMakeFiles/pthread_test.dir/hh/scheduler.cc.o.d"
   "/home/hh/HH/hh/thread.cc" "CMakeFiles/pthread_test.dir/hh/thread.cc.o" "gcc" "CMakeFiles/pthread_test.dir/hh/thread.cc.o.d"
   "/home/hh/HH/hh/util.cc" "CMakeFiles/pthread_test.dir/hh/util.cc.o" "gcc" "CMakeFiles/pthread_test.dir/hh/util.cc.o.d"
   "/home/hh/HH/tests/pthread_test.cc" "CMakeFiles/pthread_test.dir/tests/pthread_test.cc.o" "gcc" "CMakeFiles/pthread_test.dir/tests/pthread_test.cc.o.d"

@@ -125,7 +125,7 @@ namespace hh {
         uint32_t m_fiberId = 0;         //协程id
         uint64_t m_time = 0;              //时间戳
         std::stringstream m_ss;          //内容
-        std::string m_threadName;         //线程id
+        std::string m_threadName;         //线程名称
 
         std::shared_ptr<Logger> m_logger; //获取日志器
         LogLevel::Level m_level; //日志级别
@@ -256,7 +256,7 @@ namespace hh {
         std::list<LogAppender::ptr> m_appenders;    //日志输出地集合
         LogFormatter::ptr m_Formatter;              //日志格式器
         Logger::ptr m_root;                         //存放getlogger默认格式器地
-        MutexType m_mutex;                              //锁
+        MutexType m_mutex;                          //锁
     };
 
     //输出控制台LogAppender

@@ -128,10 +128,24 @@ CMakeFiles/utils_test.dir/hh/log.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/utils_test.dir/hh/log.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/log.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hh/HH/hh/log.cc -o CMakeFiles/utils_test.dir/hh/log.cc.s
 
+CMakeFiles/utils_test.dir/hh/scheduler.cc.o: CMakeFiles/utils_test.dir/flags.make
+CMakeFiles/utils_test.dir/hh/scheduler.cc.o: /home/hh/HH/hh/scheduler.cc
+CMakeFiles/utils_test.dir/hh/scheduler.cc.o: CMakeFiles/utils_test.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/utils_test.dir/hh/scheduler.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/scheduler.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/utils_test.dir/hh/scheduler.cc.o -MF CMakeFiles/utils_test.dir/hh/scheduler.cc.o.d -o CMakeFiles/utils_test.dir/hh/scheduler.cc.o -c /home/hh/HH/hh/scheduler.cc
+
+CMakeFiles/utils_test.dir/hh/scheduler.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/utils_test.dir/hh/scheduler.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/scheduler.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hh/HH/hh/scheduler.cc > CMakeFiles/utils_test.dir/hh/scheduler.cc.i
+
+CMakeFiles/utils_test.dir/hh/scheduler.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/utils_test.dir/hh/scheduler.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/scheduler.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hh/HH/hh/scheduler.cc -o CMakeFiles/utils_test.dir/hh/scheduler.cc.s
+
 CMakeFiles/utils_test.dir/hh/thread.cc.o: CMakeFiles/utils_test.dir/flags.make
 CMakeFiles/utils_test.dir/hh/thread.cc.o: /home/hh/HH/hh/thread.cc
 CMakeFiles/utils_test.dir/hh/thread.cc.o: CMakeFiles/utils_test.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/utils_test.dir/hh/thread.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/utils_test.dir/hh/thread.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/thread.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/utils_test.dir/hh/thread.cc.o -MF CMakeFiles/utils_test.dir/hh/thread.cc.o.d -o CMakeFiles/utils_test.dir/hh/thread.cc.o -c /home/hh/HH/hh/thread.cc
 
 CMakeFiles/utils_test.dir/hh/thread.cc.i: cmake_force
@@ -145,7 +159,7 @@ CMakeFiles/utils_test.dir/hh/thread.cc.s: cmake_force
 CMakeFiles/utils_test.dir/hh/util.cc.o: CMakeFiles/utils_test.dir/flags.make
 CMakeFiles/utils_test.dir/hh/util.cc.o: /home/hh/HH/hh/util.cc
 CMakeFiles/utils_test.dir/hh/util.cc.o: CMakeFiles/utils_test.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/utils_test.dir/hh/util.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/utils_test.dir/hh/util.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"hh/util.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/utils_test.dir/hh/util.cc.o -MF CMakeFiles/utils_test.dir/hh/util.cc.o.d -o CMakeFiles/utils_test.dir/hh/util.cc.o -c /home/hh/HH/hh/util.cc
 
 CMakeFiles/utils_test.dir/hh/util.cc.i: cmake_force
@@ -162,6 +176,7 @@ utils_test_OBJECTS = \
 "CMakeFiles/utils_test.dir/hh/config.cc.o" \
 "CMakeFiles/utils_test.dir/hh/fiber.cc.o" \
 "CMakeFiles/utils_test.dir/hh/log.cc.o" \
+"CMakeFiles/utils_test.dir/hh/scheduler.cc.o" \
 "CMakeFiles/utils_test.dir/hh/thread.cc.o" \
 "CMakeFiles/utils_test.dir/hh/util.cc.o"
 
@@ -172,13 +187,14 @@ bin/utils_test: CMakeFiles/utils_test.dir/tests/utils_test.cc.o
 bin/utils_test: CMakeFiles/utils_test.dir/hh/config.cc.o
 bin/utils_test: CMakeFiles/utils_test.dir/hh/fiber.cc.o
 bin/utils_test: CMakeFiles/utils_test.dir/hh/log.cc.o
+bin/utils_test: CMakeFiles/utils_test.dir/hh/scheduler.cc.o
 bin/utils_test: CMakeFiles/utils_test.dir/hh/thread.cc.o
 bin/utils_test: CMakeFiles/utils_test.dir/hh/util.cc.o
 bin/utils_test: CMakeFiles/utils_test.dir/build.make
 bin/utils_test: /usr/local/lib64/libyaml-cpp.a
 bin/utils_test: /usr/lib64/libpthread.a
 bin/utils_test: CMakeFiles/utils_test.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable bin/utils_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/hh/HH/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable bin/utils_test"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/utils_test.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

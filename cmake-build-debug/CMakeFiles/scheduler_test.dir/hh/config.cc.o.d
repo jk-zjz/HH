@@ -1,4 +1,4 @@
-CMakeFiles/pthread_test.dir/hh/config.cc.o: /home/hh/HH/hh/config.cc \
+CMakeFiles/scheduler_test.dir/hh/config.cc.o: /home/hh/HH/hh/config.cc \
  /usr/include/stdc-predef.h /home/hh/HH/./hh/include/config.h \
  /usr/include/c++/11/memory /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/c++/11/x86_64-redhat-linux/bits/c++config.h \

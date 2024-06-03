@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "bin/log_test"
+			"path" : "bin/scheduler_test"
 		}
 	],
 	"backtrace" : 1,
@@ -29,13 +29,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 27,
+				"line" : 50,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 28,
+				"line" : 51,
 				"parent" : 0
 			},
 			{
@@ -47,7 +47,7 @@
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 30,
+				"line" : 53,
 				"parent" : 0
 			},
 			{
@@ -57,40 +57,40 @@
 				"parent" : 4
 			},
 			{
-				"command" : 4,
-				"file" : 0,
-				"line" : 48,
-				"parent" : 0
+				"command" : 3,
+				"file" : 1,
+				"line" : 19,
+				"parent" : 4
 			},
 			{
 				"command" : 3,
 				"file" : 1,
 				"line" : 19,
-				"parent" : 6
+				"parent" : 4
 			},
 			{
 				"command" : 3,
 				"file" : 1,
 				"line" : 19,
-				"parent" : 6
+				"parent" : 4
 			},
 			{
 				"command" : 3,
 				"file" : 1,
 				"line" : 19,
-				"parent" : 6
+				"parent" : 4
 			},
 			{
 				"command" : 3,
 				"file" : 1,
 				"line" : 19,
-				"parent" : 6
+				"parent" : 4
 			},
 			{
 				"command" : 3,
 				"file" : 1,
 				"line" : 19,
-				"parent" : 6
+				"parent" : 4
 			}
 		]
 	},
@@ -111,7 +111,7 @@
 				},
 				{
 					"backtrace" : 5,
-					"define" : "__FILE__=\"tests/log_test.cpp\""
+					"define" : "__FILE__=\"tests/scheduler_test.cc\""
 				}
 			],
 			"includes" : 
@@ -149,7 +149,7 @@
 					"define" : "YAML_CPP_STATIC_DEFINE"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 6,
 					"define" : "__FILE__=\"hh/config.cc\""
 				}
 			],
@@ -188,7 +188,7 @@
 					"define" : "YAML_CPP_STATIC_DEFINE"
 				},
 				{
-					"backtrace" : 8,
+					"backtrace" : 7,
 					"define" : "__FILE__=\"hh/fiber.cc\""
 				}
 			],
@@ -227,7 +227,7 @@
 					"define" : "YAML_CPP_STATIC_DEFINE"
 				},
 				{
-					"backtrace" : 9,
+					"backtrace" : 8,
 					"define" : "__FILE__=\"hh/log.cc\""
 				}
 			],
@@ -266,6 +266,45 @@
 					"define" : "YAML_CPP_STATIC_DEFINE"
 				},
 				{
+					"backtrace" : 9,
+					"define" : "__FILE__=\"hh/scheduler.cc\""
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/home/hh/HH/./hh/include"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "17"
+			},
+			"sourceIndexes" : 
+			[
+				4
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -g -fdiagnostics-color=always"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "YAML_CPP_STATIC_DEFINE"
+				},
+				{
 					"backtrace" : 10,
 					"define" : "__FILE__=\"hh/thread.cc\""
 				}
@@ -288,7 +327,7 @@
 			},
 			"sourceIndexes" : 
 			[
-				4
+				5
 			]
 		},
 		{
@@ -327,11 +366,11 @@
 			},
 			"sourceIndexes" : 
 			[
-				5
+				6
 			]
 		}
 	],
-	"id" : "log_test::@6890427a1f51a3e7e1df",
+	"id" : "scheduler_test::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -357,8 +396,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "log_test",
-	"nameOnDisk" : "log_test",
+	"name" : "scheduler_test",
+	"nameOnDisk" : "scheduler_test",
 	"paths" : 
 	{
 		"build" : ".",
@@ -375,7 +414,8 @@
 				2,
 				3,
 				4,
-				5
+				5,
+				6
 			]
 		}
 	],
@@ -384,7 +424,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "tests/log_test.cpp",
+			"path" : "tests/scheduler_test.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -408,12 +448,18 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 4,
-			"path" : "hh/thread.cc",
+			"path" : "hh/scheduler.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 5,
+			"path" : "hh/thread.cc",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 6,
 			"path" : "hh/util.cc",
 			"sourceGroupIndex" : 0
 		}

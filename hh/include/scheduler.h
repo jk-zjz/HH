@@ -5,11 +5,11 @@
 #ifndef HH_SCHEDULER_H
 #define HH_SCHEDULER_H
 
-#include "thread.h"
-#include "fiber.h"
 #include <memory>
 #include <list>
 #include <utility>
+
+#include "thread.h"
 
 namespace hh {
     class Scheduler {
@@ -25,7 +25,7 @@ namespace hh {
         void stop();    //停止调度器
 
         static Scheduler *GetThis();    //获取当前线程的调度器
-        static Fiber *GetFiber();       //获取当前线程的协程
+        static Fiber *GetMainFiber();       //获取当前线程的协程
         const std::string &getName() const { return m_name; };
 
         template<class FiberOrCb>
@@ -46,7 +46,7 @@ namespace hh {
             {
                 MutexType::Lock lock(m_mutex);
                 while(begin!=end){
-                    need_tickle = scheduleNoLook(&(*begin))||need_tickle;
+                    need_tickle = scheduleNoLook(&*begin,-1)||need_tickle;
                     ++begin;
                 }
             }
@@ -54,12 +54,15 @@ namespace hh {
                 tickle();
             }
         }
+        void switchTo(int threadid =-1);
+        std::ostream &dump(std::ostream &os);
     protected:
         virtual void tickle();
         void run();
         virtual bool stopping();
         void setThis();
         virtual void idle();
+        bool hasIdleThreads(){return m_idle_thread_count>0;};
     private:
         template<class FiberOrCb>
         bool scheduleNoLook(FiberOrCb fc, uint32_t thread) {

@@ -2,35 +2,39 @@
 // Created by 35148 on 2024/5/29.
 //
 #include "scheduler.h"
-
-#include <utility>
-#include "log.h"
 #include "macro.h"
-
 namespace hh{
     static Logger::ptr g_logger = HH_LOG_NAME("system");
+
     //协程调度器
     static thread_local Scheduler* t_scheduler = nullptr;
-    //可以执行的主协程
+    //当前协程
     static thread_local Fiber* t_fiber = nullptr;
+
     Scheduler::Scheduler(uint32_t threads, bool use_caller, std::string name):
-    m_name(std::move(name)){
+    m_name(name)
+    {
+        //创建线程数量>0
         HH_ASSERT(threads > 0);
+        //需不需要使用一个线程做为调度线程
         if(use_caller){
-            --threads;
-            //创建协程调度主协程
+            //创建线程中的主协程
             hh::Fiber::GetThis();
-            //判断是否有执行主协程
+            //线程数量减一
+            --threads;
+            //没有协程调度器
             HH_ASSERT(GetThis() == nullptr);
             t_scheduler = this;
-            //创建主协程，为调度器的主协程，绑定run方法，上面主协程绑定的是协程中的主协程的fun方法
-            m_root_fiber.reset(new Fiber(std::bind(&Scheduler::run, this)));
-            m_root_thread=hh::GetThreadID();
+            //创建主协程
+            m_root_fiber.reset(new Fiber(std::bind(&Scheduler::run, this), 0, true));
+            hh::Thread::SetName(m_name);
             t_fiber = m_root_fiber.get();
+            m_root_thread=hh::GetThreadID();
             m_thread_ids.push_back(m_root_thread);
         }else{
             m_root_thread = -1;
         }
+        //线程池的真实大小
         m_thread_count = threads;
     }
 
@@ -44,17 +48,19 @@ namespace hh{
     void Scheduler::start() {
         MutexType lock(m_mutex);
         if(!m_stopping){
+            //需要启动需要判断是否是停止状态才能启动
             return;
         }
+        //已经启动
         m_stopping=false;
+        //判断线程池是否为空，线程池为空则创建线程池
         HH_ASSERT(m_threads.empty());
         m_threads.resize(m_thread_count);
-        for(int i=0;i<m_thread_count;++i){
+        for(size_t i=0;i<m_thread_count;++i){
             m_threads[i].reset(new Thread(std::bind(&Scheduler::run, this),
                                           m_name+"_"+std::to_string(i)));
             m_thread_ids.push_back(m_threads[i]->get_id());
         }
-
     }
 
     void Scheduler::stop() {
@@ -70,7 +76,7 @@ namespace hh{
                 return;
             }
         }
-        bool need_tickle = false;
+     //   bool need_tickle = false;
         //是否有主线程
         if(m_root_thread != -1){
             HH_ASSERT(GetThis() == this)
@@ -79,7 +85,7 @@ namespace hh{
         }
         //停止标志
         m_stopping = true;
-        for(int i=0;i<m_threads.size();++i){
+        for(size_t i=0;i<m_thread_count;++i){
             //唤醒所有线程停止
             tickle();
         }
@@ -87,13 +93,30 @@ namespace hh{
             //停止主线程
             tickle();
         }
+        /**
+         * 有主协程 && 主线程没有停止
+         * */
+        if(m_root_fiber && !stopping()){
+            m_root_fiber->call();
+        }
+        std::vector<Thread::ptr>thrs;
+        {
+            MutexType::Lock lock(m_mutex);
+            thrs.swap(m_threads);
+        }
+        /**
+         * 等待所有线程结束
+         * */
+        for(auto  &i:thrs){
+            i->join();
+        }
     }
 
     Scheduler *Scheduler::GetThis() {
         return t_scheduler;
     }
 
-    Fiber *Scheduler::GetFiber() {
+    Fiber *Scheduler::GetMainFiber() {
         return t_fiber;
     }
 
@@ -116,13 +139,14 @@ namespace hh{
             ft.reset();
             //需要唤醒线程
             bool tickle_me = false;
+            bool is_active = false;
             {
                 MutexType lock(m_mutex);
                 auto it = m_fibers.begin();
                 //取任务
                 while (it!=m_fibers.end()){
                     //当前任务需要指定线程执行，并且不是当前线程
-                    if(it->thread_id!=-1 && it->thread_id!=hh::GetThreadID()){
+                    if (it->thread_id != (uint32_t)-1 && it->thread_id != (uint32_t)hh::GetThreadID()){
                         ++it;
                         //需要唤醒线程
                         tickle_me = true;
@@ -130,16 +154,19 @@ namespace hh{
                     }
                     HH_ASSERT(it->fiber || it->function);
                     //是一个协程并且正在运行，那直接不管
-                    if(it->fiber && it->fiber->getState() == Fiber::State::EXEC){
+                    if(it->fiber && it->fiber->getState() == Fiber::EXEC){
                         //当前协程正在执行
                         ++it;
                         continue;
                     }
                     //取出任务
                     ft = *it;
-                    m_fibers.erase(it);
+                    m_fibers.erase(it++);
+                    ++m_active_thread_count;
+                    is_active = true;
                     break;
                 }
+                tickle_me |=it!=m_fibers.end();
             }
             //任务已经取出获取没有任务
             if(tickle_me){
@@ -147,22 +174,19 @@ namespace hh{
                 tickle();
             }
             //是协程任务，并且不是停止态
-            if(ft.fiber && ft.fiber->getState()!=Fiber::State::TERM){
-                //是一个协程--运行协程数量++
-                ++m_active_thread_count;
+            if(ft.fiber && (ft.fiber->getState()!=Fiber::State::TERM &&
+                            ft.fiber->getState()!=Fiber::EXCEPT)){
+
                 //切换执行
                 ft.fiber->swapIn();
                 --m_active_thread_count;
                 if(ft.fiber->getState() == Fiber::State::READY){
                     //这一个加入队列
                     schedule(ft.fiber);
-                }else if(ft.fiber->getState()!=Fiber::TERM ||
+                }else if(ft.fiber->getState()!=Fiber::TERM &&
                             ft.fiber->getState()!=Fiber::State::EXCEPT){
                     //不是停止态或者异常 被打断
                     ft.fiber->setState(Fiber::State::HOLD);
-                }else{
-                    //我觉得是这样的------------------------------------------------------------------------
-                    //ft.reset();
                 }
                 ft.reset();
             }else if(ft.function){
@@ -175,12 +199,12 @@ namespace hh{
                     cb_fiber.reset(new Fiber(ft.function));
                 }
                 ft.reset();
-                ++m_active_thread_count;
                 cb_fiber->swapIn();
                 --m_active_thread_count;
                 if(cb_fiber->getState()==Fiber::READY){
                     //准备就绪状态
                     schedule(cb_fiber);
+                    cb_fiber.reset();
                 }else if(cb_fiber->getState()==Fiber::TERM
                     || cb_fiber->getState()==Fiber::State::EXCEPT){
                     //执行完毕
@@ -190,6 +214,10 @@ namespace hh{
                     cb_fiber.reset();
                 }
             }else{
+                if(is_active){
+                    --m_active_thread_count;
+                    continue;
+                }
                 //是一个空闲协程
                 if (idle_fiber->getState()==Fiber::State::TERM){
                     break;
@@ -209,4 +237,55 @@ namespace hh{
         t_scheduler = this;
     }
 
+    void Scheduler::tickle() {
+        HH_LOG_INFO(g_logger, "tickle");
+    }
+
+    bool Scheduler::stopping() {
+        /**
+         * 是停止状态
+         * 是要停止
+         * 任务列表为空
+         * 活跃线程为0
+         * */
+        HH_LOG_INFO(g_logger, "stopping");
+        MutexType::Lock lock(m_mutex);
+        return m_stopping &&
+                m_auto_stop &&
+                m_fibers.empty() &&
+                m_active_thread_count==0;
+    }
+
+    void Scheduler::idle() {
+        HH_LOG_INFO(g_logger, "idle");
+        while(!stopping()){
+            hh::Fiber::YieldToHold();
+        }
+    }
+    void Scheduler::switchTo(int thread) {
+        HH_ASSERT(Scheduler::GetThis() != nullptr);
+        if(Scheduler::GetThis() == this) {
+            if(thread == -1 || thread == hh::GetThreadID()) {
+                return;
+            }
+        }
+        schedule(Fiber::GetThis(), thread);
+        Fiber::YieldToHold();
+    }
+
+    std::ostream& Scheduler::dump(std::ostream& os) {
+        os << "[Scheduler name=" << m_name
+           << " size=" << m_thread_count
+           << " active_count=" << m_active_thread_count
+           << " idle_count=" << m_idle_thread_count
+           << " stopping=" << m_stopping
+           << " ]" << std::endl << "    ";
+        for(size_t i = 0; i < m_threads.size(); ++i) {
+            if(i) {
+                os << ", ";
+            }
+            os << m_threads[i];
+        }
+        return os;
+    }
 }

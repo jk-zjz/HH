@@ -23,7 +23,7 @@ namespace hh {
     private:
         Fiber();
     public:
-        Fiber(std::function<void()> cb, size_t stackSize = 0);
+       Fiber(std::function<void()> cb, size_t stackSize=0, bool useCaller=false);
         ~Fiber();
         /*
          * 协程结束，切换协程方法以便重新激活
@@ -37,6 +37,15 @@ namespace hh {
          *切换到后台执行
          * */
         void swapOut();
+        /*
+         * 协程切换到执行
+         * */
+        void call();
+        /*
+         * 协程切换到后台执行
+         * */
+        void back();
+        uint64_t getId() const { return m_id; }
     public:
         static void SetThis(Fiber* f);
         // 获取当前正在执行的Fiber对象的智能指针
@@ -50,6 +59,7 @@ namespace hh {
         //执行方法
         static void MainFunc();
         static uint32_t getFiber_id();
+        static void CallerMainFunc();
         State getState() const { return m_state; }
         void setState(State state) { m_state = state; }
     private:

@@ -16,6 +16,8 @@ CXX_FLAGS =  -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-u
 
 # Custom defines: CMakeFiles/log_test.dir/hh/log.cc.o_DEFINES = __FILE__="hh/log.cc";__FILE__="hh/log.cc";__FILE__="hh/log.cc";__FILE__="hh/log.cc"
 
+# Custom defines: CMakeFiles/log_test.dir/hh/scheduler.cc.o_DEFINES = __FILE__="hh/scheduler.cc";__FILE__="hh/scheduler.cc";__FILE__="hh/scheduler.cc";__FILE__="hh/scheduler.cc"
+
 # Custom defines: CMakeFiles/log_test.dir/hh/thread.cc.o_DEFINES = __FILE__="hh/thread.cc";__FILE__="hh/thread.cc";__FILE__="hh/thread.cc";__FILE__="hh/thread.cc"
 
 # Custom defines: CMakeFiles/log_test.dir/hh/util.cc.o_DEFINES = __FILE__="hh/util.cc";__FILE__="hh/util.cc";__FILE__="hh/util.cc";__FILE__="hh/util.cc"

@@ -59,8 +59,14 @@
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 48,
+				"line" : 53,
 				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 19,
+				"parent" : 6
 			},
 			{
 				"command" : 3,
@@ -267,7 +273,7 @@
 				},
 				{
 					"backtrace" : 10,
-					"define" : "__FILE__=\"hh/thread.cc\""
+					"define" : "__FILE__=\"hh/scheduler.cc\""
 				}
 			],
 			"includes" : 
@@ -306,7 +312,7 @@
 				},
 				{
 					"backtrace" : 11,
-					"define" : "__FILE__=\"hh/util.cc\""
+					"define" : "__FILE__=\"hh/thread.cc\""
 				}
 			],
 			"includes" : 
@@ -328,6 +334,45 @@
 			"sourceIndexes" : 
 			[
 				5
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -g -fdiagnostics-color=always"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "YAML_CPP_STATIC_DEFINE"
+				},
+				{
+					"backtrace" : 12,
+					"define" : "__FILE__=\"hh/util.cc\""
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/home/hh/HH/./hh/include"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "17"
+			},
+			"sourceIndexes" : 
+			[
+				6
 			]
 		}
 	],
@@ -375,7 +420,8 @@
 				2,
 				3,
 				4,
-				5
+				5,
+				6
 			]
 		}
 	],
@@ -408,12 +454,18 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 4,
-			"path" : "hh/thread.cc",
+			"path" : "hh/scheduler.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 5,
+			"path" : "hh/thread.cc",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 6,
 			"path" : "hh/util.cc",
 			"sourceGroupIndex" : 0
 		}

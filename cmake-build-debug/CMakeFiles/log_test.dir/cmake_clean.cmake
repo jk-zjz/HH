@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/log_test.dir/hh/fiber.cc.o.d"
   "CMakeFiles/log_test.dir/hh/log.cc.o"
   "CMakeFiles/log_test.dir/hh/log.cc.o.d"
+  "CMakeFiles/log_test.dir/hh/scheduler.cc.o"
+  "CMakeFiles/log_test.dir/hh/scheduler.cc.o.d"
   "CMakeFiles/log_test.dir/hh/thread.cc.o"
   "CMakeFiles/log_test.dir/hh/thread.cc.o.d"
   "CMakeFiles/log_test.dir/hh/util.cc.o"
