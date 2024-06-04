@@ -12,6 +12,7 @@
 #include "thread.h"
 
 namespace hh {
+    //携程调度器
     class Scheduler {
     public:
         typedef std::shared_ptr<Scheduler> ptr;
@@ -28,6 +29,10 @@ namespace hh {
         static Fiber *GetMainFiber();       //获取当前线程的协程
         const std::string &getName() const { return m_name; };
 
+        /**
+         * @schedule 单添加任务方法
+         *
+         * */
         template<class FiberOrCb>
         void schedule(FiberOrCb fc, uint32_t thread = -1) {
             bool need_tickle = false;
@@ -39,7 +44,10 @@ namespace hh {
                 tickle();
             }
         }
-
+        /**
+         * @schedule 批量添加任务方法
+         *
+         * */
         template<class InputIterator>
         void schedule(InputIterator begin, InputIterator end){
             bool need_tickle = m_fibers.empty();
@@ -57,13 +65,20 @@ namespace hh {
         void switchTo(int threadid =-1);
         std::ostream &dump(std::ostream &os);
     protected:
+        //唤醒
         virtual void tickle();
+        //线程运行函数
         void run();
+        //判断停止
         virtual bool stopping();
         void setThis();
+        //空闲线程
         virtual void idle();
         bool hasIdleThreads(){return m_idle_thread_count>0;};
     private:
+        /**
+         * @schedule 添加任务方法
+         * */
         template<class FiberOrCb>
         bool scheduleNoLook(FiberOrCb fc, uint32_t thread) {
             bool need_tickle = m_fibers.empty();
@@ -75,6 +90,9 @@ namespace hh {
         }
 
     private:
+        /**
+         * 任务结构体
+         * */
         struct FiberAndThread {
             Fiber::ptr fiber;                   //协程
             std::function<void()> function;     //函数
@@ -116,8 +134,8 @@ namespace hh {
         bool m_stopping = true;                         //是否停止
         bool m_auto_stop =false;                        //是否自动停止
         uint32_t m_thread_count=0;                      //线程数量
-        std::atomic<uint32_t> m_active_thread_count = {0};             //活跃线程数量
-        std::atomic<uint32_t> m_idle_thread_count = {0};               //空闲线程数量
+        std::atomic<uint32_t> m_active_thread_count = {0};               //活跃线程数量
+        std::atomic<uint32_t> m_idle_thread_count = {0};                 //空闲线程数量
         int m_root_thread = 0;                          //主线程id
 
     };

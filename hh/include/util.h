@@ -11,6 +11,10 @@
 #include <vector>
 #include <string>
 #include "fiber.h"
+/**
+ * @util 工具函数的封装
+ *
+ * */
 namespace hh {
     //当前线程
     pid_t GetThreadID();

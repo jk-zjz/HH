@@ -8,6 +8,10 @@
 //  C:20
 //"A.C",20;
 namespace hh {
+    /**
+     * @config 递归遍历解析
+     *
+     * */
     static void ListAllMember(const std::string &prefix,
                               const YAML::Node &root,
                               std::list<std::pair<std::string, const YAML::Node>> &all_node) {
@@ -35,6 +39,9 @@ namespace hh {
         }
     }
 
+    /**
+     * @config 加载yaml文件
+     * */
     void Config::loadFromYaml(const YAML::Node &root) {
         std::list<std::pair<std::string, const YAML::Node>> all_node;
         ListAllMember("", root, all_node);
@@ -56,7 +63,9 @@ namespace hh {
             }
         }
     }
-
+    /**
+     * @config 获取配置项是否存在
+     * */
     ConfigVarBase::ptr Config::LookupBase(const std::string &name) {
         RWMutexType::ReadLock lock(getRWMutex());
         auto it = getData().find(name);
@@ -66,7 +75,10 @@ namespace hh {
             return it->second;
         }
     }
-
+    /**
+     * @config 自定义打印函数
+     *
+     * */
     void Config::visit(std::function<void(ConfigVarBase::ptr)> cb) {
         RWMutexType::ReadLock lock(getRWMutex());
         ConfigVarMap& m =getData();

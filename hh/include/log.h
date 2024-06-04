@@ -162,8 +162,10 @@ namespace hh {
         //格式化 event 返回
         std::string format(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event);
 
+        //获取是否为自定义格式器
         std::string get_pattern() const { return m_pattern; }
 
+        //判断格式器初始化是否成功
         bool is_Error()const {return m_Error;}
     public:
         //格式输出基类
@@ -172,7 +174,7 @@ namespace hh {
             typedef std::shared_ptr<FormatItem> ptr;
 
             virtual ~FormatItem() {};
-
+            //输出
             virtual void format(std::shared_ptr<Logger> logger, std::ostream &on, LogLevel::Level level, LogEvent::ptr event) = 0;
         };
 
@@ -201,6 +203,8 @@ namespace hh {
         void setFormatter(LogFormatter::ptr val);
         void setFatherFormatter(LogFormatter::ptr val,bool type);
         LogFormatter::ptr getFormatter();
+
+        //设置格式器的两种方式
         bool getFatherFormatter()const {return FatherFormatter;}
         void setFatherFormatter(bool val){FatherFormatter=val;}
     protected:
@@ -246,9 +250,9 @@ namespace hh {
 
         LogFormatter::ptr get_Formatter() const { return m_Formatter; }
 
+        //设置格式器的方式
         void setFormatter(LogFormatter::ptr ptr1);
         void setFormatter(const std::string& formatter);
-
 
     private:
         std::string m_name;                         //谁初始化日志
@@ -462,6 +466,9 @@ namespace hh {
             on << hh::Thread::GetName();
         }
     };
+    /**
+     * @log 日志器管理
+     * */
     class LoggerManager{
     public:
         LoggerManager();
@@ -471,6 +478,7 @@ namespace hh {
         Logger::ptr getLogger(const char *name);
         Logger::ptr GetRoot()const{return m_root;}
         std::map<std::string,Logger::ptr> getLoggers()const {return m_logger;}
+        //设置日志器名称对应的日志器
         void setlogger(std::string key,Logger::ptr loggers){
             m_logger[key]=loggers;
         }

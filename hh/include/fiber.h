@@ -21,32 +21,36 @@ namespace hh {
             EXCEPT  // 异常或错误状态
         };
     private:
+        //为创建主协程做的构造函数
         Fiber();
     public:
+        //子协程的构造函数
        Fiber(std::function<void()> cb, size_t stackSize=0, bool useCaller=false);
+        //协程的析构函数
         ~Fiber();
-        /*
+        /**
          * 协程结束，切换协程方法以便重新激活
          * */
         void reset(std::function<void()> cb);
-        /*
+        /**
          * 切换当前线程执行
          * */
         void swapIn();
-        /*
+        /**
          *切换到后台执行
          * */
         void swapOut();
-        /*
+        /**
          * 协程切换到执行
          * */
         void call();
-        /*
+        /**
          * 协程切换到后台执行
          * */
         void back();
         uint64_t getId() const { return m_id; }
     public:
+        //设置当前协程
         static void SetThis(Fiber* f);
         // 获取当前正在执行的Fiber对象的智能指针
         static Fiber::ptr GetThis();
@@ -59,6 +63,7 @@ namespace hh {
         //执行方法
         static void MainFunc();
         static uint32_t getFiber_id();
+        //多协程调用主协程
         static void CallerMainFunc();
         State getState() const { return m_state; }
         void setState(State state) { m_state = state; }

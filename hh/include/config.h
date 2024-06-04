@@ -34,6 +34,7 @@ namespace hh {
 
         //转字符串
         virtual std::string  toString() = 0;
+        //字符串转指定类
         virtual bool fromString(const std::string &var) = 0;
         virtual std::string gettype() =0;
     protected:
@@ -260,6 +261,7 @@ namespace hh {
             RWMutexType::ReadLock lock(m_mutex);
             return m_val;
         }
+        //值发生改变产生回调
         void setValue(const T &t){
             {
                 RWMutexType::ReadLock lock(m_mutex);
@@ -310,7 +312,10 @@ namespace hh {
         std::map<uint64_t,on_change_cb> m_ocb;
         RWMutexType m_mutex;
     };
-
+    /**
+     * @config 配置类
+     *
+     * */
     class Config{
     public:
         typedef std::map<std::string,ConfigVarBase::ptr> ConfigVarMap;
@@ -362,8 +367,11 @@ namespace hh {
             }
            return std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
         }
+        //静态配置解析类
         static void loadFromYaml(const YAML::Node& root);
+        //判断是否存在
         static ConfigVarBase::ptr LookupBase(const std::string& name);
+        //自定义打印函数
         static void visit(std::function<void(ConfigVarBase::ptr)> cb);
     private:
         static ConfigVarMap & getData(){

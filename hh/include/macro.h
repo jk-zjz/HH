@@ -8,6 +8,11 @@
 #include "util.h"
 #include "log.h"
 #include <cassert>
+/**
+ * @macro 断言&函数栈的宏设置
+ *
+ *
+ * */
 #define HH_ASSERT(x) \
     if(!(x)){        \
         HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"ASSERTION: " #x \

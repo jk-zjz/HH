@@ -11,6 +11,10 @@ namespace hh{
     //当前协程
     static thread_local Fiber* t_fiber = nullptr;
 
+    /**
+     * @scheduler 构造函数 线程数 是否使用调度线程 调度器名称
+     * 如果启用调度线程会创建线程池--
+     * */
     Scheduler::Scheduler(uint32_t threads, bool use_caller, std::string name):
     m_name(name)
     {
@@ -44,7 +48,10 @@ namespace hh{
             t_scheduler = nullptr;
         }
     }
-
+    /**
+     * @scheduler 启动调度器
+     * 创建线程并且存储
+     * */
     void Scheduler::start() {
         MutexType lock(m_mutex);
         if(!m_stopping){
@@ -62,7 +69,10 @@ namespace hh{
             m_thread_ids.push_back(m_threads[i]->get_id());
         }
     }
-
+    /**
+     * @scheduler 停止调度器
+     *
+     * */
     void Scheduler::stop() {
         //设置需要自动停止标志
         m_auto_stop = true;
@@ -119,7 +129,13 @@ namespace hh{
     Fiber *Scheduler::GetMainFiber() {
         return t_fiber;
     }
-
+    /**
+     * @scheduler 运行调度器
+     * while(true)
+     * 一直取任务 如果没有任务 就使用idle 任务空转
+     * 判断是否为携程任务还是fun
+     *
+     * */
     void Scheduler::run() {
         //设置为当前执行的调度器
         setThis();
@@ -256,12 +272,19 @@ namespace hh{
                 m_active_thread_count==0;
     }
 
+    /**
+     * @brief 空转任务
+     *
+     * */
     void Scheduler::idle() {
         HH_LOG_INFO(g_logger, "idle");
         while(!stopping()){
             hh::Fiber::YieldToHold();
         }
     }
+    /**
+     * @scheduler 切换到其他线程执行
+     * */
     void Scheduler::switchTo(int thread) {
         HH_ASSERT(Scheduler::GetThis() != nullptr);
         if(Scheduler::GetThis() == this) {
@@ -269,7 +292,9 @@ namespace hh{
                 return;
             }
         }
+        //添加携程指定线程任务
         schedule(Fiber::GetThis(), thread);
+        //切换到其他携程执行
         Fiber::YieldToHold();
     }
 

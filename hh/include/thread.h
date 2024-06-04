@@ -14,6 +14,9 @@
 #include <iostream>
 #include <atomic>
 namespace hh {
+    /**
+     * @thread 信号量封装
+     * */
     class Semaphore {
     public:
         Semaphore(uint32_t count = 0);
@@ -246,6 +249,10 @@ namespace hh {
     private:
         volatile std::atomic_flag m_flag; // 原子标志，用于实现自旋锁
     };
+    /**
+     * @thread 线程类封装
+     *
+     * */
     class Thread {
     public:
 

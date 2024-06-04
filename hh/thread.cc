@@ -51,6 +51,7 @@ namespace hh{
                         <<re<<" name="<<name;
             throw std::logic_error("pthread_create error");
         }
+        //等待线程创建完成
         m_semaphore.wait();
     }
 
@@ -103,7 +104,7 @@ namespace hh{
     Semaphore::~Semaphore() {
         sem_destroy(&m_semaphore);
     }
-
+    //等待
     void Semaphore::wait() {
         if(sem_wait(&m_semaphore)){
             throw std::logic_error("sem_wait error");
@@ -111,7 +112,7 @@ namespace hh{
                     <<"sem_wait error";
         }
     }
-
+    //通知
     void Semaphore::notify() {
         if(sem_post(&m_semaphore)){
             throw std::logic_error("sem_post error");
