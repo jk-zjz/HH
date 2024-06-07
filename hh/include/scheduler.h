@@ -6,7 +6,7 @@
 #define HH_SCHEDULER_H
 
 #include <memory>
-#include <list>
+#include <queue>
 #include <utility>
 
 #include "thread.h"
@@ -36,10 +36,7 @@ namespace hh {
         template<class FiberOrCb>
         void schedule(FiberOrCb fc, uint32_t thread = -1) {
             bool need_tickle = false;
-            {
-                MutexType::Lock lock(m_mutex);
-                need_tickle = scheduleNoLook(fc, thread);
-            }
+            need_tickle = scheduleNoLook(fc, thread);
             if(need_tickle){
                 tickle();
             }
@@ -64,7 +61,11 @@ namespace hh {
         }
         void switchTo(int threadid =-1);
         std::ostream &dump(std::ostream &os);
+
+        //空闲线程
+
     protected:
+        virtual void idle();
         //唤醒
         virtual void tickle();
         //线程运行函数
@@ -72,8 +73,7 @@ namespace hh {
         //判断停止
         virtual bool stopping();
         void setThis();
-        //空闲线程
-        virtual void idle();
+
         bool hasIdleThreads(){return m_idle_thread_count>0;};
     private:
         /**
@@ -81,10 +81,11 @@ namespace hh {
          * */
         template<class FiberOrCb>
         bool scheduleNoLook(FiberOrCb fc, uint32_t thread) {
+            MutexType::Lock lock(m_mutex);
             bool need_tickle = m_fibers.empty();
             FiberAndThread ft(fc, thread);
-            if (ft.function || ft.fiber) {
-                m_fibers.push_back(ft);
+            if (ft.function || ft.fiber ) {
+                m_fibers.push(ft);
             }
             return need_tickle;
         }
@@ -97,25 +98,56 @@ namespace hh {
             Fiber::ptr fiber;                   //协程
             std::function<void()> function;     //函数
             uint32_t thread_id;                 //需要指定执行的线程id
-            FiberAndThread(Fiber::ptr f, uint32_t t) :
-                    fiber(std::move(f)), thread_id(t) {
+            bool Master_NULL(){
+                return fiber== nullptr||function== nullptr;
+            };
+            bool Master_coroutine(){
+                return fiber != nullptr||function!= nullptr;
+            };
+            FiberAndThread(Fiber::ptr f, int thr)
+                    :fiber(f), thread_id(thr) {
             }
-
-            FiberAndThread(std::function<void()> f, uint32_t t) :
-                    function(std::move(f)), thread_id(t) {
-            }
-
-            FiberAndThread(Fiber::ptr *f, uint32_t t) : thread_id(t) {
+            /**
+             * @brief 构造函数
+             * @param[in] f 协程指针
+             * @param[in] thr 线程id
+             * @post *f = nullptr
+             */
+            FiberAndThread(Fiber::ptr* f, int thr)
+                    :thread_id(thr) {
                 fiber.swap(*f);
             }
 
-            FiberAndThread(std::function<void()> *f, uint32_t t) : thread_id(t) {
+            /**
+             * @brief 构造函数
+             * @param[in] f 协程执行函数
+             * @param[in] thr 线程id
+             */
+            FiberAndThread(std::function<void()> f, int thr)
+                    :function(f), thread_id(thr) {
+            }
+
+            /**
+             * @brief 构造函数
+             * @param[in] f 协程执行函数指针
+             * @param[in] thr 线程id
+             * @post *f = nullptr
+             */
+            FiberAndThread(std::function<void()>* f, int thr)
+                    :thread_id(thr) {
                 function.swap(*f);
             }
 
-            FiberAndThread() : thread_id(-1) {
+            /**
+             * @brief 无参构造函数
+             */
+            FiberAndThread()
+                    :thread_id(-1) {
             }
 
+            /**
+             * @brief 重置数据
+             */
             void reset() {
                 fiber = nullptr;
                 function = nullptr;
@@ -127,7 +159,7 @@ namespace hh {
         std::vector<Thread::ptr> m_threads;             //线程组
         std::string m_name;                             //线程池名称
         MutexType m_mutex;                              //互斥锁
-        std::list<FiberAndThread> m_fibers;             //协程获方法队列
+        std::queue<FiberAndThread> m_fibers;             //协程获方法队列
         Fiber::ptr m_root_fiber;                        //主协程
     protected:
         std::vector<int> m_thread_ids;                  //线程id

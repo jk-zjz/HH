@@ -77,10 +77,10 @@ namespace hh {
         m_ctx.uc_stack.ss_size = m_stackSize;
         // 根据useCaller参数决定使用哪种方式初始化协程上下文
         if (!useCaller) {
-            // 如果不使用调用者上下文，直接调用Fiber::MainFunc作为入口
+            // 正常协程执行的方法
             makecontext(&m_ctx, (void (*)()) &Fiber::MainFunc, 0);
         } else {
-            // 如果使用调用者上下文，调用Fiber::CallerMainFunc作为入口
+            // 在调度器中使用了一个线程当调度线程的协程的方法
             makecontext(&m_ctx, (void (*)()) &Fiber::CallerMainFunc, 0);
         }
     }
@@ -142,6 +142,7 @@ namespace hh {
      */
     void Fiber::call() {
         SetThis(this); // 设置当前Fiber对象
+
         m_state = EXEC; // 将Fiber状态设置为执行中
         if (swapcontext(&t_threadFiber->m_ctx, &m_ctx)) { // 执行上下文切换
             HH_ASSERT2(false, "Fiber::call"); // 如果切换失败，触发断言

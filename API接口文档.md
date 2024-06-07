@@ -124,5 +124,27 @@
 |hh::Fiber::Mainfunc | 协程主函数 | 获取       |     |  |        |          |
 |hh::Fiber::getFiber_id | 获取协程ID | 获取       |     |  |        |          |
 
+## scheduler 协程调度器API
+| SCHEDULER API           | 说明         | 备注       | 有无重载 | 是否为虚 | 类是否为父类 | 父类    |
+|-------------------------|------------|----------|------|--|--------|--------------------------------------|
+| hh::Scheduler           | 协程调度器类     |          |      |  |        |          |
+| hh::Scheduler::Scheduler | 协程调度器类构造方法 | 构造       |      |  |        |          |
+| hh::Scheduler::start | 协程调度器启动    | 设置       |      |  |        |          |
+| hh::Scheduler::stop | 协程调度器停止    | 设置       |      |  |        |          |
+| hh::Scheduler::schedule | 添加任务       | 设置       | 有    |  |        |          |
+|hh::Scheduler::GetThis | 获取当前调度器  | 获取       |      |  |        |          |
+|hh::Scheduler::GetMainFiber | 获取主协程  | 获取       |      |  |        |          |
+|hh::Scheduler::getName | 获取调度器名  | 获取       |      |  |        |          |
+|hh::Scheduler::switchTo | 切换协程       | 设置       |      |  |        |          |
+|hh::Scheduler::dump | 协程调度器状态    | 获取       |      |  |        |          |\
+|hh::Scheduler::tickle | 协程调度器调度    | 设置       |      |  |        |          |
+|hh::Scheduler::stopping | 协程调度器停止    | 设置       |      |  |        |          |
+|hh::Scheduler::setThis | 设置当前调度器  | 设置       |      |  |        |          |
+|hh::Scheduler::run | 协程调度器运行    | 设置       |      |  |        |          |
+|hh::Scheduler::idle | 协程调度器空闲    | 设置       |      |  |        |          |
+|hh::Scheduler::hasIdleThread | 协程调度器是否有空闲线程  | 设置       |      |  |        |          |
+
+
+
 
 

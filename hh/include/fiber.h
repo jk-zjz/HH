@@ -67,6 +67,8 @@ namespace hh {
         static void CallerMainFunc();
         State getState() const { return m_state; }
         void setState(State state) { m_state = state; }
+        bool Master_coroutine(){return m_stack==nullptr || m_cb==nullptr;}
+        bool Fun_(){return m_cb==nullptr;}
     private:
         std::function<void()> m_cb;         //真正执行的函数
         ucontext_t m_ctx;                   //协程

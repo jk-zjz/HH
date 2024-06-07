@@ -533,6 +533,28 @@ while(一直取任务)  是线程池中的每一个线程运行的方法run
     不是停止状态 跳出
     不是异常不是停止 设置暂停状态        
 ```
+## IO协程调度模块
+```
+IOManager (epoll) -->scheduler(继承)
+     |
+     |
+     |
+     V
+  idle(重载)
+  
+PutMaessage(msg,) 信号量+1 ，single()
+meassage_queue
+    |
+    |---Thread
+    |---Thread
+        wait()-信号量-1,RecvMessage(msg,)
+异步IO,等待数据返回，epoll_wait
+
+流程
+poll_wait等待IO事件的发生，当有事件发生时，epoll通知IOManager进行处理。
+PutMaessage()将任务放人meassage_queue(队列)
+通过single()唤醒wait线程进行RecvMessage()执行
+```
 
 ## socket函数库开发
 
