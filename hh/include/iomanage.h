@@ -7,7 +7,7 @@
 
 #include "scheduler.h"
 /**
- * @class IOManager IO管理器
+ * @class IOManager IO协程调度模块
  *
  * */
 namespace hh {
@@ -17,9 +17,9 @@ namespace hh {
         typedef RWMutex RWMutexType;
         //事件
         enum Event {
-            NONE = 0x0,
-            READ = 0x1,
-            WRITE = 0x2
+            NONE = 0x0, //无事件
+            READ = 0x1, //读事件
+            WRITE = 0x4 //写事件
         };
     private:
         //FD上下文   FD指的是epoll文件描述符
@@ -31,6 +31,9 @@ namespace hh {
                 Fiber::ptr fiber;               //协程
                 std::function<void()> cb;       //回调函数
             };
+            EventContext & getEventContext(Event event);
+            void resetEventContext(EventContext eventContext);
+            void triggerEvent(Event event);
             EventContext read;                  //读事件
             EventContext write;                 //写事件
             MutexType mutex;                    //互斥锁
@@ -49,7 +52,7 @@ namespace hh {
         //删除事件
         bool delEvent(int fd, Event event);
 
-        //取消事件
+        //取消事件--->不是删除而是强制触发事件
         bool cancelEvent(int fd, Event event);
 
         //取消所有事件

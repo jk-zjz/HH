@@ -21,8 +21,9 @@ namespace hh {
     static thread_local Fiber::ptr t_threadFiber = nullptr;
 
     //注册fiber栈大小配置
-    static hh::ConfigVar<uint32_t>::ptr g_fiber_stack_size = hh::Config::Lookup<uint32_t>("fiber.stack_size",
-                                                                                          1024 * 1024, "stack size");
+    static hh::ConfigVar<uint32_t>::ptr g_fiber_stack_size =
+            hh::Config::Lookup<uint32_t>("fiber.stack_size",
+                                         128 * 1024, "stack size");
 
     //简单的内存分配器
     class MallocStackAllocator {
@@ -119,7 +120,7 @@ namespace hh {
         HH_ASSERT(m_state == INIT
                   || m_state == TERM
                   || m_state == EXCEPT);
-        m_cb = std::move(cb);
+        m_cb = cb;
         if (getcontext(&m_ctx)) {
             HH_ASSERT2(false, "Fiber::reset");
         }
@@ -129,7 +130,7 @@ namespace hh {
         m_ctx.uc_stack.ss_sp = m_stack;
         //指定栈大小
         m_ctx.uc_stack.ss_size = m_stackSize;
-        makecontext(&m_ctx, (void (*)()) &Fiber::MainFunc, 0);
+        makecontext(&m_ctx,  &Fiber::MainFunc, 0);
         m_state = INIT;
     }
 
@@ -142,7 +143,6 @@ namespace hh {
      */
     void Fiber::call() {
         SetThis(this); // 设置当前Fiber对象
-
         m_state = EXEC; // 将Fiber状态设置为执行中
         if (swapcontext(&t_threadFiber->m_ctx, &m_ctx)) { // 执行上下文切换
             HH_ASSERT2(false, "Fiber::call"); // 如果切换失败，触发断言
@@ -301,7 +301,7 @@ namespace hh {
      */
     uint32_t Fiber::getFiber_id() {
         if (t_fiber) {
-            return t_fiber->m_id; // 返回Fiber ID
+            return t_fiber->getId(); // 返回Fiber ID
         }
         return 0; // 无Fiber时返回0
     }

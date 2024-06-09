@@ -36,7 +36,10 @@ namespace hh {
         template<class FiberOrCb>
         void schedule(FiberOrCb fc, uint32_t thread = -1) {
             bool need_tickle = false;
-            need_tickle = scheduleNoLook(fc, thread);
+            {
+                MutexType::Lock lock(m_mutex);
+                need_tickle = scheduleNoLook(fc, thread);
+            }
             if(need_tickle){
                 tickle();
             }
@@ -47,7 +50,7 @@ namespace hh {
          * */
         template<class InputIterator>
         void schedule(InputIterator begin, InputIterator end){
-            bool need_tickle = m_fibers.empty();
+            bool need_tickle = false;
             {
                 MutexType::Lock lock(m_mutex);
                 while(begin!=end){
@@ -62,8 +65,6 @@ namespace hh {
         void switchTo(int threadid =-1);
         std::ostream &dump(std::ostream &os);
 
-        //空闲线程
-
     protected:
         virtual void idle();
         //唤醒
@@ -74,6 +75,7 @@ namespace hh {
         virtual bool stopping();
         void setThis();
 
+        //空闲线程
         bool hasIdleThreads(){return m_idle_thread_count>0;};
     private:
         /**
@@ -81,11 +83,10 @@ namespace hh {
          * */
         template<class FiberOrCb>
         bool scheduleNoLook(FiberOrCb fc, uint32_t thread) {
-            MutexType::Lock lock(m_mutex);
             bool need_tickle = m_fibers.empty();
             FiberAndThread ft(fc, thread);
             if (ft.function || ft.fiber ) {
-                m_fibers.push(ft);
+                m_fibers.push_back(ft);
             }
             return need_tickle;
         }
@@ -159,7 +160,7 @@ namespace hh {
         std::vector<Thread::ptr> m_threads;             //线程组
         std::string m_name;                             //线程池名称
         MutexType m_mutex;                              //互斥锁
-        std::queue<FiberAndThread> m_fibers;             //协程获方法队列
+        std::vector<FiberAndThread> m_fibers;             //协程获方法队列
         Fiber::ptr m_root_fiber;                        //主协程
     protected:
         std::vector<int> m_thread_ids;                  //线程id

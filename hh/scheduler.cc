@@ -53,7 +53,7 @@ namespace hh {
      * 创建线程并且存储
      * */
     void Scheduler::start() {
-        MutexType lock(m_mutex);
+        MutexType::Lock lock(m_mutex);
         if (!m_stopping) {
             //需要启动需要判断是否是停止状态才能启动
             return;
@@ -147,7 +147,7 @@ namespace hh {
             t_fiber = Fiber::GetThis().get();
         }
         //设置空闲协程执行
-        Fiber::ptr idle_fiber = std::make_shared<Fiber>(std::bind(&Scheduler::idle, this));
+        Fiber::ptr idle_fiber(new Fiber(std::bind(&Scheduler::idle, this)));
         //未了提供给fun函数，变成协程
         Fiber::ptr cb_fiber;
 
@@ -159,26 +159,27 @@ namespace hh {
             bool tickle_me = false;
             bool is_active = false;
             {
-                MutexType lock(m_mutex);
+                MutexType::Lock lock(m_mutex);
+                auto it = m_fibers.begin();
                 while (!m_fibers.empty()) {
-                    auto it = m_fibers.front();
-                    m_fibers.pop();
-                    if (it.thread_id != (uint32_t) -1 && it.thread_id != (uint32_t) hh::GetThreadID()) {
+                    if (it->thread_id != (uint32_t) -1 && it->thread_id != (uint32_t) hh::GetThreadID()) {
                         tickle_me = true;
-                        m_fibers.push(it);
+                        it++;
                         continue;
                     }
 
-                    HH_ASSERT(it.fiber || it.function);
-                    if (it.fiber && it.fiber->getState() == Fiber::EXEC) {
+                    HH_ASSERT(it->fiber || it->function);
+                    if (it->fiber && it->fiber->getState() == Fiber::EXEC) {
+                        it++;
                         continue;
                     }
-                    ft = it;
+                    ft = *it;
+                    m_fibers.erase(it++);
                     ++m_active_thread_count;
                     is_active = true;
                     break;
                 }
-                tickle_me |= m_fibers.empty();
+                tickle_me |= it != m_fibers.end();
             }
             //任务已经取出获取没有任务
             if (tickle_me) {
@@ -200,9 +201,8 @@ namespace hh {
                            ft.fiber->getState() != Fiber::State::EXCEPT) {
                     //不是停止态或者异常 被打断
                     ft.fiber->setState(Fiber::State::HOLD);
-                } else {
-                    ft.reset();
                 }
+                ft.reset();
             } else if (ft.function) {
                 if(cb_fiber) {
                     cb_fiber->reset(ft.function);

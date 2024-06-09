@@ -51,3 +51,8 @@ add_executable(scheduler_test tests/scheduler_test.cc ${CPP_G})
 target_link_libraries(scheduler_test yaml-cpp::yaml-cpp
         ${PTHREAD})
 redefine_file_macro(scheduler_test)
+
+add_executable(iomanager_test tests/iomanager_test.cc ${CPP_G})
+target_link_libraries(iomanager_test yaml-cpp::yaml-cpp
+${PTHREAD})
+redefine_file_macro(iomanager_test)

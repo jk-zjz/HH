@@ -49,6 +49,7 @@ namespace hh {
          * */
         void back();
         uint64_t getId() const { return m_id; }
+        State getState() const { return m_state; }
     public:
         //设置当前协程
         static void SetThis(Fiber* f);
@@ -65,7 +66,6 @@ namespace hh {
         static uint32_t getFiber_id();
         //多协程调用主协程
         static void CallerMainFunc();
-        State getState() const { return m_state; }
         void setState(State state) { m_state = state; }
         bool Master_coroutine(){return m_stack==nullptr || m_cb==nullptr;}
         bool Fun_(){return m_cb==nullptr;}
