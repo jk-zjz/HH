@@ -120,7 +120,7 @@ namespace hh {
         m_pendingEventCount++;
         FdCtx->events = (Event) (FdCtx->events | event);
         //回调的上下文 读 | 写
-        FdContext::EventContext event_ctx = FdCtx->getEventContext(event);
+        FdContext::EventContext& event_ctx = FdCtx->getEventContext(event);
         HH_ASSERT(!event_ctx.scheduler
                   && !event_ctx.cb
                   && !event_ctx.fiber);
@@ -316,7 +316,7 @@ namespace hh {
     void IOManager::idle() {
         //创建事件触发数组
         static int m_epollEventSize = 255;
-        epoll_event *events = new epoll_event[m_epollEventSize];
+        epoll_event *events = new epoll_event[m_epollEventSize]();
         std::shared_ptr<epoll_event> event_ptr(events, [](epoll_event *ptr) {
             delete[] ptr;
         });
@@ -342,15 +342,15 @@ namespace hh {
                 //取出一个触发事件
                 epoll_event &event = events[i];
                 if(event.data.fd == m_TickleFd[0]){
-                    char dummy;
+                    char dummy[256];
                     //读出数据，清空管到  因为使用到边沿不然就触发不了了
-                    while(read(m_TickleFd[0], &dummy, 1) == 1){
+                    while(read(m_TickleFd[0], &dummy, sizeof(dummy)) > 0){
                         continue;
                     }
                 }
                 //取出上下文
                 FdContext *FdCtx = (FdContext *)event.data.ptr;
-                FdContext::MutexType lock(FdCtx->mutex);
+                FdContext::MutexType::Lock lock(FdCtx->mutex);
                 //判断event.events中是否有错误事件
                 if(event.events & (EPOLLERR | EPOLLHUP)){
                     //没有就为event.events设置读写

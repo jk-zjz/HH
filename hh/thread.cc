@@ -30,6 +30,9 @@ namespace hh{
     }
 
     void Thread::SetName(const std::string &name) {
+        if(name.empty()){
+            return;
+        }
         if(t_thread){
             t_thread->m_name = name;
         }
