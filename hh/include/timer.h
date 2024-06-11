@@ -23,6 +23,12 @@ namespace hh {
         Timer(uint64_t interval, bool repeat, std::function<void()> cb,
               bool recurring, TimerManager *manager);
         Timer(uint64_t Max):m_next_time(Max){};
+        //重置
+        bool reset(uint64_t interval, bool from_now);
+        //取消
+        bool cancel();
+        //刷新
+        bool refresh();
     private:
         // 毫秒级
         uint64_t m_next_time = 0;   // 下一次触发时间
@@ -39,6 +45,7 @@ namespace hh {
     };
 
     class TimerManager {
+        friend class Timer;
     public:
         typedef RWMutex RWMutexType;
 
@@ -63,10 +70,15 @@ namespace hh {
     protected:
         // 添加定时器 并且 为最小 唤醒
         virtual void onTimerInsertedAtFront() = 0;
+        void addTimer(Timer::ptr timer);
+    private:
+        bool detectClockRollover(uint64_t now_ms);
     private:
         RWMutexType m_mutex;
         // 定时器集合
-        std::set<Timer::ptr, Timer::Compare> m_timers;
+        std::set<Timer::ptr, Timer::Compare> m_timers;  // 定时器集合
+        bool m_tickled = false;                         // 是否被唤醒
+        uint64_t m_previouseTime = 0;                   // 上一次触发时间
     };
 }
 #endif //HH_TIMER_H
