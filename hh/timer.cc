@@ -6,28 +6,33 @@
 
 namespace hh {
     bool hh::Timer::Compare::operator()(const hh::Timer::ptr &lhs, const hh::Timer::ptr &rhs) {
-        // 优先级队列，按照时间升序排列
-        if (lhs->m_next_time < rhs->m_next_time) {
+        if(!lhs && !rhs) {
+            return false;
+        }
+        if(!lhs) {
             return true;
         }
-        // 如果时间相同，则比较指针
-        if (lhs->m_next_time == rhs->m_next_time && lhs.get() < rhs.get()) {
+        if(!rhs) {
+            return false;
+        }
+        if(lhs->m_next_time < rhs->m_next_time) {
             return true;
         }
-        return false;
+        if(rhs->m_next_time < lhs->m_next_time) {
+            return false;
+        }
+        return lhs.get() < rhs.get();
     }
-
-    hh::Timer::Timer(uint64_t interval, bool repeat,
+    hh::Timer::Timer(uint64_t interval,
                      std::function<void()> cb, bool recurring,
                      hh::TimerManager *manager) :
             m_interval(interval),
-            m_repeat(repeat),
+            m_repeat(recurring),
             m_cb(cb),
             m_manager(manager) {
         // 获取当前时间 毫秒级
         m_next_time = hh::GetCurrentMS() + interval;
     }
-
     /**
      * 重置定时器
      * @param interval  间隔时间
@@ -35,9 +40,9 @@ namespace hh {
      * @return bool
      */
     bool Timer::reset(uint64_t interval, bool from_now) {
-        // 如果间隔时间没有变化，并且不重新计算时间，则返回false
+        // 如果间隔时间没有变化，并且不重新计算时间，则返回true
         if (interval == m_interval && !from_now) {
-            return false;
+            return true;
         }
         TimerManager::RWMutexType::WriteLock lock(m_manager->m_mutex);
         if (!m_cb) {
@@ -47,13 +52,12 @@ namespace hh {
         if (it == m_manager->m_timers.end()) {
             return false;
         }
-        // 删除原定时器更改新定时器
-        m_interval = interval;
         m_manager->m_timers.erase(it);
         // 重新添加
         uint64_t start_time = from_now ? hh::GetCurrentMS() : m_next_time - m_interval;
+        m_interval = interval;
         m_next_time = start_time + m_interval;
-        m_manager->addTimer(shared_from_this());
+        m_manager->addTimer(shared_from_this(), lock);
         return true;
     }
 
@@ -89,9 +93,10 @@ namespace hh {
         }
         m_manager->m_timers.erase(it);
         m_next_time = hh::GetCurrentMS() + m_interval;
-        m_manager->addTimer(shared_from_this());
+        m_manager->m_timers.insert(shared_from_this());
         return true;
     }
+
 
     hh::TimerManager::TimerManager() {
          m_previouseTime = hh::GetCurrentMS();
@@ -112,10 +117,8 @@ namespace hh {
                                               std::function<void()> cb,
                                               bool recurring) {
         Timer::ptr timer(new Timer(interval, cb, recurring, this));
-        {
-             TimerManager::RWMutexType::WriteLock lock(m_mutex);
-             addTimer(timer);
-        }
+         TimerManager::RWMutexType::WriteLock lock(m_mutex);
+         addTimer(timer, lock);
         // 判断是否最小需要onTimerInsertedAtFront(唤醒)
         return timer;
     }
@@ -155,21 +158,15 @@ namespace hh {
             return ~0ull;
         }
         // 取出最小的timer
-        auto it = *m_timers.begin();
-        if (it->m_next_time > hh::GetCurrentMS()) {
-            return it->m_next_time - hh::GetCurrentMS();
+        const Timer::ptr& it = *m_timers.begin();
+        uint64_t now_ms = hh::GetCurrentMS();
+        if (now_ms >= it->m_next_time) {
+           return 0;
+        }else{
+            return it->m_next_time - now_ms;
         }
-        return 0;
     }
 
-    /**
-     * 移除定时器
-     * @param timer
-     */
-    void TimerManager::removeTimer(Timer::ptr &timer) {
-        RWMutexType::WriteLock lock(m_mutex);
-        m_timers.erase(timer);
-    }
 
     /**
      * 获取触发定时器任务
@@ -185,6 +182,9 @@ namespace hh {
             }
         }
         RWMutexType::WriteLock lock(m_mutex);
+        if(m_timers.empty()){
+            return;
+        }
         //是否回拨
         bool rollover = detectClockRollover(now_ms);
         if(!rollover &&  now_ms<(*m_timers.begin())->m_next_time){
@@ -194,37 +194,23 @@ namespace hh {
         Timer::ptr now_timer(new Timer(now_ms));
         // 回拨是一定不会有超时
         auto it =rollover ?m_timers.end() : std::lower_bound(m_timers.begin(), m_timers.end(), now_timer);
-        while (it != m_timers.end() && (*it)->m_next_time < now_ms) {
+        while (it != m_timers.end() && (*it)->m_next_time == now_ms) {
             it++;
         }
         tmp.insert(tmp.begin(), m_timers.begin(), it);
         m_timers.erase(m_timers.begin(), it);
         cbs.resize(tmp.size());
-        for (size_t i = 0; i < tmp.size(); i++) {
-            cbs[i] = tmp[i]->m_cb;
-            if (tmp[i]->m_repeat) {
-                tmp[i]->m_next_time = now_ms + tmp[i]->m_interval;
-                m_timers.insert(tmp[i]);
+        for(auto& timer : tmp) {
+            cbs.push_back(timer->m_cb);
+            if(timer->m_repeat) {
+                timer->m_next_time = now_ms + timer->m_interval;
+                m_timers.insert(timer);
             } else {
-                tmp[i]->m_cb = nullptr;
+                timer->m_cb = nullptr;
             }
         }
     }
 
-    /**
-     * 添加定时器
-     */
-    void TimerManager::addTimer(Timer::ptr timer) {
-        bool is_first = false;
-        auto it = m_timers.insert(timer).first;
-        is_first = (it == m_timers.begin()) && !m_tickled;
-        if (is_first) {
-            m_tickled = true;
-        }
-        if(is_first){
-            onTimerInsertedAtFront();
-        }
-    }
     /**
      * 检测时钟回拨
      * @param now_ms 当前时间
@@ -239,6 +225,28 @@ namespace hh {
         // 更新最后一次时间
         m_previouseTime = now_ms;
         return rollover;
+    }
+    /**
+     * 是否有定时器
+     * @return bool true 有定时器
+     */
+    bool TimerManager::hasTimer() {
+        RWMutexType::ReadLock lock(m_mutex);
+        return m_timers.empty();
+    }
+    /**
+     * 添加定时器
+     */
+    void TimerManager::addTimer(Timer::ptr timer,RWMutexType::WriteLock &lock) {
+        auto it = m_timers.insert(timer).first;
+        bool is_first = (it == m_timers.begin()) && !m_tickled;
+        if (is_first) {
+            m_tickled = true;
+        }
+        lock.unlock();
+        if(is_first){
+            onTimerInsertedAtFront();
+        }
     }
 
 }

@@ -27,14 +27,8 @@ namespace hh {
     std::string BacktraceToString(int size=64, int skip=2, const std::string& prefix = "");
 
     // 获取当前时间毫秒
-    uint64_t GetCurrentMS(){
-        return std::chrono::duration_cast< std::chrono::milliseconds >(
-                std::chrono::system_clock::now().time_since_epoch()
-        ).count();
-    };
+    uint64_t GetCurrentMS();
     // 获取当前时间秒
-    uint64_t GetCurrentUS(){
-        return time(nullptr);
-    }
+    uint64_t GetCurrentUS();
 }
 #endif //HH_UTIL_H

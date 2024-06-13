@@ -6,10 +6,10 @@
 #define HH_SCHEDULER_H
 
 #include <memory>
-#include <queue>
-#include <utility>
 
+#include <utility>
 #include "thread.h"
+
 
 namespace hh {
     //携程调度器
@@ -73,6 +73,7 @@ namespace hh {
         void run();
         //判断停止
         virtual bool stopping();
+
         void setThis();
 
         //空闲线程

@@ -47,6 +47,13 @@ void test01(){
     hh::IOManager iom(2, false,"JK");
     iom.schedule(&test_fiber);
 }
+void test02(){
+    hh::IOManager iom(2);
+    iom.addTimer(1000, [](){
+        HH_LOG_INFO(g_logger, "hello");
+    }, true);
+}
 int main(){
     test01();
+    //test02();
 }

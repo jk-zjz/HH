@@ -6,12 +6,13 @@
 #define HH_IOMANAGE_H
 
 #include "scheduler.h"
+#include "timer.h"
 /**
  * @class IOManager IO协程调度模块
  *
  * */
 namespace hh {
-    class IOManager : public Scheduler {
+    class IOManager : public Scheduler,public TimerManager{
     public:
         typedef std::shared_ptr<IOManager> ptr;
         typedef RWMutex RWMutexType;
@@ -32,7 +33,7 @@ namespace hh {
                 std::function<void()> cb;       //回调函数
             };
             EventContext & getEventContext(Event event);
-            void resetEventContext(EventContext eventContext);
+            void resetEventContext(EventContext& eventContext);
             void triggerEvent(Event event);
             EventContext read;                  //读事件
             EventContext write;                 //写事件
@@ -42,7 +43,7 @@ namespace hh {
         };
         void fdcontextReset(int size);
     public:
-        IOManager(int threads = 1, bool use_caller = false, const std::string &name = "");
+        IOManager(int threads = 1, bool use_caller = true, const std::string &name = "");
 
         ~IOManager() override;
 
@@ -63,6 +64,8 @@ namespace hh {
         void tickle() override;
         void idle() override;
         bool stopping() override;
+        bool stopping(uint64_t &timeout);
+        void onTimerInsertedAtFront() override;
     private:
         int m_EpollFd = 0;                                  //epoll文件描述符
         int m_TickleFd[2];                                  //用于唤醒epoll的文件描述符

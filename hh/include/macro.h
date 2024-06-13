@@ -28,4 +28,5 @@
         <<hh::BacktraceToString(100,2,"    ");                           \
         assert(x);                 \
     }
+#   define HH_UNLIKELY(x)     __builtin_expect(!!(x), 0)
 #endif //HH_MACRO_H

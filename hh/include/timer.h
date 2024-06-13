@@ -5,22 +5,22 @@
 #ifndef HH_TIMER_H
 #define HH_TIMER_H
 
-#include "thread.h"
+
 #include <memory>
 #include <set>
-
+#include <functional>
+#include "thread.h"
 namespace hh {
     class TimerManager;
 
     class Timer : public std::enable_shared_from_this<Timer> {
-        Timer(uint64_t i, std::function<void(void)> function1, bool b, TimerManager *pManager);
 
         friend class TimerManager;
 
     public:
         typedef std::shared_ptr<Timer> ptr;
 
-        Timer(uint64_t interval, bool repeat, std::function<void()> cb,
+        Timer(uint64_t interval, std::function<void()> cb,
               bool recurring, TimerManager *manager);
         Timer(uint64_t Max):m_next_time(Max){};
         //重置
@@ -63,14 +63,13 @@ namespace hh {
                                      bool recurring = false);
         // 获取最小定时器的执行时间
         uint64_t getNextTimer();
-        // 删除定时器
-        void removeTimer(Timer::ptr &timer);
         // 获取过期的定时器任务
         void listExpiredCb(std::vector<std::function<void()>> &cbs);
+        bool hasTimer();
     protected:
         // 添加定时器 并且 为最小 唤醒
         virtual void onTimerInsertedAtFront() = 0;
-        void addTimer(Timer::ptr timer);
+        void addTimer(Timer::ptr timer,RWMutexType::WriteLock &lock);
     private:
         bool detectClockRollover(uint64_t now_ms);
     private:

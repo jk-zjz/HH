@@ -5,6 +5,7 @@
 #include <sys/syscall.h>
 #include <sstream>
 #include <execinfo.h>
+#include <sys/time.h>
 
 
 namespace hh {
@@ -58,5 +59,23 @@ namespace hh {
             ss << prefix << bt[i] << std::endl;
         }
         return ss.str();
+    }
+    /**
+     * 获取当前时间戳毫秒
+     * @return
+     */
+    uint64_t GetCurrentMS(){
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        return tv.tv_sec * 1000ul  + tv.tv_usec / 1000;
+    };
+    /**
+     * 获取当前时间戳秒
+     * @return
+     */
+    uint64_t GetCurrentUS(){
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        return tv.tv_sec * 1000 * 1000ul  + tv.tv_usec;
     }
 }

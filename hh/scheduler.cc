@@ -68,6 +68,7 @@ namespace hh {
                                           m_name + "_" + std::to_string(i)));
             m_thread_ids.push_back(m_threads[i]->get_id());
         }
+        lock.unlock();
     }
 
     /**
@@ -161,7 +162,7 @@ namespace hh {
             {
                 MutexType::Lock lock(m_mutex);
                 auto it = m_fibers.begin();
-                while (!m_fibers.empty()) {
+                while (it != m_fibers.end()) {
                     if (it->thread_id != (uint32_t) -1 && it->thread_id != (uint32_t) hh::GetThreadID()) {
                         tickle_me = true;
                         it++;
@@ -192,7 +193,6 @@ namespace hh {
 
                 //切换执行
                 ft.fiber->swapIn();
-                HH_LOG_INFO(g_logger, "schedule fiber run");
                 --m_active_thread_count;
                 if (ft.fiber->getState() == Fiber::State::READY) {
                     //这一个加入队列
@@ -249,7 +249,6 @@ namespace hh {
     void Scheduler::tickle() {
         HH_LOG_INFO(g_logger, "tickle");
     }
-
     bool Scheduler::stopping() {
         /**
          * 是停止状态
@@ -307,4 +306,5 @@ namespace hh {
         }
         return os;
     }
+
 }
