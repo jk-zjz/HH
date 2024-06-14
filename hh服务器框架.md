@@ -555,6 +555,76 @@ poll_wait等待IO事件的发生，当有事件发生时，epoll通知IOManager�
 PutMaessage()将任务放人meassage_queue(队列)
 通过single()唤醒wait线程进行RecvMessage()执行
 ```
+```c++
+void test_fiber() {
+    //所有socket 进行测试
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    fcntl(sock, F_SETFL, O_NONBLOCK);
+    sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(80);
+    inet_pton(AF_INET, "110.242.68.66", &addr.sin_addr.s_addr);
+    if(!connect(sock, (const sockaddr*)&addr, sizeof(addr))) {
+    } else if(errno == EINPROGRESS) {
+        HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "add event errno=" << errno << " " << strerror(errno);
+        hh::IOManager::GetThis()->addEvent(sock, hh::IOManager::READ, [](){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "read callback";
+        });
+        hh::IOManager::GetThis()->addEvent(sock, hh::IOManager::WRITE, [&sock](){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "write callback";
+            //close(sock);
+            hh::IOManager::GetThis()->addEvent(sock, hh::IOManager::READ);
+        });
+    } else {
+        HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "else " << errno << " " << strerror(errno);
+    }
+
+}
+```
+## 定时器模块
+```
+                    1-N
+Timer（定时器类） <-------TimerManager（定时器管理类）
+                             ^
+                             | 1-1
+                             |
+（协程调度器）Scheduler<-----IOManager(epoll)（继承与定时器管理，使用定时器接口） 
+                |
+                | 1->N
+                v
+             Thread（线程类）
+                |
+                | N->M
+                v
+              Fiber（协程类） 
+       
+TimerManager 通过set红黑树管理定时器，通过写入唤醒epoll_wait(),计算最近定时器时间
+并且设置执行，获取定时器过期任务，添加调度器任务列表执行
+```
+```c++
+hh::Timer::ptr timer;
+// 简单使用
+void test02(){
+    // 创建IOManager对象，并设置线程数
+    hh::IOManager iom(2);
+    //添加定时器
+    timer = iom.addTimer(1000, [](){
+        static int count = 0;
+        HH_LOG_INFO(g_logger, "hello");
+        if(++count == 4) {
+            //重新设置定时器，设置为500ms，并且设置为重复定时器
+            timer->reset(500, true);
+        }
+        if(count == 7){
+            // 取消定时器
+            timer->cancel();
+        }
+    }, true);
+}
+
+```
+## HOOK 模块
 
 ## socket函数库开发
 
