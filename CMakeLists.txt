@@ -56,3 +56,8 @@ add_executable(iomanager_test tests/iomanager_test.cc ${CPP_G})
 target_link_libraries(iomanager_test yaml-cpp::yaml-cpp
 ${PTHREAD})
 redefine_file_macro(iomanager_test)
+
+add_executable(hook_test tests/hook_test.cc ${CPP_G})
+target_link_libraries(hook_test yaml-cpp::yaml-cpp
+        ${PTHREAD})
+redefine_file_macro(hook_test)
