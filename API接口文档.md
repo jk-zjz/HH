@@ -108,43 +108,73 @@
 | hh::SpinLock        |旋锁类    |          |     |  |        |          |
 
 ## fiber 协程API
-| FIBER API           | 说明      | 备注       | 有无重载 | 是否为虚 | 类是否为父类 | 父类    |
-|---------------------|---------|----------|-----|--|--------|--------------------------------------|
-| hh::Fiber           | 协程类     |          |     |  |        |          |
-| hh::Fiber::Fiber    | 协程类构造方法 | 构造       |     |  |        |          |
-| hh::Fiber::reset    | 重置协程    | 设置       |     |  |        |          |
-| hh::Fiber::swapIn   | 协程切换到当前协程 | 设置       |     |  |        |          |
-| hh::Fiber::swapOut  | 当前协程切换到其他协程 | 设置       |     |  |        |          |
-| hh::Fiber::getState | 获取协程状态  | 获取       |     |  |        | 
-| hh::Fiber::getThis  | 获取当前协程  | 获取       |     |  |        |          |
-| hh::Fiber::SetThis | 设置当前协程  | 设置       |     |  |        |          |
-| hh::Fiber::YieldToHold | 协程切换到其他协程 | 设置       |     |  |        |          |
-| hh::Fiber::YieldToReady | 协程切换到其他协程 | 设置       |     |  |        |          |
-|hh::Fiber::GetTotalFibers | 获取当前协程数量 | 获取       |     |  |        |          |
-|hh::Fiber::Mainfunc | 协程主函数 | 获取       |     |  |        |          |
-|hh::Fiber::getFiber_id | 获取协程ID | 获取       |     |  |        |          |
+| FIBER API                 | 说明      | 备注       | 有无重载 | 是否为虚 | 类是否为父类 | 父类    |
+|---------------------------|---------|----------|-----|--|--------|--------------------------------------|
+| hh::Fiber                 | 协程类     |          |     |  |        |          |
+| hh::Fiber::Fiber          | 协程类构造方法 | 构造       |     |  |        |          |
+| hh::Fiber::reset          | 重置协程    | 设置       |     |  |        |          |
+| hh::Fiber::swapIn         | 协程切换到当前协程 | 设置       |     |  |        |          |
+| hh::Fiber::swapOut        | 当前协程切换到其他协程 | 设置       |     |  |        |          |
+| hh::Fiber::getState       | 获取协程状态  | 获取       |     |  |        | 
+| hh::Fiber::getThis        | 获取当前协程  | 获取       |     |  |        |          |
+| hh::Fiber::SetThis        | 设置当前协程  | 设置       |     |  |        |          |
+| hh::Fiber::YieldToHold    | 协程切换到其他协程 | 设置       |     |  |        |          |
+| hh::Fiber::YieldToReady   | 协程切换到其他协程 | 设置       |     |  |        |          |
+| hh::Fiber::GetTotalFibers | 获取当前协程数量 | 获取       |     |  |        |          |
+| hh::Fiber::Mainfunc       | 协程主函数 | 获取       |     |  |        |          |
+| hh::Fiber::getFiber_id    | 获取协程ID | 获取       |     |  |        |          |
 
 ## scheduler 协程调度器API
-| SCHEDULER API           | 说明         | 备注       | 有无重载 | 是否为虚 | 类是否为父类 | 父类    |
-|-------------------------|------------|----------|------|--|--------|--------------------------------------|
-| hh::Scheduler           | 协程调度器类     |          |      |  |        |          |
-| hh::Scheduler::Scheduler | 协程调度器类构造方法 | 构造       |      |  |        |          |
-| hh::Scheduler::start | 协程调度器启动    | 设置       |      |  |        |          |
-| hh::Scheduler::stop | 协程调度器停止    | 设置       |      |  |        |          |
-| hh::Scheduler::schedule | 添加任务       | 设置       | 有    |  |        |          |
-|hh::Scheduler::GetThis | 获取当前调度器  | 获取       |      |  |        |          |
-|hh::Scheduler::GetMainFiber | 获取主协程  | 获取       |      |  |        |          |
-|hh::Scheduler::getName | 获取调度器名  | 获取       |      |  |        |          |
-|hh::Scheduler::switchTo | 切换协程       | 设置       |      |  |        |          |
-|hh::Scheduler::dump | 协程调度器状态    | 获取       |      |  |        |          |\
-|hh::Scheduler::tickle | 协程调度器调度    | 设置       |      |  |        |          |
-|hh::Scheduler::stopping | 协程调度器停止    | 设置       |      |  |        |          |
-|hh::Scheduler::setThis | 设置当前调度器  | 设置       |      |  |        |          |
-|hh::Scheduler::run | 协程调度器运行    | 设置       |      |  |        |          |
-|hh::Scheduler::idle | 协程调度器空闲    | 设置       |      |  |        |          |
-|hh::Scheduler::hasIdleThread | 协程调度器是否有空闲线程  | 设置       |      |  |        |          |
+| SCHEDULER API                | 说明         | 备注       | 有无重载 | 是否为虚 | 类是否为父类 | 父类    |
+|------------------------------|------------|----------|------|--|--------|--------------------------------------|
+| hh::Scheduler                | 协程调度器类     |          |      |  | 是      |          |
+| hh::Scheduler::Scheduler     | 协程调度器类构造方法 | 构造       |      |  |        |          |
+| hh::Scheduler::start         | 协程调度器启动    | 设置       |      |  |        |          |
+| hh::Scheduler::stop          | 协程调度器停止    | 设置       |      |  |        |          |
+| hh::Scheduler::schedule      | 添加任务       | 设置       | 有    |  |        |          |
+| hh::Scheduler::GetThis       | 获取当前调度器  | 获取       |      |  |        |          |
+| hh::Scheduler::GetMainFiber  | 获取主协程  | 获取       |      |  |        |          |
+| hh::Scheduler::getName       | 获取调度器名  | 获取       |      |  |        |          |
+| hh::Scheduler::switchTo      | 切换协程       | 设置       |      |  |        |          |
+| hh::Scheduler::dump          | 协程调度器状态    | 获取       |      |  |        |          |\
+| hh::Scheduler::tickle        | 协程调度器调度    | 设置       |      |  |        |          |
+| hh::Scheduler::stopping      | 协程调度器停止    | 设置       |      |  |        |          |
+| hh::Scheduler::setThis       | 设置当前调度器  | 设置       |      |  |        |          |
+| hh::Scheduler::run           | 协程调度器运行    | 设置       |      |  |        |          |
+| hh::Scheduler::idle          | 协程调度器空闲    | 设置       |      |  |        |          |
+| hh::Scheduler::hasIdleThread | 协程调度器是否有空闲线程  | 设置       |      |  |        |          |
 
-
-
-
-
+## IOManager IO协程调度器API
+| IOManager API                         | 说明         | 备注       | 有无重载 | 是否为虚 | 类是否为父类 | 父类         |
+|---------------------------------------|------------|----------|------|------|--------|------------|
+| hh::IOManager                         | IO协程调度器类     |          |      |      |        | Scheduler,TimerManager |
+| hh::IOManager::IOManager              | IO协程调度器类构造方法 | 构造       |      |      |        |            |
+| hh::IOManager::addEvent               | 添加事件       | 设置       |      |      |        |            |
+| hh::IOManager::cancelEvent            | 取消事件       | 设置       |      |      |        |            |
+| hh::IOManager::delEvent               | 删除事件       | 设置       |      |      |        |            |
+| hh::IOManager::onTimerInsertedAtFront | 添加事件回调       | 设置       |      | 是    |        |            |
+| hh::IOManager::stopping               | 停止调度器       | 设置       | 是    | 是    |        |            |
+| hh::IOManager::tickle                 | 唤醒调度器       | 设置       |      | 是    |        |            |
+| hh::IOManager::idle                   | 空闲调度器       | 设置       |      | 是    |        |            |
+| hh::IOManager::cancelAll              | 取消所有事件       | 设置       |      | 是    |        |            |
+## TimerManager 定时器调度器API
+| TimerManager API                         | 说明         | 备注       | 有无重载 | 是否为虚 | 类是否为父类 | 父类            |
+|------------------------------------------|------------|----------|------|-----|-------|---------------|
+| hh::TimerManager                         | 定时器调度器类     |          |      |     | 是     |               |
+| hh::TimerManager::TimerManager           | 定时器调度器类构造方法 | 构造       |      |     |       |               |
+| hh::TimerManager::addTimer               | 添加定时器       | 设置       |      |     |       |               |
+| hh::TimerManager::addConditionTimer      |添加条件定时器  | 设置       |      |     |       |               |
+| hh::TimerManager::getNextTimer           |获取下一个定时器  | 获取       |      |     |       |               |
+| hh::TimerManager::listExpiredCb          |获取过期定时器回调  | 获取       |      |     |       |               |
+| hh::TimerManager::hasTimer               |判断是否有定时器  | 获取       |      |     |       |               |
+| hh::TimerManager::onTimerInsertedAtFront |添加定时器回调  | 设置       |      | 是   |       |               |
+| hh::TimerManager::addTimer               |添加定时器  | 设置       |      | 是   |       |               |
+| hh::TimerManager::detectClockRollover    |检测时钟回滚  | 设置       |      | 是   |       |               |
+| hh::TimerManager::cancel                 |取消定时器  | 设置       |      | 是   |       |               |
+| hh::TimerManager::reset                  |重置定时器  | 设置       |      | 是   |       |               |
+| hh::TimerManager::refresh                |刷新定时器  | 设置       |      | 是   |       |               |
+|hh::Timer| 定时器类||      |  |    | TimerManager，enable_shared_from_this |
+| hh::Timer::Timer                         | 定时器类构造方法 | 构造       | 是    |     |       |               |
+| hh::Timer::cancel                        | 取消定时器       | 设置       |      | 是   |       |               |
+| hh::Timer::reset                         | 重置定时器       | 设置       |      | 是   |       |               |
+| hh::Timer::refresh                       | 刷新定时器       | 设置       |      | 是   |       |               |

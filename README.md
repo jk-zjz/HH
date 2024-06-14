@@ -20,6 +20,8 @@ fiber(协程模块)
 schedule(协程调度模块) 
 
 IOManager(IO协程调度模块)
+
+TimerManager(定时器模块)
 ```
 ## HH 所需的第三方库
 [boost库](http://www.boost.org/users/download/)  
