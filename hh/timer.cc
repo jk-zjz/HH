@@ -193,7 +193,8 @@ namespace hh {
         }
         Timer::ptr now_timer(new Timer(now_ms));
         // 回拨是一定不会有超时
-        auto it =rollover ?m_timers.end() : std::lower_bound(m_timers.begin(), m_timers.end(), now_timer);
+        auto it =rollover ?m_timers.end() : m_timers.upper_bound(now_timer);
+
         while (it != m_timers.end() && (*it)->m_next_time == now_ms) {
             it++;
         }

@@ -3,6 +3,7 @@
 //
 #include "scheduler.h"
 #include "macro.h"
+#include "hook.h"
 
 namespace hh {
     static Logger::ptr g_logger = HH_LOG_NAME("system");
@@ -140,6 +141,8 @@ namespace hh {
      *
      * */
     void Scheduler::run() {
+        //设置钩子函数 为不阻塞
+        set_hook_enable(true);
         //设置为当前执行的调度器
         setThis();
         //判断当前线程是否为主线程
@@ -256,7 +259,6 @@ namespace hh {
          * 任务列表为空
          * 活跃线程为0
          * */
-        HH_LOG_INFO(g_logger, "stopping");
         MutexType::Lock lock(m_mutex);
         return m_stopping &&
                m_auto_stop &&
