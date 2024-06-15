@@ -7,7 +7,8 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <sys/uio.h>
-
+#include <fcntl.h>
+#include "fd_manager.h"
 namespace hh {
     bool is_hook_enable();
 
@@ -83,6 +84,27 @@ extern sendto_fun sendto_f;
 typedef ssize_t (*sendmsg_fun)(int sockfd, const struct msghdr *msg, int flags);
 extern sendmsg_fun sendmsg_f;
 
+// 关闭文件
+typedef int (*close_fun)(int fd);
+extern close_fun close_f;
+/**
+ * socket操作相关函数hook
+ */
+ // 设置文件句柄访问状态
+ typedef int (*fcntl_fun)(int fd, int cmd, ... /* arg */ );
+ extern fcntl_fun fcntl_f;
+
+ // 获取文件句柄访问状态
+ typedef int (*ioctl_fun)(int fd, unsigned long request, ...);
+ extern ioctl_fun ioctl_f;
+
+// 获取文件句柄访问状态
+typedef int (*getsockopt_fun)(int sockfd, int level, int optname, void *optval, socklen_t *optlen);
+extern getsockopt_fun getsockopt_f;
+
+// 设置文件句柄访问状态
+typedef int (*setsockopt_fun)(int sockfd, int level, int optname, const void *optval, socklen_t optlen);
+extern setsockopt_fun setsockopt_f;
 }
 
 

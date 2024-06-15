@@ -5,17 +5,33 @@
 #include <dlfcn.h>
 #include "fiber.h"
 #include "iomanage.h"
-#include <time.h>
-
+#include "macro.h"
+#include <ctime>
+hh::Logger::ptr g_logger = HH_LOG_NAME("system");
 namespace hh {
     thread_local bool t_enable_hook_guard = false;
 #define HOOK_FUN(XX) \
     XX(sleep)         \
     XX(usleep)       \
     XX(nanosleep)    \
-    XX(socket)
-
-
+    XX(socket)       \
+    XX(accept)           \
+    XX(connect)          \
+    XX(read)             \
+    XX(readv)            \
+    XX(recv)             \
+    XX(recvfrom)         \
+    XX(recvmsg)          \
+    XX(write)            \
+    XX(writev)           \
+    XX(send)             \
+    XX(sendto)           \
+    XX(sendmsg)          \
+    XX(close)            \
+    XX(fcntl)            \
+    XX(ioctl)            \
+    XX(getsockopt)       \
+    XX(setsockopt)
 
     void hook_init() {
         static bool s_inited = false;
@@ -43,6 +59,90 @@ namespace hh {
         t_enable_hook_guard = flag;
     }
 
+}
+struct timer_info {
+    int cancelled = 0;
+};
+
+// 通用异步I/O操作模板函数
+template<typename OriginFun, typename... Args>
+static ssize_t do_io(int fd, OriginFun *fun,
+                     const char *hook_fun_name, // I/O操作对应的钩子函数名称，用于调试或监控
+                     uint32_t event,            // 事件类型，比如读、写或同时读写事件
+                     int timeout_so,            // 套接字超时设置的选项，如SO_RCVTIMEO或SO_SNDTIMEO
+                     Args &&... args) {         // 可变参数模板，转发给原始I/O操作的所有其他参数
+    if(!hh::is_hook_enable()){
+        // 如果钩子功能未启用，则直接调用原始I/O操作函数
+        return fun(fd, std::forward<Args>(args)...);
+    }
+    // 获取有没有套接字
+    hh::FdCtx::ptr ctx = hh::FdMgr::GetInstance()->get(fd);
+    if (!ctx) {
+        // 如果套接字不存在，则调用原始I/O操作函数
+        return fun(fd, std::forward<Args>(args)...);
+    }
+    if(!ctx->isClose()){
+        // EBADF 错误表示套接字已关闭
+        errno = EBADF;
+        return -1;
+    }
+    if(!ctx->isSocket() || ctx->getUserNonblock()){
+        // 如果套接字不存在，则调用原始I/O操作函数
+        return fun(fd, std::forward<Args>(args)...);
+    }
+    // 获取套接字超时时间 读或写
+    uint64_t to = ctx->getTimeout(timeout_so);
+    // 创建一个定时器，用于在超时时间到期时取消I/O操作
+    std::shared_ptr<timer_info> tinfo(new timer_info);
+
+hh:
+    ssize_t n = fun(fd, std::forward<Args>(args)...);
+    // EINTR 表示系统调用被信号中断
+    while (n == -1 && errno == EINTR){
+        n = fun(fd, std::forward<Args>(args)...);
+    }
+    // EAGAIN 表示资源暂时不可用，需要稍后再试
+    if (n == -1 && errno == EAGAIN) {
+        hh::IOManager *iom = hh::IOManager::GetThis();
+        hh::Timer::ptr timer;
+        // 创建一个定时器，用于在超时时间到期时取消I/O操作
+        std::weak_ptr<timer_info> winfo(tinfo);
+        if(to != (uint64_t)-1){
+            // 设置了超时时间
+            timer = iom->addConditionTimer(to, [winfo, fd,iom,event]() {
+                auto t = winfo.lock();
+                if (!t || t->cancelled) {
+                    // 如果定时器已过期或已取消，则返回
+                    return;
+                }
+                // 取消I/O操作 ETIMEDOUT表示超时
+                t->cancelled =ETIMEDOUT;
+                // 设置套接字为可读或可写
+                iom->addEvent(fd, (hh::IOManager::Event)event);
+            },winfo);
+        }
+        int re = iom->addEvent(fd, (hh::IOManager::Event)event);
+        if(HH_UNLIKELY(re)){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::ERROR)
+            <<"addEvent error"<<hook_fun_name<<"("<<fd<<")"<<errno;
+            if(timer){
+                // 如果有定时器，则取消定时器 强制触发掉任务
+                timer->cancel();
+            }
+            return -1;
+        }else{
+            hh::Fiber::YieldToHold();
+            if(timer){
+                timer->cancel();
+            }
+            if(tinfo->cancelled){
+                errno = tinfo->cancelled;
+                return -1;
+            }
+            goto hh;
+        }
+    }
+    return n;
 }
 extern "C" {
 #define XX(name) name ## _fun name ## _f = nullptr;
