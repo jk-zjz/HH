@@ -8,6 +8,11 @@
 
 namespace hh {
 
+    /**
+     * 将日志级别转成字符串
+     * @param level
+     * @return
+     */
     const char *LogLevel::ToString(LogLevel::Level level) {
         //宏的返回传入参数，转字符串返回
         switch (level) {
@@ -26,7 +31,11 @@ namespace hh {
         }
         return "UNKNOWN";
     }
-
+    /**
+     * 将字符串转成日志级别
+     * @param str
+     * @return
+     */
     LogLevel::Level LogLevel::FromString(const std::string &str) {
 #define XX(name) \
     if(str==#name){ \
@@ -49,7 +58,10 @@ namespace hh {
         m_Formatter.reset(new LogFormatter("%d <%t-%F-%N> [%p:%m] <%f:%l> %b"));
     }
 
-//添加输出地
+    /**
+     * 添加输出地
+     * @param appender
+     */
     void Logger::addAppender(LogAppender::ptr appender) {
          MutexType::Lock lock(m_mutex);
         if (!appender->getFormatter()) {
@@ -61,7 +73,10 @@ namespace hh {
         m_appenders.push_back(appender);
     }
 
-//删除输出地
+    /**
+     * 删除输出地
+     * @param appender
+     */
     void Logger::delectAppender(LogAppender::ptr appender) {
         MutexType::Lock lock(m_mutex);
         for (auto i = m_appenders.begin();
@@ -73,7 +88,11 @@ namespace hh {
         }
     }
 
-//设置每一个输入地
+    /**
+     * 日志输出
+     * @param level
+     * @param event
+     */
     void Logger::Log(LogLevel::Level level, LogEvent::ptr event) {
         if (level >= m_level) {
             MutexType::Lock lock(m_mutex);
@@ -90,7 +109,10 @@ namespace hh {
         }
     }
 
-//日志输出函数
+    /**
+     * 日志输出
+     * @param event
+     */
     void Logger::debug(LogEvent::ptr event) {
         Log(LogLevel::DEBUG, event);
     }
@@ -111,11 +133,17 @@ namespace hh {
         Log(LogLevel::FATAL, event);
     }
 
+    /**
+     * 清空输出地
+     */
     void Logger::clearAppender() {
         MutexType::Lock lock(m_mutex);
         m_appenders.clear();
     }
-
+    /**
+     * 设置日志格式器
+     * @param formatter
+     */
     void Logger::setFormatter(const std::string &formatter) {
         //防止格式器为错误的
         hh::LogFormatter::ptr new_Val(new hh::LogFormatter(formatter));
@@ -125,7 +153,10 @@ namespace hh {
         }
         setFormatter(new_Val);
     }
-
+    /**
+     * 设置日志格式器
+     * @param ptr1
+     */
     void Logger::setFormatter(LogFormatter::ptr ptr1) {
         MutexType::Lock lock(m_mutex);
         m_Formatter = std::move(ptr1);
@@ -136,12 +167,18 @@ namespace hh {
         }
     }
 
-/*    FileLogAppender(日志输出地) 实现 */
+    /**
+     * 构造函数
+     * @param filename
+     */
     FileLogAppender::FileLogAppender(const std::string &filename)
             : m_filename(filename) {
         reopen();
     }
-
+    /**
+     * 重新打开文件
+     * @return
+     */
     bool FileLogAppender::reopen() {
         if (!m_ofstream.fail()) {
             m_ofstream.close();
@@ -150,7 +187,12 @@ namespace hh {
         return !!m_ofstream;
     }
 
-//文件输出地
+    /**
+     * 文件日志输出
+     * @param logger
+     * @param level
+     * @param event
+     */
     void FileLogAppender::log(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) {
         if (level >= m_level) {
             //返回1970年1月1日0时0分0秒到当前时间戳
@@ -166,7 +208,12 @@ namespace hh {
         m_ofstream.close();
     }
 
-//控制台输出地
+    /**
+     * 标准输出日志输出
+     * @param logger
+     * @param level
+     * @param event
+     */
     void StdoutLogAppender::log(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) {
         if (level >= m_level) {
             MutexType::Lock lock(m_mutex);
@@ -174,24 +221,35 @@ namespace hh {
         }
     }
 
-/*LogFormatter(格式器) 实现*/
+    /**
+     * 日志格式器 初始化格式器
+     * @param pattern
+     */
     LogFormatter::LogFormatter(const std::string &pattern)
             : m_pattern(pattern) {
         init();
     }
-
+    /**
+     * 输出格式化日志
+     * @param logger
+     * @param level
+     * @param event
+     * @return
+     */
     std::string LogFormatter::format(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) {
         std::stringstream ss;
         for (auto &i: m_items) {
             i->format(logger, ss, level, event);
         }
         return ss.str();
-
     };
 
 // 格式化输入->方法
 // %s   %d{yyyy}
 //m_pattern   %C %d{YYYY-MM-dd hh:mm:ss} [%m] %n
+    /**
+     * 格式化输入->方法
+     */
     void LogFormatter::init() {
         std::vector<std::tuple<std::string, std::string, int>> vec;
         std::string nstr;
@@ -303,14 +361,32 @@ namespace hh {
         m_items.push_back(FormatItem::ptr(new MassageFormatItem()));
     }
 
+    /**
+     * 构造函数
+     * @param logger
+     * @param level
+     * @param mFile
+     * @param mLine
+     * @param mElapse
+     * @param mThreadId
+     * @param mFiberId
+     * @param mTime
+     * @param m_ThreadName
+     */
     LogEvent::LogEvent(std::shared_ptr<Logger> logger, LogLevel::Level level, const char *mFile,
                        uint32_t mLine, uint32_t mElapse, uint32_t mThreadId, uint32_t mFiberId,
                        uint64_t mTime,std::string m_ThreadName) :
             m_file(mFile), m_line(mLine), m_elapse(mElapse),
             m_threadId(mThreadId), m_fiberId(mFiberId),
             m_time(mTime), m_threadName(std::move(m_ThreadName)),
-            m_logger(std::move(logger)),m_level(level) {}
+            m_logger(std::move(logger)),m_level(level) {
 
+    }
+    /**
+     * 格式化日志
+     * @param fat
+     * @param ...
+     */
     void LogEvent::format(const char *fat, ...) {
         //绑定可变参
         va_list va;
@@ -318,7 +394,11 @@ namespace hh {
         format(fat, va);
         va_end(va);
     }
-
+    /**
+     * 格式化日志
+     * @param fat
+     * @param al
+     */
     void LogEvent::format(const char *fat, va_list al) {
         char *buf = nullptr;
         //根据大小动态开辟空间
@@ -330,15 +410,23 @@ namespace hh {
             buf = nullptr;
         }
     }
-
+    /**
+     * 构造函数
+     * @param logEvent
+     */
     LogEventWrap::LogEventWrap(LogEvent::ptr logEvent) :
             m_logEvent(std::move(logEvent)) {
     }
-
+    /**
+     * 析构函数 通过析构函数将日志输出到日志器中
+     */
     LogEventWrap::~LogEventWrap() {
         m_logEvent->getLogger()->Log(m_logEvent->getLevel(), m_logEvent);
     }
-
+    /**
+     * 设置日志内容
+     * @param S
+     */
     void LogEventWrap::setSS(const std::string &S) {
         m_logEvent->setSS(S);
     }
@@ -348,7 +436,9 @@ namespace hh {
         m_root->addAppender(LogAppender::ptr(new StdoutLogAppender));
         init();
     }
-
+    /**
+     * 初始化
+     */
     class LogAppenderDefine {
     public:
         int type = 0;//1为file 2为stdout
