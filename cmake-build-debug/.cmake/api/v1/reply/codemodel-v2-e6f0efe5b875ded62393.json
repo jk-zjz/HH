@@ -1,0 +1,114 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "HH",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "config_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-config_test-Debug-d2350629c8f832179c00.json",
+					"name" : "config_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hook_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hook_test-Debug-3ed7105203598221ed78.json",
+					"name" : "hook_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "iomanager_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-iomanager_test-Debug-c4d1b9fcc3bff935d36b.json",
+					"name" : "iomanager_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "log_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-log_test-Debug-fb9f2a94fe521ef405a5.json",
+					"name" : "log_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "pthread_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-pthread_test-Debug-839097596a6a9e1709a4.json",
+					"name" : "pthread_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "scheduler_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-scheduler_test-Debug-20568df700d560173b45.json",
+					"name" : "scheduler_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "utils_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-utils_test-Debug-3454c638033d2b9db2f0.json",
+					"name" : "utils_test",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/hh/HH/cmake-build-debug",
+		"source" : "/home/hh/HH"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
