@@ -5,7 +5,6 @@
 #ifndef HH_FD_MANAGER_H
 #define HH_FD_MANAGER_H
 
-#include <cstdint>
 #include <vector>
 #include <memory>
 #include "thread.h"

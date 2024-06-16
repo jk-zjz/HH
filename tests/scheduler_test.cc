@@ -6,7 +6,6 @@
 #include "log.h"
 
 hh::Mutex g_mutex;
-hh::Mutex g_mutex_;
 static hh::Logger::ptr g_logger = HH_LOG_ROOT();
 
 void test_fiber() {

@@ -7,7 +7,7 @@
 #include "config.h"
 
 hh::RWMutex g_mutex;
-hh::Logger::ptr g_logger = HH_LOG_ROOT();
+static hh::Logger::ptr g_logger = HH_LOG_ROOT();
 int num = 0;
 hh::Logger::ptr it;
 hh::Mutex g_mutex2;

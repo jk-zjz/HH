@@ -224,7 +224,6 @@ namespace hh {
         HH_ASSERT(u_fiber->m_state == EXEC); // 检查Fiber状态
         u_fiber->swapOut(); // 切换到调度器
     }
-
     /**
      * @brief 将当前Fiber切换到就绪状态。
      *

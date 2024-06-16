@@ -34,7 +34,7 @@ namespace hh {
          *
          * */
         template<class FiberOrCb>
-        void schedule(FiberOrCb fc, uint32_t thread = -1) {
+        void schedule(FiberOrCb fc, int thread = -1) {
             bool need_tickle = false;
             {
                 MutexType::Lock lock(m_mutex);

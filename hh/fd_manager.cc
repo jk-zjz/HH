@@ -2,8 +2,6 @@
 // Created by 35148 on 2024/6/15.
 //
 #include <sys/stat.h>
-#include <bits/fcntl.h>
-#include <fcntl.h>
 #include "fd_manager.h"
 namespace hh {
 
@@ -88,7 +86,7 @@ namespace hh {
         lock.unlock();
         RWMutexType::WriteLock lock2(m_mutex);
         FdCtx::ptr ctx(new FdCtx(fd));
-        if(fd>=m_datas.size()){
+        if(fd>=(int)m_datas.size()){
             m_datas.resize(fd*1.5);
         }
         m_datas[fd]=ctx;
