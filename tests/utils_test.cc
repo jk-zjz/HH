@@ -6,7 +6,7 @@
 #include "hh.h"
 #include "fiber.h"
 #include "scheduler.h"
-hh::Logger::ptr g_logger = HH_LOG_ROOT();
+static hh::Logger::ptr g_logger = HH_LOG_ROOT();
 void func1(){
     HH_LOG_INFO(g_logger,"RUN_IN_ BEGIN");
     hh::Fiber::YieldToHold();
@@ -19,11 +19,11 @@ void func2(){
         hh::Fiber::GetThis();
         HH_LOG_INFO(g_logger, "main begin")
         hh::Fiber::ptr f1(new hh::Fiber(func1));
-        f1->swapIn();
+        f1->call();
         HH_LOG_INFO(g_logger, "main swapIn")
-        f1->swapIn();
+        f1->call();
         HH_LOG_INFO(g_logger,"{main end")
-        f1->swapIn();
+        f1->call();
     }
 }
 int main(){
