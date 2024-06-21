@@ -11,10 +11,10 @@ namespace hh {
     m_sysNonblock(false),
     m_userNonblock(false),
     m_isSocket(false),
-    m_sockfd(fd){
-        m_timeout[0]=m_timeout[1]=-1;
+    m_sockfd(fd),
+    m_sendTimeout(-1),
+    m_recvTimeout(-1){
         init();
-
     }
 
     FdCtx::~FdCtx() {
@@ -30,14 +30,14 @@ namespace hh {
         if(m_isInited){
             return true;
         }
-        m_timeout[0]=m_timeout[1]=-1;
+        m_recvTimeout = -1;
+        m_sendTimeout = -1;
         struct stat fd_stat;
         // 获取句柄文件状态
         if(fstat(m_sockfd,&fd_stat)==-1){
             // 失败
             m_isInited=false;
             m_isSocket=false;
-            return false;
         }else{
             m_isInited=true;
             // 判断是否为套接字 S_ISSOCK宏
@@ -47,8 +47,7 @@ namespace hh {
             // 是套接字 设置非阻塞
             int flags=fcntl_f(m_sockfd,F_GETFL,0);
             if(!(flags&O_NONBLOCK)){
-                flags|=O_NONBLOCK;
-                fcntl_f(m_sockfd,F_SETFL,flags);
+                fcntl_f(m_sockfd,F_SETFL,flags | O_NONBLOCK);
             }
             m_sysNonblock=true;
         }else{
@@ -61,9 +60,17 @@ namespace hh {
 
     void FdCtx::setTimeout(int type, uint64_t v) {
         if(type==SO_RCVTIMEO){
-            m_timeout[0]=v;
+            m_recvTimeout =v;
         }else{
-            m_timeout[1]=v;
+            m_sendTimeout =v;
+        }
+    }
+
+    uint64_t FdCtx::getTimeout(int type) {
+        if(type==SO_RCVTIMEO){
+            return m_recvTimeout;
+        }else{
+            return m_sendTimeout;
         }
     }
 
@@ -72,6 +79,9 @@ namespace hh {
     }
 
     FdCtx::ptr FdManager::get(int fd, bool auto_create) {
+        if(fd==-1){
+            return nullptr;
+        }
         RWMutexType::ReadLock lock(m_mutex);
         if(fd>=(int)m_datas.size()){
             // 如果不自动创建就返回

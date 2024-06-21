@@ -51,7 +51,7 @@ namespace hh {
         void setUserNonblock(bool value){m_userNonblock = value;};
 
         // 根据类型（接收或发送）获取超时时间
-        uint64_t getTimeout(int type) const{return type == SO_RCVTIMEO ? m_timeout[0] : m_timeout[1];};
+        uint64_t getTimeout(int type);
 
         // 设置超时时间，type指定是接收还是发送超时，v为新的超时时间值
         void setTimeout(int type, uint64_t v);
@@ -66,7 +66,8 @@ namespace hh {
         // 超时设置，单位通常为毫秒或微秒，取决于具体应用上下文
             // 接收数据的超时时间 0
             // 发送数据的超时时间 1
-        uint64_t m_timeout[2];
+        uint64_t m_sendTimeout;
+        uint64_t m_recvTimeout;
     };
     class FdManager {
     public:

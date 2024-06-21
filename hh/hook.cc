@@ -6,10 +6,15 @@
 #include <asm-generic/ioctls.h>
 #include "iomanage.h"
 #include "macro.h"
+#include "config.h"
 
 hh::Logger::ptr g_logger = HH_LOG_NAME("system");
+
 namespace hh {
-    thread_local bool t_enable_hook_guard = false;
+    static hh::ConfigVar<int>::ptr g_tcp_connect_timeout =
+            hh::Config::Lookup("tcp.connect.timeout", 5000, "tcp connect timeout");
+
+    static thread_local bool t_hook_enable = false;
 #define HOOK_FUN(XX) \
     XX(sleep)         \
     XX(usleep)       \
@@ -43,20 +48,23 @@ namespace hh {
 #undef XX
     }
 
+    static uint64_t s_connect_timeout = -1;
+
     struct _FuncInit {
         _FuncInit() {
             hook_init();
+            s_connect_timeout = g_tcp_connect_timeout->getValue();
         };
     };
 
     static _FuncInit s_init;
 
     bool is_hook_enable() {
-        return t_enable_hook_guard;
+        return t_hook_enable;
     };
 
     void set_hook_enable(bool flag) {
-        t_enable_hook_guard = flag;
+        t_hook_enable = flag;
     }
 
 }
@@ -64,38 +72,45 @@ struct timer_info {
     int cancelled = 0;
 };
 
-// 通用异步I/O操作模板函数
 template<typename OriginFun, typename... Args>
-static ssize_t do_io(int fd, OriginFun *fun,
+static ssize_t do_io(int fd, OriginFun fun,
                      const char *hook_fun_name, // I/O操作对应的钩子函数名称，用于调试或监控
                      uint32_t event,            // 事件类型，比如读、写或同时读写事件
                      int timeout_so,            // 套接字超时设置的选项，如SO_RCVTIMEO或SO_SNDTIMEO
                      Args &&... args) {         // 可变参数模板，转发给原始I/O操作的所有其他参数
-    if (!hh::is_hook_enable()) {
+    std::cout << "Entering do_io: " << hook_fun_name << std::endl;
+
+    if (!hh::t_hook_enable) {
         // 如果钩子功能未启用，则直接调用原始I/O操作函数
         return fun(fd, std::forward<Args>(args)...);
     }
-    // 获取有没有套接字
+
+    // 获取文件描述符上下文
     hh::FdCtx::ptr ctx = hh::FdMgr::GetInstance()->get(fd);
     if (!ctx) {
+        std::cerr << "FdCtx not found for fd: " << fd << std::endl;
         // 如果套接字不存在，则调用原始I/O操作函数
         return fun(fd, std::forward<Args>(args)...);
     }
-    if (!ctx->isClose()) {
+
+    if (ctx->isClose()) {
+        std::cerr << "FdCtx is closed for fd: " << fd << std::endl;
         // EBADF 错误表示套接字已关闭
         errno = EBADF;
         return -1;
     }
+
     if (!ctx->isSocket() || ctx->getUserNonblock()) {
         // 如果套接字不存在，则调用原始I/O操作函数
         return fun(fd, std::forward<Args>(args)...);
     }
+
     // 获取套接字超时时间 读或写
     uint64_t to = ctx->getTimeout(timeout_so);
     // 创建一个定时器，用于在超时时间到期时取消I/O操作
     std::shared_ptr<timer_info> tinfo(new timer_info);
 
-    hh:
+    retry:
     ssize_t n = fun(fd, std::forward<Args>(args)...);
     // EINTR 表示系统调用被信号中断
     while (n == -1 && errno == EINTR) {
@@ -118,10 +133,10 @@ static ssize_t do_io(int fd, OriginFun *fun,
                 // 取消I/O操作 ETIMEDOUT表示超时
                 t->cancelled = ETIMEDOUT;
                 // 设置套接字为可读或可写
-                iom->cancelEvent(fd, (hh::IOManager::Event) event);
+                iom->cancelEvent(fd, (hh::IOManager::Event) (event));
             }, winfo);
         }
-        int re = iom->addEvent(fd, (hh::IOManager::Event) event);
+        int re = iom->addEvent(fd, (hh::IOManager::Event) (event));
         if (HH_UNLIKELY(re)) {
             HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR)
                 << "addEvent error" << hook_fun_name << "(" << fd << ")" << errno;
@@ -139,7 +154,7 @@ static ssize_t do_io(int fd, OriginFun *fun,
                 errno = tinfo->cancelled;
                 return -1;
             }
-            goto hh;
+            goto retry;
         }
     }
     return n;
@@ -159,7 +174,7 @@ HOOK_FUN(XX) ;
  */
 unsigned int sleep(unsigned int seconds) {
     // 如果没有启用钩子功能，则直接调用原始的sleep函数
-    if (!hh::is_hook_enable()) {
+    if (!hh::t_hook_enable) {
         return sleep_f(seconds); // sleep_f指向原始sleep函数
     }
 
@@ -182,7 +197,7 @@ unsigned int sleep(unsigned int seconds) {
  * @return 返回值0表示成功执行
  */
 int usleep(useconds_t usec) {
-    if (!hh::is_hook_enable()) {
+    if (!hh::t_hook_enable) {
         return usleep_f(usec); // 直接调用原始的usleep函数
     }
     hh::Fiber::ptr fiber = hh::Fiber::GetThis();
@@ -202,7 +217,7 @@ int usleep(useconds_t usec) {
  * @return
  */
 int nanosleep(const struct timespec *req, struct timespec *rem) {
-    if (!hh::is_hook_enable()) {
+    if (!hh::t_hook_enable) {
         return nanosleep_f(req, rem);
     }
     // 将timespec结构体转换为毫秒
@@ -218,7 +233,7 @@ int nanosleep(const struct timespec *req, struct timespec *rem) {
 }
 int socket(int domain, int type, int protocol) {
     // 如果没有启用钩子功能，则直接调用原始的socket函数
-    if (!hh::is_hook_enable()) {
+    if (!hh::t_hook_enable) {
         return socket_f(domain, type, protocol);
     }
     int fd = socket_f(domain, type, protocol);
@@ -236,7 +251,6 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen) {
     if (fd >= 0) {
         // 获取文件描述符管理器并设置文件描述符为非阻塞模式
         hh::FdMgr::GetInstance()->get(fd, true);
-        return fd;
     };
     return fd;
 }
@@ -293,7 +307,7 @@ ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags) {
     return do_io(sockfd, sendmsg_f, "sendmsg", hh::IOManager::WRITE, SO_SNDTIMEO, msg, flags);
 }
 int close(int fd) {
-    if (!hh::is_hook_enable()) {
+    if (!hh::t_hook_enable) {
         return close_f(fd);
     }
     // 获取文件描述符类，并且进行删除fd的所有事件
@@ -303,14 +317,12 @@ int close(int fd) {
         if (iom) {
             iom->cancelAll(fd);
         }
+        hh::FdMgr::GetInstance()->del(fd);
     }
     return close_f(fd);
 } ;
 
 int fcntl(int fd, int cmd, ... /* arg */ ) {
-    if (!hh::is_hook_enable()) {
-        return fcntl_f(fd, cmd);
-    }
     va_list va;
     va_start(va, cmd);
     switch (cmd) {
@@ -332,6 +344,7 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
             }
             return fcntl_f(fd, cmd, arg);
         }
+            break;
             // 以下命令处理模式相似，主要区别在于参数类型和是否需要额外处理
         case F_GETFL: // 获取文件描述符标志
         {
@@ -347,6 +360,7 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
                 return arg & ~O_NONBLOCK;
             }
         }
+            break;
         case F_DUPFD: // 复制文件描述符
         case F_DUPFD_CLOEXEC: // 复制文件描述符并在execve后关闭
         case F_SETFD: // 设置文件描述符 close-on-exec 标志
@@ -354,7 +368,9 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
         case F_SETSIG: // 设置异步I/O信号
         case F_SETLEASE: // 设置文件租约
         case F_NOTIFY: // 文件或目录变化通知
-        case F_SETPIPE_SZ: // 设置管道缓冲区大小
+#ifdef F_SETPIPE_SZ
+        case F_SETPIPE_SZ:
+#endif
         {
             int arg = va_arg(va, int); // 获取整型参数
             va_end(va); // 结束可变参数处理
@@ -366,7 +382,9 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
         case F_GETOWN: // 获取文件描述符的所有者进程ID
         case F_GETSIG: // 获取异步I/O信号
         case F_GETLEASE: // 获取文件租约信息
-        case F_GETPIPE_SZ: // 获取管道缓冲区大小
+#ifdef F_GETPIPE_SZ
+        case F_GETPIPE_SZ:
+#endif
         {
             va_end(va); // 结束可变参数处理
             return fcntl_f(fd, cmd); // 调用自定义fcntl处理函数
@@ -445,14 +463,14 @@ optval：指向选项值的指针。
 optlen：选项值的长度。
 */
 int setsockopt(int sockfd, int level, int optname, const void *optval, socklen_t optlen) {
-    if (!hh::is_hook_enable()) {
+    if (!hh::t_hook_enable) {
         return setsockopt_f(sockfd, level, optname, optval, optlen);
     }
     if (level == SOL_SOCKET) {
         if (optname == SO_RCVTIMEO || optname == SO_SNDTIMEO) {
             hh::FdCtx::ptr ctx = hh::FdMgr::GetInstance()->get(sockfd);
             if (ctx) {
-                const struct timeval *tv = (const struct timeval *) optval;
+                const auto *tv = (const struct timeval *) optval;
                 ctx->setTimeout(optname, tv->tv_sec * 1000 + tv->tv_usec / 1000);
             }
         }
@@ -460,8 +478,8 @@ int setsockopt(int sockfd, int level, int optname, const void *optval, socklen_t
     return setsockopt_f(sockfd, level, optname, optval, optlen);
 } ;
 
-int connect_with_timeout(int fd, const struct sockaddr *addr, socklen_t addrlen, int timeout_ms) {
-    if(!hh::is_hook_enable()){
+int connect_with_timeout(int fd, const struct sockaddr *addr, socklen_t addrlen, uint64_t timeout_ms) {
+    if (!hh::t_hook_enable) {
         return connect_f(fd, addr, addrlen);
     }
     hh::FdCtx::ptr ptr = hh::FdMgr::GetInstance()->get(fd);
@@ -470,12 +488,12 @@ int connect_with_timeout(int fd, const struct sockaddr *addr, socklen_t addrlen,
         errno = EBADF;
         return -1;
     }
-    if(!ptr->isSocket()){
+    if (!ptr->isSocket()) {
         // 不是一个socket
         return connect_f(fd, addr, addrlen);
     }
     // 用户态非阻塞
-    if(ptr->getUserNonblock()){
+    if (ptr->getUserNonblock()) {
         return connect_f(fd, addr, addrlen);
     }
     hh::IOManager *iom = hh::IOManager::GetThis();
@@ -483,53 +501,50 @@ int connect_with_timeout(int fd, const struct sockaddr *addr, socklen_t addrlen,
     std::shared_ptr<timer_info> info(new timer_info);
     std::weak_ptr<timer_info> winfo(info);
     // 如果拥有超时时间
-    if(timeout_ms != (uint64_t)-1){
-        timer = iom->addConditionTimer(timeout_ms, [winfo,fd,iom]() {
+    if (timeout_ms != (uint64_t) -1) {
+        timer = iom->addConditionTimer(timeout_ms, [winfo, fd, iom]() {
             auto t = winfo.lock();
-            if(!t || t->cancelled){
+            if (!t || t->cancelled) {
                 return;
             }
             t->cancelled = ETIMEDOUT;
-            iom->cancelEvent(fd,hh::IOManager::WRITE);
+            iom->cancelEvent(fd, hh::IOManager::WRITE);
         }, winfo);
     }
-    int rt = connect_f(fd, addr, addrlen);
+    int rt = iom->addEvent(fd, hh::IOManager::WRITE);
     // 成功返回0，失败-1
-    if(rt == 0){
+    if (rt == 0) {
         // 成功直接hold
         hh::Fiber::YieldToHold();
-        if(timer){
+        if (timer) {
             timer->cancel();
         }
-        if(info->cancelled){
+        if (info->cancelled) {
             errno = info->cancelled;
             return -1;
         }
-    }else{
-        if(timer){
+    } else {
+        if (timer) {
             timer->cancel();
         }
-        HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::ERROR)<<"connect error";
+        HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR) << "connect error";
     }
     int error = 0;
     socklen_t len = sizeof(int);
-    if(getsockopt(fd, SOL_SOCKET, SO_ERROR, &error, &len) < 0){
+    if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &error, &len) < 0) {
         return -1;
     }
-    if(error == 0){
+    if (error == 0) {
         // 成功
         return 0;
-    }else{
+    } else {
         // 失败
         errno = error;
         return -1;
     }
 }
 int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
-    if(!hh::is_hook_enable()){
-        //return connect_with_timeout(sockfd, addr, addrlen,hh::s);
-    }
-    return connect_f(sockfd, addr, addrlen);
+    return connect_with_timeout(sockfd, addr, addrlen, hh::s_connect_timeout);
 }
 
 }
