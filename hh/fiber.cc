@@ -33,7 +33,7 @@ namespace hh {
         }
 
         static void Dealloc(void *ptr, size_t size) {
-            free(ptr);
+            return free(ptr);
         }
     };
 
@@ -97,8 +97,8 @@ namespace hh {
             StackAllocator::Dealloc(m_stack, m_stackSize);
         } else {
             //主协程
-            HH_ASSERT(m_state == EXEC);
             HH_ASSERT(!m_cb);
+            HH_ASSERT(m_state == EXEC);
             Fiber *cur = t_fiber;
             if (cur == this)
                 SetThis(nullptr);
@@ -254,9 +254,11 @@ namespace hh {
         } catch (std::exception &e) {
             m_fiber->m_state = EXCEPT; // 设置状态为异常
             // 记录异常日志
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::ERROR)<<"Fiber Except: "<<e.what();
         } catch (...) {
             m_fiber->m_state = EXCEPT; // 设置状态为异常
             // 记录未知异常日志
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::ERROR)<<"Fiber Except: "<<"unknown exception";
         }
         auto pFiber = m_fiber.get(); // 获取Fiber指针
         m_fiber.reset(); // 释放Fiber对象
@@ -281,9 +283,11 @@ namespace hh {
         } catch (std::exception &e) {
             fiber->m_state = EXCEPT; // 设置状态为异常
             // 记录异常日志
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::ERROR)<<"Fiber Except: "<<e.what();
         } catch (...) {
             fiber->m_state = EXCEPT; // 设置状态为异常
             // 记录未知异常日志
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::ERROR)<<"Fiber Except: "<<"unknown exception";
         }
         auto pFiber = fiber.get(); // 获取Fiber指针
         fiber.reset(); // 释放Fiber对象

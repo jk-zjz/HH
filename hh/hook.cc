@@ -11,10 +11,13 @@
 hh::Logger::ptr g_logger = HH_LOG_NAME("system");
 
 namespace hh {
+    // 设置默认超时时间
     static hh::ConfigVar<int>::ptr g_tcp_connect_timeout =
             hh::Config::Lookup("tcp.connect.timeout", 5000, "tcp connect timeout");
 
+    // 当前线程是否开启hook
     static thread_local bool t_hook_enable = false;
+    // hook函数
 #define HOOK_FUN(XX) \
     XX(sleep)         \
     XX(usleep)       \
@@ -56,7 +59,7 @@ namespace hh {
             s_connect_timeout = g_tcp_connect_timeout->getValue();
         };
     };
-
+    // 使用静态变量初始化hook
     static _FuncInit s_init;
 
     bool is_hook_enable() {
@@ -72,91 +75,81 @@ struct timer_info {
     int cancelled = 0;
 };
 
+// 通用IO操作 模板
 template<typename OriginFun, typename... Args>
-static ssize_t do_io(int fd, OriginFun fun,
-                     const char *hook_fun_name, // I/O操作对应的钩子函数名称，用于调试或监控
-                     uint32_t event,            // 事件类型，比如读、写或同时读写事件
-                     int timeout_so,            // 套接字超时设置的选项，如SO_RCVTIMEO或SO_SNDTIMEO
-                     Args &&... args) {         // 可变参数模板，转发给原始I/O操作的所有其他参数
-    std::cout << "Entering do_io: " << hook_fun_name << std::endl;
-
-    if (!hh::t_hook_enable) {
-        // 如果钩子功能未启用，则直接调用原始I/O操作函数
+static ssize_t do_io(int fd, OriginFun fun, const char* hook_fun_name,
+                     uint32_t event, int timeout_so, Args&&... args) {
+    if(!hh::t_hook_enable) {
+        // 判断启用hook状态
         return fun(fd, std::forward<Args>(args)...);
     }
 
-    // 获取文件描述符上下文
+    // 获取fd
     hh::FdCtx::ptr ctx = hh::FdMgr::GetInstance()->get(fd);
-    if (!ctx) {
-        std::cerr << "FdCtx not found for fd: " << fd << std::endl;
-        // 如果套接字不存在，则调用原始I/O操作函数
+    if(!ctx) {
         return fun(fd, std::forward<Args>(args)...);
     }
-
-    if (ctx->isClose()) {
-        std::cerr << "FdCtx is closed for fd: " << fd << std::endl;
-        // EBADF 错误表示套接字已关闭
+    // 判断fd是否关闭
+    if(ctx->isClose()) {
         errno = EBADF;
         return -1;
     }
-
-    if (!ctx->isSocket() || ctx->getUserNonblock()) {
-        // 如果套接字不存在，则调用原始I/O操作函数
+    // 不是socket 或者用户设置了非阻塞
+    if(!ctx->isSocket() || ctx->getUserNonblock()) {
         return fun(fd, std::forward<Args>(args)...);
     }
 
-    // 获取套接字超时时间 读或写
+    // 获取超时与添加定时器条件
     uint64_t to = ctx->getTimeout(timeout_so);
-    // 创建一个定时器，用于在超时时间到期时取消I/O操作
     std::shared_ptr<timer_info> tinfo(new timer_info);
 
     retry:
+    // 执行
     ssize_t n = fun(fd, std::forward<Args>(args)...);
-    // EINTR 表示系统调用被信号中断
-    while (n == -1 && errno == EINTR) {
+    while(n == -1 && errno == EINTR) {
         n = fun(fd, std::forward<Args>(args)...);
     }
-    // EAGAIN 表示资源暂时不可用，需要稍后再试
-    if (n == -1 && errno == EAGAIN) {
-        hh::IOManager *iom = hh::IOManager::GetThis();
+    if(n == -1 && errno == EAGAIN) {
+        // 是-1 或者是 EAGAIN(阻塞)
+        hh::IOManager* iom = hh::IOManager::GetThis();
         hh::Timer::ptr timer;
-        // 创建一个定时器，用于在超时时间到期时取消I/O操作
         std::weak_ptr<timer_info> winfo(tinfo);
-        if (to != (uint64_t) -1) {
-            // 设置了超时时间
+        // 有超时定时器
+        if(to != (uint64_t)-1) {
+            // 添加条件定时器
             timer = iom->addConditionTimer(to, [winfo, fd, iom, event]() {
                 auto t = winfo.lock();
-                if (!t || t->cancelled) {
-                    // 如果定时器已过期或已取消，则返回
+                if(!t || t->cancelled) {
                     return;
                 }
-                // 取消I/O操作 ETIMEDOUT表示超时
                 t->cancelled = ETIMEDOUT;
-                // 设置套接字为可读或可写
-                iom->cancelEvent(fd, (hh::IOManager::Event) (event));
+                iom->cancelEvent(fd, (hh::IOManager::Event)(event));
             }, winfo);
         }
-        int re = iom->addEvent(fd, (hh::IOManager::Event) (event));
-        if (HH_UNLIKELY(re)) {
-            HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR)
-                << "addEvent error" << hook_fun_name << "(" << fd << ")" << errno;
-            if (timer) {
-                // 如果有定时器，则取消定时器 强制触发掉任务
+        // 添加事件
+        int rt = iom->addEvent(fd, (hh::IOManager::Event)(event));
+        if(HH_UNLIKELY(rt)) {
+            HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR) << hook_fun_name << " addEvent("
+                                                              << fd << ", " << event << ")";
+            if(timer) {
+                // 添加事件失败取消定时器，并且强制触发函数
                 timer->cancel();
             }
             return -1;
         } else {
+            // 添加成功，hold住，切换到后天
             hh::Fiber::YieldToHold();
-            if (timer) {
+            if(timer) {
                 timer->cancel();
             }
-            if (tinfo->cancelled) {
+            if(tinfo->cancelled) {
                 errno = tinfo->cancelled;
                 return -1;
             }
             goto retry;
         }
     }
+
     return n;
 }
 
@@ -325,19 +318,17 @@ int close(int fd) {
 int fcntl(int fd, int cmd, ... /* arg */ ) {
     va_list va;
     va_start(va, cmd);
-    switch (cmd) {
-        // 处理F_SETFL命令：设置文件描述符标志
-        case F_SETFL: {
-            int arg = va_arg(va, int); // 获取va_list中的下一个参数，这里是int类型
-            va_end(va); // 清空va_list，表明已处理完所有可变参数
-            hh::FdCtx::ptr ctx = hh::FdMgr::GetInstance()->get(fd); // 获取文件描述符对应的上下文
-            if (!ctx || !ctx->isSocket() || ctx->isClose()) { // 检查上下文有效性及文件描述符状态
-                return fcntl_f(fd, cmd, arg); // 上下文无效或文件描述符已关闭时，调用自定义fcntl处理函数
+    switch(cmd) {
+        case F_SETFL:
+        {
+            int arg = va_arg(va, int);
+            va_end(va);
+            hh::FdCtx::ptr ctx = hh::FdMgr::GetInstance()->get(fd);
+            if(!ctx || ctx->isClose() || !ctx->isSocket()) {
+                return fcntl_f(fd, cmd, arg);
             }
-            // 判断 用户态是否为非阻塞
             ctx->setUserNonblock(arg & O_NONBLOCK);
-            if (ctx->getSysNonblock()) {
-                // 设置系统非阻塞
+            if(ctx->getSysNonblock()) {
                 arg |= O_NONBLOCK;
             } else {
                 arg &= ~O_NONBLOCK;
@@ -345,29 +336,21 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
             return fcntl_f(fd, cmd, arg);
         }
             break;
-            // 以下命令处理模式相似，主要区别在于参数类型和是否需要额外处理
-        case F_GETFL: // 获取文件描述符标志
+        case F_GETFL:
         {
             va_end(va);
             int arg = fcntl_f(fd, cmd);
             hh::FdCtx::ptr ctx = hh::FdMgr::GetInstance()->get(fd);
-            if (!ctx || ctx->isClose() || !ctx->isSocket()) {
+            if(!ctx || ctx->isClose() || !ctx->isSocket()) {
                 return arg;
             }
-            if (ctx->getUserNonblock()) {
+            if(ctx->getUserNonblock()) {
                 return arg | O_NONBLOCK;
             } else {
                 return arg & ~O_NONBLOCK;
             }
         }
             break;
-        case F_DUPFD: // 复制文件描述符
-        case F_DUPFD_CLOEXEC: // 复制文件描述符并在execve后关闭
-        case F_SETFD: // 设置文件描述符 close-on-exec 标志
-        case F_SETOWN: // 设置文件描述符的所有者进程ID
-        case F_SETSIG: // 设置异步I/O信号
-        case F_SETLEASE: // 设置文件租约
-        case F_NOTIFY: // 文件或目录变化通知
 #ifdef F_SETPIPE_SZ
         case F_SETPIPE_SZ:
 #endif
@@ -386,8 +369,8 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
         case F_GETPIPE_SZ:
 #endif
         {
-            va_end(va); // 结束可变参数处理
-            return fcntl_f(fd, cmd); // 调用自定义fcntl处理函数
+            va_end(va);
+            return fcntl_f(fd, cmd);
         }
             break;
             // 处理文件锁相关的命令
@@ -431,6 +414,7 @@ int ioctl(int fd, unsigned long request, ...) {
     void *arg = va_arg(va, void *);
     va_end(va);
     if (request == FIONBIO) {
+        // 获取文件描述符类，并且进行设置非阻塞
         bool user_nonblock = !!*(int *) arg;
         hh::FdCtx::ptr ptr = hh::FdMgr::GetInstance()->get(fd);
         if (!ptr || !ptr->isSocket() || ptr->isClose()) {
@@ -496,6 +480,14 @@ int connect_with_timeout(int fd, const struct sockaddr *addr, socklen_t addrlen,
     if (ptr->getUserNonblock()) {
         return connect_f(fd, addr, addrlen);
     }
+
+    int n = connect_f(fd, addr, addrlen);
+    if(n == 0) {
+        return 0;
+    } else if(n != -1 || errno != EINPROGRESS) {
+        return n;
+    }
+
     hh::IOManager *iom = hh::IOManager::GetThis();
     hh::Timer::ptr timer;
     std::shared_ptr<timer_info> info(new timer_info);
@@ -546,5 +538,6 @@ int connect_with_timeout(int fd, const struct sockaddr *addr, socklen_t addrlen,
 int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
     return connect_with_timeout(sockfd, addr, addrlen, hh::s_connect_timeout);
 }
+
 
 }

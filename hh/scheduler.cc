@@ -109,8 +109,10 @@ namespace hh {
         /**
          * 有主协程 && 主线程没有停止
          * */
-        if (m_root_fiber && !stopping()) {
-            m_root_fiber->call();
+        if (m_root_fiber) {
+            if(!stopping()){
+                m_root_fiber->call();
+            }
         }
         std::vector<Thread::ptr> thrs;
         {

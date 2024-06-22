@@ -13,6 +13,15 @@
  *
  *
  * */
+#if defined __GNUC__ || defined __llvm__
+/// LIKCLY 宏的封装, 告诉编译器优化,条件大概率成立
+#   define HH_LIKELY(x)       __builtin_expect(!!(x), 1)
+/// LIKCLY 宏的封装, 告诉编译器优化,条件大概率不成立
+#   define HH_UNLIKELY(x)     __builtin_expect(!!(x), 0)
+#else
+#   define HH_LIKELY(x)      (x)
+#   define HH_UNLIKELY(x)      (x)
+#endif
 #define HH_ASSERT(x) \
     if(!(x)){        \
         HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"ASSERTION: " #x \
