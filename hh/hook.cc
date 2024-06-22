@@ -351,20 +351,26 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
             }
         }
             break;
+        case F_DUPFD:
+        case F_DUPFD_CLOEXEC:
+        case F_SETFD:
+        case F_SETOWN:
+        case F_SETSIG:
+        case F_SETLEASE:
+        case F_NOTIFY:
 #ifdef F_SETPIPE_SZ
         case F_SETPIPE_SZ:
 #endif
         {
-            int arg = va_arg(va, int); // 获取整型参数
-            va_end(va); // 结束可变参数处理
-            return fcntl_f(fd, cmd, arg); // 调用自定义fcntl处理函数，传入参数
+            int arg = va_arg(va, int);
+            va_end(va);
+            return fcntl_f(fd, cmd, arg);
         }
             break;
-            // 下列命令无需额外参数，直接调用fcntl处理
-        case F_GETFD: // 获取文件描述符的close-on-exec标志
-        case F_GETOWN: // 获取文件描述符的所有者进程ID
-        case F_GETSIG: // 获取异步I/O信号
-        case F_GETLEASE: // 获取文件租约信息
+        case F_GETFD:
+        case F_GETOWN:
+        case F_GETSIG:
+        case F_GETLEASE:
 #ifdef F_GETPIPE_SZ
         case F_GETPIPE_SZ:
 #endif
@@ -373,33 +379,28 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
             return fcntl_f(fd, cmd);
         }
             break;
-            // 处理文件锁相关的命令
-        case F_SETLK: // 设置记录锁（非阻塞）
-        case F_SETLKW: // 设置记录锁（阻塞直到成功）
-        case F_GETLK: // 检查记录锁状态
+        case F_SETLK:
+        case F_SETLKW:
+        case F_GETLK:
         {
-            struct flock *arg = va_arg(va, struct flock *); // 获取文件锁结构体指针
-            va_end(va); // 结束可变参数处理
-            return fcntl_f(fd, cmd, arg); // 调用自定义fcntl处理函数，传入文件锁结构体
+            struct flock* arg = va_arg(va, struct flock*);
+            va_end(va);
+            return fcntl_f(fd, cmd, arg);
         }
             break;
-            // 处理进程所有权扩展相关命令
-        case F_GETOWN_EX: // 获取扩展的所有权信息
-        case F_SETOWN_EX: // 设置扩展的所有权信息
+        case F_GETOWN_EX:
+        case F_SETOWN_EX:
         {
-            struct f_owner_ex *arg = va_arg(va, struct f_owner_ex *); // 获取所有权扩展结构体指针
-            va_end(va); // 结束可变参数处理
-            return fcntl_f(fd, cmd, arg); // 调用自定义fcntl处理函数，传入所有权扩展结构体
+            struct f_owner_exlock* arg = va_arg(va, struct f_owner_exlock*);
+            va_end(va);
+            return fcntl_f(fd, cmd, arg);
         }
             break;
-            // 默认情况，处理未列出的其他命令
-        default: {
-            va_end(va); // 结束可变参数处理
-            return fcntl(fd, cmd); // 直接调用系统提供的fcntl函数
-        }
+        default:
+            va_end(va);
+            return fcntl_f(fd, cmd);
     }
-} ;
-
+}
 /**
  * ioctl函数 设置非阻塞
  * @param fd
