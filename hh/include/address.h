@@ -8,12 +8,29 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <sys/un.h>
+#include <netdb.h>
+#include <vector>
 namespace hh{
     class Address{
     public:
         // 使用std::shared_ptr智能指针来管理Address对象的生命周期
         typedef std::shared_ptr<Address> ptr;
 
+        static bool lookup(std::vector<Address::ptr>& result,
+                           const std::string& host,
+                           int family = AF_INET,
+                           int type = 0,
+                           int protocol = 0);
+        static Address::ptr lookupAny(const std::string& host,
+                                       int family = AF_INET,
+                                       int type = 0,
+                                       int protocol = 0);
+        static Address::ptr lookupAnyIPAddress(const std::string& host,
+                                               int family = AF_INET,
+                                               int type = 0,
+                                               int protocol = 0);
+
+        static Address::ptr create(const sockaddr* addr, socklen_t len);
         // 虚析构函数，确保通过基类指针删除派生类对象时能正确调用派生类的析构函数
         virtual ~Address(){}
 
@@ -44,8 +61,8 @@ namespace hh{
     };
     class IPAddress : public Address{
     public:
-        // 使用std::shared_ptr智能指针来管理IPAddress对象的生命周期，定义为IPAddress::ptr别名
         typedef std::shared_ptr<IPAddress> ptr;
+        IPAddress::ptr Create(const char* address, uint16_t port =0);
 
         // 根据给定的前缀长度计算并返回广播地址，纯虚函数需在派生类中实现
         virtual IPAddress::ptr broadcastAddress(uint32_t prefix_len) = 0;
@@ -66,7 +83,9 @@ namespace hh{
     public:
         typedef std::shared_ptr<IPv4Address> ptr;
         IPv4Address(uint32_t address = INADDR_ANY, uint32_t port = 0);
+        IPv4Address(const sockaddr_in& address);
 
+        static IPv4Address::ptr Create(const std::string& address, uint32_t port = 0);
         // 返回指向存储IPv4地址信息的sockaddr结构体的指针，实现基类的getAddr()函数
         const sockaddr* getAddr() const override;
 
@@ -97,8 +116,9 @@ namespace hh{
     public:
         typedef std::shared_ptr<IPv6Address> ptr;
         IPv6Address();
-        IPv6Address( const char * address, uint32_t port = 0);
-
+        IPv6Address( const uint8_t address[16], uint32_t port = 0);
+        static  IPv6Address::ptr Create(const char * address, uint32_t port = 0);
+        IPv6Address(const sockaddr_in6& address);
         const sockaddr* getAddr() const override;
         socklen_t getAddrLen() const override;
         std::ostream &insert(std::ostream& os) const override;
@@ -127,6 +147,7 @@ namespace hh{
     public:
         typedef std::shared_ptr<UnknownAddress> ptr;
         UnknownAddress(int family);
+        UnknownAddress(const sockaddr& addr);
         const sockaddr* getAddr() const override;
         socklen_t getAddrLen() const override;
         std::ostream &insert(std::ostream& os) const override;
