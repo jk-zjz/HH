@@ -698,6 +698,16 @@ void test_sock(){
        [socket]
         (套接字)                   
 ```
+封装Address类，封装IPAddress类，封装IPv4Address类，封装IPv6Address类，封装UnixAddress类，
+
+
+```c++
+为完成
+lookupAny,lookupAnyIPAddress
+
+```
+
+
 ## http协议开发
 
 ## 分布式协议

@@ -2,14 +2,13 @@
 // Created by 35148 on 2024/6/14.
 //
 #include <netinet/in.h>
-#include <cstring>
 #include <arpa/inet.h>
 #include <csignal>
 #include <iostream>
 #include "hook.h"
 #include "log.h"
 #include "iomanage.h"
-
+#include <cstring>
 static hh::Logger::ptr g_logger = HH_LOG_ROOT();
 
 // 捕获 SIGPIPE 信号的处理函数
@@ -74,6 +73,5 @@ void test_sock(){
 int main(){
     hh::IOManager iomanager;
     iomanager.schedule(test_sock);
-
     return 0;
 }
