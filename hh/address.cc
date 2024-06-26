@@ -25,6 +25,15 @@ namespace hh {
         return (1 << (sizeof(T) * 8 - bits)) - 1;
     }
 
+    template<class T>
+    static uint32_t countBits(T value){
+        uint32_t ret = 0;
+        for(;value;ret++){
+            value &= value-1;
+        }
+        return ret;
+    }
+
     static hh::Logger::ptr g_logger = HH_LOG_NAME("system");
 
 /**
@@ -120,68 +129,188 @@ namespace hh {
      *
      * @return 如果查找操作成功执行，则返回true；否则返回false。
      */
-    bool
-    Address::lookup(std::vector<Address::ptr> &result, const std::string &host, int family, int type, int protocol) {
-        // 初始化addrinfo
+    bool Address::lookup(std::vector<Address::ptr> &result, const std::string &host, int family, int type, int protocol) {
         addrinfo hints, *results, *next;
-        hints.ai_flags = 0;
+        memset(&hints, 0, sizeof(addrinfo));
         hints.ai_family = family;
         hints.ai_socktype = type;
         hints.ai_protocol = protocol;
-        hints.ai_addrlen = 0;
-        hints.ai_canonname = nullptr;
-        hints.ai_addr = nullptr;
-        hints.ai_next = nullptr;
 
-        // 获取主机名对应的IP地址
         std::string node;
-        const char * service = nullptr;
-        if(!host.empty() && host[0] != '['){
+        const char *service = nullptr;
+
+        if (!host.empty() && host[0] == '[') {
             // 是否是IPv6地址
-            const char *endipv6 = (const char *)memchr(host.c_str()+1, ']',host.size()-1);
-            if(endipv6){
-                // 有ipv6
-                if(*(endipv6+1)==':'){
-                    service = endipv6+2;
+            const char *endipv6 = (const char *)memchr(host.c_str() + 1, ']', host.size() - 1);
+            if (endipv6) {
+                if (*(endipv6 + 1) == ':') {
+                    service = endipv6 + 2;
                 }
-                node = host.substr(1, endipv6 - host.c_str()-1);
+                node = host.substr(1, endipv6 - host.c_str() - 1);
             }
-        }
-        if(host.empty()){
-            // 是否存储了ipv6。没有就是IPv4
-            service = (const char *) memchr(host.c_str(), ':', host.size());
-            if(service){
-                // 有端口号
+        } else {
+            service = (const char *)memchr(host.c_str(), ':', host.size());
+            if (service) {
                 node = host.substr(0, service - host.c_str());
                 service++;
             }
         }
-        if(node.empty()){
-            // 如果为空填写
+
+        if (node.empty()) {
             node = host;
         }
-        // 获取设备信息
+
+        std::cout << "Resolving node: " << node << ", service: " << (service ? service : "null") << std::endl;
+
         int error = getaddrinfo(node.c_str(), service, &hints, &results);
-        if(error) {
-            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG) << "Address::lookup(" << host << ", " << family << ", " << type << ", " << protocol
-                                   << ") error=" << error << " errno=" << errno << " errstr=" << strerror(errno);
+        if (error) {
+            std::cerr << "Address::lookup(" << host << ", " << family << ", " << type << ", " << protocol
+                      << ") error=" << error << " errstr=" << gai_strerror(error) << std::endl;
             return false;
         }
+
         next = results;
         while (next) {
-            // 循环获取
-            result.push_back(create(next->ai_addr, (socklen_t) next->ai_addrlen));
+            result.push_back(create(next->ai_addr, (socklen_t)next->ai_addrlen));
             next = next->ai_next;
         }
         freeaddrinfo(results);
         return true;
     }
+    /**
+     * 根据给定的主机名、地址族、类型和协议，查找并返回第一个匹配的地址对象。
+     *
+     * @param host 要查找的主机名或IP地址。
+     * @param family 地址族，如AF_INET用于IPv4，AF_INET6用于IPv6。
+     * @param type 地址类型，如 SOCK_STREAM 用于TCP，SOCK_DGRAM 用于UDP。
+     * @param protocol 协议，对应于地址类型，如TCP或UDP的协议号。
+     * @return 如果找到匹配的地址，则返回一个指向地址对象的指针；否则返回nullptr。
+     */
+    Address::ptr Address::lookupAny(const std::string &host, int family, int type, int protocol) {
+        std::vector<Address::ptr> result; // 用于存储查询结果的向量
+        // 尝试查找匹配的地址，如果成功，结果将存储在result中
+        if(lookup(result, host, family, type, protocol)){
+            // 如果找到至少一个匹配的地址，返回第一个地址
+            return result[0];
+        }
+        // 如果没有找到匹配的地址，返回nullptr
+        return nullptr;
+    }
 
-/**
- * 构造函数
- * @param address
- * @param port
- */
+    /**
+     * 查找给定主机名、地址族、类型和协议下的任意IP地址，并将其转换为IPAddress对象返回。
+     *
+     * @param host 要查询的主机名或IP地址字符串。
+     * @param family 指定地址族，例如AF_INET（IPv4）或AF_INET6（IPv6）。
+     * @param type 地址对应的套接字类型，如SOCK_STREAM（TCP）或SOCK_DGRAM（UDP）。
+     * @param protocol 指定的协议类型，如IPPROTO_TCP或IPPROTO_UDP。
+     * @return 查找到的第一个IPAddress对象的智能指针，如果没有找到则返回nullptr。
+     */
+    std::shared_ptr<IPAddress> Address::lookupAnyIPAddress(const std::string& host,
+                                                          int family,
+                                                          int type,
+                                                          int protocol){
+        std::vector<Address::ptr> result; // 存储地址查询结果的容器
+        // 执行地址查找操作
+        if(lookup(result, host, family, type, protocol)){
+            // 遍历所有查找到的地址对象
+            for(auto &i:result){
+                // 尝试将地址对象动态转换为IPAddress类型
+                IPAddress::ptr v = std::dynamic_pointer_cast<IPAddress>(i);
+                // 如果转换成功，即找到了IPAddress对象，则返回之
+                if(v){
+                    return v;
+                }
+            }
+        }
+        // 如果没有找到合适的IPAddress对象，则返回nullptr
+        return nullptr;
+    }
+
+    bool
+    Address::GetInterfaceAddresses(std::multimap<std::string, std::pair<Address::ptr, uint32_t>> &result, int family) {
+        struct ifaddrs *next, *results;
+        // 获取接口地址列表
+        if(getifaddrs(&results) != 0){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG) << "Address::GetInterfaceAddresses failed, errno="
+                                                              << errno << " errstr=" << strerror(errno);
+            return false;
+        }
+        try {
+            // 循环遍历接口地址列表
+            for(next = results; next; next = next->ifa_next){
+                Address::ptr address;
+                uint32_t prefix_len = 0;
+                if(family != AF_UNSPEC && next->ifa_addr->sa_family != family){
+                    continue;
+                }
+                switch (next->ifa_addr->sa_family) {
+                    case AF_INET: {
+                        address = create(next->ifa_addr, sizeof(sockaddr_in));
+                        uint32_t netmask = ((sockaddr_in *)next->ifa_netmask)->sin_addr.s_addr;
+                        prefix_len = countBits(netmask);
+                        break;
+                    }
+                    case AF_INET6: {
+                        HH_LOG_INFO(g_logger, "Address::GetInterfaceAddresses family=AF_INET6");
+                        address = create(next->ifa_addr, sizeof(sockaddr_in6));
+                        in6_addr& netmask_ = ((sockaddr_in6 *)next->ifa_netmask)->sin6_addr;
+                        prefix_len = 0;
+                        for (int i = 0; i < 16; ++i) {
+                            prefix_len += countBits(netmask_.s6_addr[i]);
+                        }
+                        break;
+                    }
+                    default:
+                        break;
+                }
+                if(address){
+                    result.insert(std::make_pair(next->ifa_name, std::make_pair(address, prefix_len)));
+                }
+            }
+        }catch(...){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<< "Address::GetInterfaceAddresses except";
+            freeifaddrs(results);
+            return false;
+        }
+        freeifaddrs(results);
+        return true;
+    }
+
+    bool
+    Address::GetInterfaceAddresses(std::vector<std::pair<Address::ptr, uint32_t>> &result, const std::string &iface,
+                                   int family) {
+        // 如果没有指定网卡名称或者为*返回所有
+        if(iface.empty() || iface=="*"){
+            // 是ipv4 或者 不规范的地址
+            if(family==AF_INET || family == AF_UNSPEC){
+                result.push_back(std::make_pair(Address::ptr(new IPv4Address()), 0));
+            }
+            // 是ipv6 或者 不规范的地址
+            if(family==AF_INET6 || family == AF_UNSPEC){
+                result.push_back(std::make_pair(Address::ptr(new IPv6Address()), 0));
+            }
+            return true;
+        }
+        // 如果有网卡名称
+        std::multimap<std::string, std::pair<Address::ptr, uint32_t>> results;
+        if(!GetInterfaceAddresses(results, family)){
+            return false;
+        }
+        // 查询范围  [] 的相同名称网卡
+        auto its = results.equal_range(iface);
+        for(; its.first != its.second; ++its.first){
+            // 添加到结果中
+            result.push_back(its.first->second);
+        }
+        return true;
+    }
+
+    /**
+     * 构造函数
+     * @param address
+     * @param port
+     */
     IPv4Address::IPv4Address(uint32_t address, uint32_t port) {
         memset(&m_addr, 0, sizeof(m_addr));
         m_addr.sin_family = AF_INET;
@@ -449,7 +578,7 @@ namespace hh {
     }
 
     IPAddress::ptr IPAddress::Create(const char *address, uint16_t port) {
-        addrinfo hint, *results, *next;
+        addrinfo hint, *results;
         memset(&hint, 0, sizeof(hint));
         hint.ai_flags = AI_NUMERICHOST;
         hint.ai_family = AF_UNSPEC;

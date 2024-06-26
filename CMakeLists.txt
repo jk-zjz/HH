@@ -65,3 +65,9 @@ target_link_libraries(hook_test yaml-cpp::yaml-cpp
         ${PTHREAD}
         dl)
 redefine_file_macro(hook_test)
+
+add_executable(address_test tests/address_test.cc ${CPP_G})
+target_link_libraries(address_test yaml-cpp::yaml-cpp
+        ${PTHREAD}
+        dl)
+redefine_file_macro(address_test)

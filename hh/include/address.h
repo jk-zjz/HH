@@ -10,28 +10,41 @@
 #include <sys/un.h>
 #include <netdb.h>
 #include <vector>
+#include <map>
+#include <ifaddrs.h>
 namespace hh{
+    class IPAddress;
     class Address{
     public:
         // 使用std::shared_ptr智能指针来管理Address对象的生命周期
         typedef std::shared_ptr<Address> ptr;
 
+        // 通用查询满版本
         static bool lookup(std::vector<Address::ptr>& result,
                            const std::string& host,
                            int family = AF_INET,
                            int type = 0,
                            int protocol = 0);
+        // 查询地址，不管是什么地址 ip或者为unix
         static Address::ptr lookupAny(const std::string& host,
                                        int family = AF_INET,
                                        int type = 0,
                                        int protocol = 0);
-        static Address::ptr lookupAnyIPAddress(const std::string& host,
+        // 查询IP地址
+        static std::shared_ptr<IPAddress> lookupAnyIPAddress(const std::string& host,
                                                int family = AF_INET,
                                                int type = 0,
                                                int protocol = 0);
 
+        // 查询网卡信息
+        static bool GetInterfaceAddresses(std::multimap<std::string, std::pair<Address::ptr, uint32_t>>& result,
+                                                             int family = AF_INET);
+        // 查询网卡信息全部
+        static bool GetInterfaceAddresses(std::vector<std::pair<Address::ptr, uint32_t>>& result,
+                                                               const std::string& iface,
+                                                               int family = AF_INET);
         static Address::ptr create(const sockaddr* addr, socklen_t len);
-        // 虚析构函数，确保通过基类指针删除派生类对象时能正确调用派生类的析构函数
+        // 虚析构函数，确保通过基类指针删除派生类对象·时能正确调用派生类的析构函数
         virtual ~Address(){}
 
         // 获取地址族（如AF_INET for IPv4, AF_INET6 for IPv6）
@@ -62,7 +75,7 @@ namespace hh{
     class IPAddress : public Address{
     public:
         typedef std::shared_ptr<IPAddress> ptr;
-        IPAddress::ptr Create(const char* address, uint16_t port =0);
+        static IPAddress::ptr Create(const char* address, uint16_t port =0);
 
         // 根据给定的前缀长度计算并返回广播地址，纯虚函数需在派生类中实现
         virtual IPAddress::ptr broadcastAddress(uint32_t prefix_len) = 0;

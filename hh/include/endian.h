@@ -9,6 +9,7 @@
 
 #include <byteswap.h>
 #include <stdint.h>
+
 extern "C++" {
 #include <type_traits>
 namespace hh {
@@ -46,7 +47,7 @@ namespace hh {
 
     template<class T>
     T byteswapOnLittleEndian(T t) {
-        return t;
+        return byteswap(t);
     }
 
 /**
@@ -54,7 +55,7 @@ namespace hh {
  */
     template<class T>
     T byteswapOnBigEndian(T t) {
-        return byteswap(t);
+        return t;
     }
 
 #else
@@ -63,7 +64,7 @@ namespace hh {
      */
     template<class T>
     T byteswapOnLittleEndian(T t) {
-        return byteswap(t);
+        return t;
     }
 
     /**
@@ -71,7 +72,7 @@ namespace hh {
      */
     template<class T>
     T byteswapOnBigEndian(T t) {
-        return t;
+        return byteswap(t);
     }
 #endif
 
