@@ -23,14 +23,14 @@
 #   define HH_UNLIKELY(x)      (x)
 #endif
 #define HH_ASSERT(x) \
-    if(!(x)){        \
+    if(HH_UNLIKELY(!(x))){        \
         HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"ASSERTION: " #x \
         <<"\nBacktraceToString\n"                                        \
         <<hh::BacktraceToString(100,2,"    ");                           \
         assert(x);                 \
     }
 #define HH_ASSERT2(x,y) \
-    if(!(x)){        \
+    if(HH_UNLIKELY(!(x))){        \
         HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::ERROR)<<"ASSERTION: " #x \
         <<"\n"<<y                \
         <<"\nBacktraceToString\n"                                        \
