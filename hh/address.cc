@@ -314,7 +314,7 @@ namespace hh {
     IPv4Address::IPv4Address(uint32_t address, uint32_t port) {
         memset(&m_addr, 0, sizeof(m_addr));
         m_addr.sin_family = AF_INET;
-        m_addr.sin_port = byteswapOnLittleEndian(port);
+        m_addr.sin_port = byteswapOnLittleEndian<uint32_t>(port);
         m_addr.sin_addr.s_addr = byteswapOnLittleEndian(address);
     }
 
@@ -335,13 +335,12 @@ namespace hh {
     }
 
 // 0xC0A80101 是一个32位的16进制数
-    std::ostream &IPv4Address::insert(std::ostream &os) const {
-        uint32_t addr_net = byteswapOnLittleEndian(m_addr.sin_addr.s_addr);
-        // 通过每一次比较8为二进制吧32位拆分为点分十进制
-        os << ((addr_net >> 24) & 0xff);
-        os << "." << ((addr_net >> 16) & 0xff);
-        os << "." << ((addr_net >> 8) & 0xff);
-        os << "." << (addr_net & 0xff);
+    std::ostream& IPv4Address::insert(std::ostream& os) const {
+        uint32_t addr = byteswapOnLittleEndian(m_addr.sin_addr.s_addr);
+        os << ((addr >> 24) & 0xff) << "."
+           << ((addr >> 16) & 0xff) << "."
+           << ((addr >> 8) & 0xff) << "."
+           << (addr & 0xff);
         os << ":" << byteswapOnLittleEndian(m_addr.sin_port);
         return os;
     }
@@ -362,7 +361,7 @@ namespace hh {
         }
         sockaddr_in broadcast_addr(m_addr);
         broadcast_addr.sin_addr.s_addr &=
-                byteswapOnLittleEndian(creataMask<uint32_t>(prefix_len));
+                byteswapOnBigEndian(creataMask<uint32_t>(prefix_len));
         return std::make_shared<IPv4Address>(broadcast_addr);
     }
 
@@ -386,7 +385,7 @@ namespace hh {
  * 设置端口
  * @param port
  */
-    void IPv4Address::setPort(uint32_t port) {
+    void IPv4Address::setPort(uint16_t port) {
         m_addr.sin_port = byteswapOnLittleEndian(port);
     }
 
@@ -394,7 +393,7 @@ namespace hh {
         m_addr = address;
     }
 
-    IPv4Address::ptr IPv4Address::Create(const std::string &address, uint32_t port) {
+    IPv4Address::ptr IPv4Address::Create(const std::string &address, uint16_t port) {
         IPv4Address::ptr ret(new IPv4Address);
         ret->m_addr.sin_port = byteswapOnLittleEndian(port);
         int result = inet_pton(AF_INET, address.c_str(), &ret->m_addr.sin_addr);
@@ -474,7 +473,7 @@ namespace hh {
         return byteswapOnLittleEndian(m_addr.sin6_port);
     }
 
-    void IPv6Address::setPort(uint32_t port) {
+    void IPv6Address::setPort(uint16_t port) {
         m_addr.sin6_port = byteswapOnLittleEndian(port);
     }
 
@@ -503,7 +502,7 @@ namespace hh {
         memcpy(&m_addr.sin6_addr, address, 16);
     }
 
-    IPv6Address::ptr IPv6Address::Create(const char *address, uint32_t port) {
+    IPv6Address::ptr IPv6Address::Create(const char *address, uint16_t port) {
         IPv6Address::ptr ret(new IPv6Address);
         ret->m_addr.sin6_port = byteswapOnLittleEndian(port);
         int result = inet_pton(AF_INET6, address, &ret->m_addr.sin6_addr);
@@ -577,30 +576,49 @@ namespace hh {
         m_addr = addr;
     }
 
+    /**
+     * 根据给定的地址和端口创建一个IPAddress对象的智能指针。
+     * @param address 字符串形式的IP地址，支持IPv4和IPv6。
+     * @param port 端口号，使用网络字节序。
+     * @return 返回一个IPAddress对象的智能指针，如果创建失败则返回nullptr。
+     *
+     * 本函数首先使用getaddrinfo函数解析地址字符串，然后尝试创建一个IPAddress对象。
+     * 如果解析地址失败，函数将记录错误信息并返回nullptr。
+     * 成功解析地址后，函数将释放相关的addrinfo结构体。
+     */
     IPAddress::ptr IPAddress::Create(const char *address, uint16_t port) {
         addrinfo hint, *results;
+        // 初始化addrinfo结构体
         memset(&hint, 0, sizeof(hint));
+        // 指定不进行名称解析，直接使用数值形式的IP地址
         hint.ai_flags = AI_NUMERICHOST;
+        // 允许自动选择IPv4或IPv6
         hint.ai_family = AF_UNSPEC;
+        // 解析地址信息
         int ret = getaddrinfo(address, nullptr, &hint, &results);
         if(ret != 0){
+            // 记录getaddrinfo调用失败的错误信息
             HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::DEBUG) << "getaddrinfo(" << address << ") error=" << ret << " errno=" << errno << " errstr=" << strerror(errno) << std::endl;
             return nullptr;
         }
         try{
+            // 创建IPAddress对象，并设置端口
             IPAddress::ptr result =std::dynamic_pointer_cast<IPAddress>(
                     Address::create(results->ai_addr, (socklen_t)results->ai_addrlen));
             if(result){
                 result->setPort(port);
             }
+            // 释放getaddrinfo返回的addrinfo结构体
             freeaddrinfo(results);
             return result;
         }
         catch(...){
+            // 在异常情况下释放addrinfo结构体
             // 释放内存
             freeaddrinfo(results);
             return nullptr;
         }
     }
+
 
 }

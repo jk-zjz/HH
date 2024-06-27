@@ -700,6 +700,10 @@ void test_sock(){
 ```
 封装Address类，封装IPAddress类，封装IPv4Address类，封装IPv6Address类，封装UnixAddress类，
 
+socket  
+connect  
+accept  bind listen
+read write close
 
 ```c++
 为完成

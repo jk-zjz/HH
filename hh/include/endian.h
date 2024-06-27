@@ -9,7 +9,6 @@
 
 #include <byteswap.h>
 #include <stdint.h>
-
 extern "C++" {
 #include <type_traits>
 namespace hh {
@@ -45,6 +44,9 @@ namespace hh {
 
 #if HH_BYTE_ORDER == HH_BIG_ENDIAN
 
+/**
+ * @brief 只在小端机器上执行byteswap, 在大端机器上什么都不做
+ */
     template<class T>
     T byteswapOnLittleEndian(T t) {
         return byteswap(t);
@@ -56,15 +58,16 @@ namespace hh {
     template<class T>
     T byteswapOnBigEndian(T t) {
         return t;
-    }
 
+    }
 #else
+
     /**
      * @brief 只在小端机器上执行byteswap, 在大端机器上什么都不做
      */
     template<class T>
     T byteswapOnLittleEndian(T t) {
-        return t;
+        return byteswap(t);
     }
 
     /**
@@ -72,10 +75,9 @@ namespace hh {
      */
     template<class T>
     T byteswapOnBigEndian(T t) {
-        return byteswap(t);
+        return t;
     }
 #endif
-
 }
 }
 #endif //HH_ENDIAN_H

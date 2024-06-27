@@ -19,7 +19,7 @@ namespace hh{
         // 使用std::shared_ptr智能指针来管理Address对象的生命周期
         typedef std::shared_ptr<Address> ptr;
 
-        // 通用查询满版本
+        // 通用查询满版本(可以查询ip中的地址)
         static bool lookup(std::vector<Address::ptr>& result,
                            const std::string& host,
                            int family = AF_INET,
@@ -39,10 +39,11 @@ namespace hh{
         // 查询网卡信息
         static bool GetInterfaceAddresses(std::multimap<std::string, std::pair<Address::ptr, uint32_t>>& result,
                                                              int family = AF_INET);
-        // 查询网卡信息全部
+        // 通过姓名查询网卡信息全部
         static bool GetInterfaceAddresses(std::vector<std::pair<Address::ptr, uint32_t>>& result,
                                                                const std::string& iface,
                                                                int family = AF_INET);
+        // 通过协议族返回 Address对象
         static Address::ptr create(const sockaddr* addr, socklen_t len);
         // 虚析构函数，确保通过基类指针删除派生类对象·时能正确调用派生类的析构函数
         virtual ~Address(){}
@@ -75,6 +76,7 @@ namespace hh{
     class IPAddress : public Address{
     public:
         typedef std::shared_ptr<IPAddress> ptr;
+        // 支持ipv4  ipv6 解析，但是不支持域名解析的方式
         static IPAddress::ptr Create(const char* address, uint16_t port =0);
 
         // 根据给定的前缀长度计算并返回广播地址，纯虚函数需在派生类中实现
@@ -90,7 +92,7 @@ namespace hh{
         virtual uint32_t getPort() const = 0;
 
         // 设置IP地址关联的端口号
-        virtual void setPort(uint32_t port) = 0;
+        virtual void setPort(uint16_t port) = 0;
     };
     class IPv4Address : public IPAddress{
     public:
@@ -98,7 +100,8 @@ namespace hh{
         IPv4Address(uint32_t address = INADDR_ANY, uint32_t port = 0);
         IPv4Address(const sockaddr_in& address);
 
-        static IPv4Address::ptr Create(const std::string& address, uint32_t port = 0);
+        // 初始化IPv4地址，根据给定的地址和端口号
+        static IPv4Address::ptr Create(const std::string& address, uint16_t port = 0);
         // 返回指向存储IPv4地址信息的sockaddr结构体的指针，实现基类的getAddr()函数
         const sockaddr* getAddr() const override;
 
@@ -121,7 +124,7 @@ namespace hh{
         uint32_t getPort() const override;
 
         // 设置与IPv4地址关联的端口号
-        void setPort(uint32_t port) override;
+        void setPort(uint16_t port) override;
     private:
         sockaddr_in m_addr;
     };
@@ -130,7 +133,7 @@ namespace hh{
         typedef std::shared_ptr<IPv6Address> ptr;
         IPv6Address();
         IPv6Address( const uint8_t address[16], uint32_t port = 0);
-        static  IPv6Address::ptr Create(const char * address, uint32_t port = 0);
+        static  IPv6Address::ptr Create(const char * address, uint16_t port = 0);
         IPv6Address(const sockaddr_in6& address);
         const sockaddr* getAddr() const override;
         socklen_t getAddrLen() const override;
@@ -139,7 +142,7 @@ namespace hh{
         IPAddress::ptr networkAddress(uint32_t prefix_len) override;
         IPAddress::ptr subnetMask(uint32_t prefix_len) override;
         uint32_t getPort() const override;
-        void setPort(uint32_t port) override;
+        void setPort(uint16_t port) override;
     private:
         sockaddr_in6 m_addr;
     };
