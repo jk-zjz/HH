@@ -76,7 +76,7 @@ namespace hh {
         // 绑定
         bool bind(const Address::ptr &address);
         // 建立连接
-        bool connect(const Address::ptr &address, int timeout_ms = -1);
+        bool connect(const Address::ptr &address, uint64_t timeout_ms = -1);
         //  监听
         bool listen(int backlog = SOMAXCONN);
         // 关闭

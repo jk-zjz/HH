@@ -311,7 +311,7 @@ namespace hh {
      * @param address
      * @param port
      */
-    IPv4Address::IPv4Address(uint32_t address, uint32_t port) {
+    IPv4Address::IPv4Address(uint32_t address, uint16_t port) {
         memset(&m_addr, 0, sizeof(m_addr));
         m_addr.sin_family = AF_INET;
         m_addr.sin_port = byteswapOnLittleEndian<uint32_t>(port);
@@ -322,7 +322,7 @@ namespace hh {
  * 获取地址sockaddr
  * @return
  */
-    const sockaddr *IPv4Address::getAddr() const {
+    sockaddr *IPv4Address::getAddr() const {
         return (sockaddr *) &m_addr;
     }
 
@@ -408,7 +408,7 @@ namespace hh {
  * 获取地址sockaddr
  * @return
  */
-    const sockaddr *IPv6Address::getAddr() const {
+     sockaddr *IPv6Address::getAddr() const {
         return (sockaddr *) &m_addr;
     }
 
@@ -495,7 +495,7 @@ namespace hh {
      * @param address
      * @param port
      */
-    IPv6Address::IPv6Address(const uint8_t *address, uint32_t port) {
+    IPv6Address::IPv6Address(const uint8_t *address, uint16_t port) {
         memset(&m_addr, 0, sizeof(m_addr));
         m_addr.sin6_family = AF_INET6;
         m_addr.sin6_port = byteswapOnLittleEndian(port);
@@ -532,7 +532,7 @@ namespace hh {
         m_length += offsetof(sockaddr_un, sun_path);
     }
 
-    const sockaddr *UnixAddress::getAddr() const {
+     sockaddr *UnixAddress::getAddr() const {
         return (sockaddr *) &m_addr;
     }
 
@@ -554,7 +554,11 @@ namespace hh {
         m_addr.sun_family = AF_UNIX;
     }
 
-    const sockaddr *UnknownAddress::getAddr() const {
+    void UnixAddress::setAddrLen(socklen_t length) {
+        m_length = length;
+    }
+
+    sockaddr *UnknownAddress::getAddr() const {
         return (sockaddr *) &m_addr;
     }
 

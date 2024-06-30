@@ -5,6 +5,7 @@
 #include "fd_manager.h"
 #include "log.h"
 #include "macro.h"
+#include "hook.h"
 namespace hh{
 static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
     Socket::Socket(int family, int type, int protocol):
@@ -92,19 +93,104 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
     }
 
     bool Socket::bind(const Address::ptr &address) {
-
-        return false;
+        if(!isValid()){
+            // socket 无效
+            // 创建socket
+            newSock();
+            if(HH_UNLIKELY(!isValid())){
+                // 还是无效
+                HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"newSock error,errno="
+                <<errno<<",error="<<strerror(errno);
+                close();
+                return false;
+            }
+        }
+        // 存储的和传入地址族不匹配
+        if(HH_UNLIKELY(address->getFamily() != m_family)){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"address family error"
+            <<address->getFamily()
+            <<" "<<m_family
+            <<address->toString();
+            close();
+            return false;
+        }
+        // 绑定失败不关闭文件描述符
+        if(::bind(m_sock, address->getAddr(), address->getAddrLen())){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"bind error,errno="
+            <<errno<<",error="<<strerror(errno);
+            return false;
+        };
+        getLocalAddress();
+        return true;
     }
 
-    bool Socket::connect(const Address::ptr &address, int timeout_ms) {
-        return false;
+    bool Socket::connect(const Address::ptr &address, uint64_t timeout_ms) {
+        if(!isValid()){
+            // socket 无效
+            // 创建socket
+            newSock();
+            if(HH_UNLIKELY(!isValid())){
+                // 还是无效
+                HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"newSock error,errno="
+                                                                <<errno<<",error="<<strerror(errno);
+                close();
+                return false;
+            }
+        }
+        // 存储的和传入地址族不匹配
+        if(HH_UNLIKELY(address->getFamily() != m_family)){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"address family error"
+                                                            <<address->getFamily()
+                                                            <<" "<<m_family
+                                                            <<address->toString();
+            close();
+            return false;
+        }
+        if(timeout_ms == (uint64_t)-1){
+            // 没有超时时间
+            if(::connect(m_sock, address->getAddr(), address->getAddrLen()) != 0){
+                HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"connect error,errno="
+                                                                <<errno<<",error="<<strerror(errno);
+                close();
+                return false;
+            }
+        }else{
+            if(::connect_with_timeout(m_sock, address->getAddr(), address->getAddrLen(), timeout_ms)){
+                HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"connect error,errno="
+                                                                <<errno<<",error="<<strerror(errno);
+                close();
+                return false;
+            }
+        }
+        getLocalAddress();
+        getRemoteAddress();
+        m_isConnected = true;
+        return true;
     }
 
     bool Socket::listen(int backlog) {
-        return false;
+        if(!isValid()){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"listen error,errno="
+                                                            <<errno<<",error="<<strerror(errno);
+            return false;
+        }
+        if(::listen(m_sock, backlog)){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"listen error,errno="
+                                                            <<errno<<",error="<<strerror(errno);
+            return false;
+        }
+        return true;
     }
 
     bool Socket::close() {
+        if(!m_isConnected && !isValid()){
+            return true;
+        }
+        if(HH_LIKELY(::close(m_sock) == 0)){
+            m_sock = -1;
+            m_isConnected = false;
+            return true;
+        }
         return false;
     }
 
@@ -125,47 +211,140 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
     }
 
     int Socket::send(const void *buffer, size_t length, int flags) {
-        return 0;
+        if(m_isConnected){
+            return ::send(m_sock, buffer, length, flags);
+        }
+        return -1;
     }
 
     int Socket::send(const iovec *buffers, size_t length, int flags) {
-        return 0;
+        if(m_isConnected){
+            msghdr msg;
+            memset(&msg, 0, sizeof(msg));
+            msg.msg_iov = (iovec*)buffers;
+            msg.msg_iovlen = length;
+            return ::sendmsg(m_sock, &msg, flags);
+        }
+        return -1;
     }
 
     int Socket::sendTo(const void *buffer, size_t length, const Address::ptr to, int flags) {
-        return 0;
+        return ::sendto(m_sock, (msghdr*)buffer, length, flags, to->getAddr(), to->getAddrLen());
     }
 
     int Socket::sendTo(const iovec *buffer, size_t length, const Address::ptr to, int flags) {
-        return 0;
+        msghdr msg;
+        memset(&msg, 0, sizeof(msg));
+        msg.msg_iov = (iovec*)buffer;
+        msg.msg_iovlen = length;
+        msg.msg_name = to->getAddr();
+        msg.msg_namelen = to->getAddrLen();
+        return ::sendmsg(m_sock, &msg, flags);
     }
 
     int Socket::recv(void *buffer, size_t length, int flags) {
-        return 0;
+        if(m_isConnected){
+            return ::recv(m_sock, buffer, length, flags);
+        }
+        return -1;
     }
 
     int Socket::recv(iovec *buffer, size_t length, int flags) {
-        return 0;
+        if(m_isConnected){
+            msghdr msg;
+            memset(&msg, 0, sizeof(msg));
+            msg.msg_iov = (iovec*)buffer;
+            msg.msg_iovlen = length;
+            return ::recvmsg(m_sock, &msg, flags);
+        }
+        return -1;
     }
 
     int Socket::recvFrom(void *buffer, size_t length, Address::ptr &from, int flags) {
-        return 0;
+        socklen_t fromlen = from->getAddrLen();
+        return ::recvfrom(m_sock, buffer, length, flags, from->getAddr(), &fromlen);
     }
 
     int Socket::recvFrom(iovec *buffer, size_t length, Address::ptr &from, int flags) {
+        msghdr msg;
+        memset(&msg, 0, sizeof(msg));
+        msg.msg_iov = (iovec*)buffer;
+        msg.msg_iovlen = length;
+        msg.msg_name = from->getAddr();
+        msg.msg_namelen = from->getAddrLen();
+        return ::recvmsg(m_sock, &msg, flags);
         return 0;
     }
 
     Address::ptr Socket::getLocalAddress() {
-        return hh::Address::ptr();
+        if(m_localAddress){
+            return m_localAddress;
+        }
+        Address::ptr ret;
+        switch(m_family){
+            case AF_INET:
+                ret.reset(new IPv4Address());
+            case AF_INET6:
+                ret.reset(new IPv6Address());
+                break;
+            case AF_UNIX:
+                ret.reset(new UnixAddress());
+            default:
+                ret.reset(new UnknownAddress(m_family));
+                break;
+        }
+        socklen_t len = ret->getAddrLen();
+        if(getsockname(m_sock, ret->getAddr(), &len)==-1){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"getLocalAddress error,errno="
+                                                            <<errno<<",error="<<strerror(errno);
+            return Address::ptr(new UnknownAddress(m_family));
+        }
+        if(m_family==AF_UNIX){
+            UnixAddress::ptr address = std::dynamic_pointer_cast<UnixAddress>(ret);
+            if(address){
+                address->setAddrLen(len);
+            }
+        }
+        m_localAddress=ret;
+        return m_localAddress;
     }
 
     Address::ptr Socket::getRemoteAddress() {
-        return hh::Address::ptr();
+        if(m_remoteAddress){
+            return m_remoteAddress;
+        }
+        Address::ptr ret;
+        switch(m_family){
+            case AF_INET:
+                ret.reset(new IPv4Address());
+            case AF_INET6:
+                ret.reset(new IPv6Address());
+                break;
+            case AF_UNIX:
+                ret.reset(new UnixAddress());
+                break;
+            default:
+                ret.reset(new UnknownAddress(m_family));
+                break;
+        }
+        socklen_t len = ret->getAddrLen();
+        if(getpeername(m_sock, ret->getAddr(), &len)==-1){
+            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"getRemoteAddress error,errno="
+                                                            <<errno<<",error="<<strerror(errno);
+            return Address::ptr(new UnknownAddress(m_family));
+        }
+        if(m_family==AF_UNIX){
+            UnixAddress::ptr address = std::dynamic_pointer_cast<UnixAddress>(ret);
+            if(address){
+                address->setAddrLen(len);
+            }
+        }
+        m_remoteAddress=ret;
+        return m_remoteAddress;
     }
 
     bool Socket::isValid() const {
-        return false;
+        return m_sock != -1;
     }
 
     int Socket::getError() {

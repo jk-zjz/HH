@@ -52,7 +52,7 @@ namespace hh{
         int getFamily() const;
 
         // 返回指向sockaddr结构体的指针，用于获取地址信息，纯虚函数需在派生类中实现
-        virtual const sockaddr* getAddr() const = 0;
+        virtual sockaddr* getAddr() const = 0;
 
         // 返回sockaddr结构体的大小，用于如bind、connect等函数中的长度参数，纯虚函数需在派生类中实现
         virtual socklen_t getAddrLen() const = 0;
@@ -97,13 +97,13 @@ namespace hh{
     class IPv4Address : public IPAddress{
     public:
         typedef std::shared_ptr<IPv4Address> ptr;
-        IPv4Address(uint32_t address = INADDR_ANY, uint32_t port = 0);
+        IPv4Address(uint32_t address = INADDR_ANY, uint16_t port = 0);
         IPv4Address(const sockaddr_in& address);
 
         // 初始化IPv4地址，根据给定的地址和端口号
         static IPv4Address::ptr Create(const std::string& address, uint16_t port = 0);
         // 返回指向存储IPv4地址信息的sockaddr结构体的指针，实现基类的getAddr()函数
-        const sockaddr* getAddr() const override;
+        sockaddr* getAddr() const override;
 
         // 返回sockaddr结构体的大小，实现基类的getAddrLen()函数
         socklen_t getAddrLen() const override;
@@ -132,10 +132,10 @@ namespace hh{
     public:
         typedef std::shared_ptr<IPv6Address> ptr;
         IPv6Address();
-        IPv6Address( const uint8_t address[16], uint32_t port = 0);
+        IPv6Address( const uint8_t address[16], uint16_t port = 0);
         static  IPv6Address::ptr Create(const char * address, uint16_t port = 0);
         IPv6Address(const sockaddr_in6& address);
-        const sockaddr* getAddr() const override;
+        sockaddr* getAddr() const override;
         socklen_t getAddrLen() const override;
         std::ostream &insert(std::ostream& os) const override;
         IPAddress::ptr broadcastAddress(uint32_t prefix_len) override;
@@ -152,9 +152,10 @@ namespace hh{
         UnixAddress(const std::string& path);
         UnixAddress();
 
-        const sockaddr* getAddr() const override;
+        sockaddr* getAddr() const override;
         socklen_t getAddrLen() const override;
         std::ostream &insert(std::ostream& os) const override;
+        void setAddrLen(socklen_t length);
     private:
         struct sockaddr_un m_addr;
         socklen_t m_length;
@@ -164,7 +165,7 @@ namespace hh{
         typedef std::shared_ptr<UnknownAddress> ptr;
         UnknownAddress(int family);
         UnknownAddress(const sockaddr& addr);
-        const sockaddr* getAddr() const override;
+        sockaddr* getAddr() const override;
         socklen_t getAddrLen() const override;
         std::ostream &insert(std::ostream& os) const override;
     private:
