@@ -206,7 +206,7 @@ namespace hh {
      * @param protocol 指定的协议类型，如IPPROTO_TCP或IPPROTO_UDP。
      * @return 查找到的第一个IPAddress对象的智能指针，如果没有找到则返回nullptr。
      */
-    std::shared_ptr<IPAddress> Address::lookupAnyIPAddress(const std::string& host,
+     std::shared_ptr<IPAddress> Address::lookupAnyIPAddress(const std::string& host,
                                                           int family,
                                                           int type,
                                                           int protocol){

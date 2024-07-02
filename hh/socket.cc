@@ -5,7 +5,8 @@
 #include "fd_manager.h"
 #include "log.h"
 #include "macro.h"
-#include "hook.h"
+#include "iomanage.h"
+#include <netinet/tcp.h>
 namespace hh{
 static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
     Socket::Socket(int family, int type, int protocol):
@@ -348,27 +349,41 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
     }
 
     int Socket::getError() {
-        return 0;
+        int error = 0;
+        size_t len = sizeof(error);
+        if(!getOption(SOL_SOCKET, SO_ERROR, &error, &len)){
+            return -1;
+        }
+        return error;
     }
 
     std::ostream &Socket::dump(std::ostream &os) const {
-
+        os<<"[ socket: "<<m_sock
+        <<" family="<<m_family
+        <<" type="<<m_type
+        <<" protocol="<<m_protocol
+        <<" isConnected="<<m_isConnected
+        <<" localAddress="<<(m_localAddress ? m_localAddress->toString() : "")
+        <<" remoteAddress="<<(m_remoteAddress ? m_remoteAddress->toString() : "")
+        <<"]";
+        return os;
     }
 
+    // 取消事件
     bool Socket::cancelRead() {
-        return false;
+        return hh::IOManager::GetThis()->cancelEvent(m_sock, hh::IOManager::READ);
     }
 
     bool Socket::cancelWrite() {
-        return false;
+        return hh::IOManager::GetThis()->cancelEvent(m_sock, hh::IOManager::WRITE);
     }
 
     bool Socket::cancelAccept() {
-        return false;
+        return hh::IOManager::GetThis()->cancelEvent(m_sock, hh::IOManager::READ);
     }
 
     bool Socket::cancelAll() {
-        return false;
+        return hh::IOManager::GetThis()->cancelAll(m_sock);
     }
 
     void Socket::initSock() {
@@ -377,7 +392,8 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
         setOption(SOL_SOCKET, SO_REUSEADDR, val);
         // 判断是否为流式套接字，还有一种是UDP的
         if(m_type == SOCK_STREAM){
-            setOption(SOL_SOCKET, SO_KEEPALIVE, val);
+            //这行代码的功能是根据val的值来决定是否在TCP连接上禁用Nagle算法，以优化数据传输的延迟特性
+            setOption(IPPROTO_TCP, TCP_NODELAY, val);
         }
     }
 
@@ -390,4 +406,45 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
             HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"socket error,errno="<<errno<<",error="<<strerror(errno);
         }
     }
+    Socket::ptr Socket::CreateTCP(Address::ptr address){
+        Socket::ptr sock(new Socket(address->getFamily(),TCP,0));
+        return sock;
+    }
+
+    Socket::ptr Socket::CreateUDP(Address::ptr address) {
+        Socket::ptr sock(new Socket(address->getFamily(),UDP,0));
+        return sock;
+    }
+
+    Socket::ptr Socket::CreateTCPSocket() {
+        Socket::ptr socke(new Socket(IPv4,TCP,0));
+        return socke;
+    }
+
+    Socket::ptr Socket::CreateUDPSocket() {
+        Socket::ptr socke(new Socket(IPv4,UDP,0));
+        return socke;
+    }
+
+    Socket::ptr Socket::CreateTCPSocket6() {
+        Socket::ptr socke(new Socket(IPv6,TCP,0));
+        return socke;
+    }
+
+    Socket::ptr Socket::CreateUDPSocket6() {
+        Socket::ptr socke(new Socket(IPv6,UDP,0));
+        return socke;
+    }
+
+    Socket::ptr Socket::CreateUnixTCPSocket() {
+        Socket::ptr socke(new Socket(UNIX,TCP,0));
+        return socke;
+    }
+
+    Socket::ptr Socket::CreateUnixUDPSocket() {
+        Socket::ptr socke(new Socket(UNIX,UDP,0));
+        return socke;
+    }
+
+
 }

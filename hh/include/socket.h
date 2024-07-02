@@ -17,6 +17,27 @@ namespace hh {
         Socket(int family, int type, int protocol = 0);
         ~Socket();
 
+        enum Type {
+            TCP = SOCK_STREAM,
+            UDP = SOCK_DGRAM
+        };
+        enum Family {
+            IPv4 = AF_INET,
+            IPv6 = AF_INET6,
+            UNIX = AF_UNIX
+        };
+        static Socket::ptr CreateTCP(Address::ptr address);
+        static Socket::ptr CreateUDP(Address::ptr address);
+
+        static Socket::ptr CreateTCPSocket();
+        static Socket::ptr CreateUDPSocket();
+
+        static Socket::ptr CreateTCPSocket6();
+        static Socket::ptr CreateUDPSocket6();
+
+        static Socket::ptr CreateUnixTCPSocket();
+        static Socket::ptr CreateUnixUDPSocket();
+
         // 获取当前设置的发送数据超时时间（单位：毫秒）
         int64_t getSendTimeout();
         // 设置发送数据的超时时间，单位为毫秒

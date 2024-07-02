@@ -626,6 +626,8 @@ void test02(){
 ```
 ## HOOK 模块
 基本IO函数的hook与socket函数hook
+
+重点是异步变同步
 ```c++
 // hook 模块sleep使用不堵塞
 void test01(){
@@ -705,10 +707,25 @@ connect
 accept  bind listen
 read write close
 
+// 使用
 ```c++
-为完成
-lookupAny,lookupAnyIPAddress
+// 通过 hh::Address::lookupAnyIPAddress  通过域名获取address地址
+hh::Address::ptr addr = hh::Address::lookupAnyIPAddress("www.baidu.com");
 
+// 创建socket  创建的tcpsocket
+hh::Socket::ptr sock = hh::Socket::CreateTCP(addr);
+// 设置端口号
+addr->setPort(80);
+// 连接
+sock->connect(addr)
+
+// 发送请求
+std::string buff = "GET / HTTP/1.0\r\n\r\n";
+int rt = sock->send(buff.c_str(),buff.size());
+
+// 直接获取，因为send 和recv 被hook了，我们在hook中已经把异步变成同步了
+char buff2[4096];
+rt = sock->recv(buff2,sizeof(buff2));
 ```
 
 
