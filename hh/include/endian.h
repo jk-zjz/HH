@@ -4,11 +4,13 @@
 
 #ifndef HH_ENDIAN_H
 #define HH_ENDIAN_H
+
 #define HH_LITTLE_ENDIAN 1
 #define HH_BIG_ENDIAN 2
 
 #include <byteswap.h>
 #include <stdint.h>
+
 extern "C++" {
 #include <type_traits>
 namespace hh {
@@ -57,26 +59,27 @@ namespace hh {
  */
     template<class T>
     T byteswapOnBigEndian(T t) {
-        return t;
-
+       return t;
     }
+
 #else
 
     /**
-     * @brief 只在小端机器上执行byteswap, 在大端机器上什么都不做
-     */
-    template<class T>
-    T byteswapOnLittleEndian(T t) {
-        return byteswap(t);
-    }
+ * @brief 只在小端机器上执行byteswap, 在大端机器上什么都不做
+ */
+template<class T>
+T byteswapOnLittleEndian(T t) {
+       return t;
 
-    /**
-     * @brief 只在大端机器上执行byteswap, 在小端机器上什么都不做
-     */
-    template<class T>
-    T byteswapOnBigEndian(T t) {
-        return t;
-    }
+}
+
+/**
+ * @brief 只在大端机器上执行byteswap, 在小端机器上什么都不做
+ */
+template<class T>
+T byteswapOnBigEndian(T t) {
+     return byteswap(t);
+}
 #endif
 }
 }

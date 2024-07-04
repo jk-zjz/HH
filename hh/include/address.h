@@ -89,7 +89,7 @@ namespace hh{
         virtual IPAddress::ptr subnetMask(uint32_t prefix_len) = 0;
 
         // 获取IP地址关联的端口号
-        virtual uint32_t getPort() const = 0;
+        virtual uint16_t getPort() const = 0;
 
         // 设置IP地址关联的端口号
         virtual void setPort(uint16_t port) = 0;
@@ -101,7 +101,7 @@ namespace hh{
         IPv4Address(const sockaddr_in& address);
 
         // 初始化IPv4地址，根据给定的地址和端口号
-        static IPv4Address::ptr Create(const std::string& address, uint16_t port = 0);
+        static IPv4Address::ptr Create(const char* address, uint16_t port = 0);
         // 返回指向存储IPv4地址信息的sockaddr结构体的指针，实现基类的getAddr()函数
         sockaddr* getAddr() const override;
 
@@ -121,7 +121,7 @@ namespace hh{
         IPAddress::ptr subnetMask(uint32_t prefix_len) override;
 
         // 获取与IPv4地址关联的端口号
-        uint32_t getPort() const override;
+        uint16_t getPort() const override;
 
         // 设置与IPv4地址关联的端口号
         void setPort(uint16_t port) override;
@@ -141,7 +141,7 @@ namespace hh{
         IPAddress::ptr broadcastAddress(uint32_t prefix_len) override;
         IPAddress::ptr networkAddress(uint32_t prefix_len) override;
         IPAddress::ptr subnetMask(uint32_t prefix_len) override;
-        uint32_t getPort() const override;
+        uint16_t getPort() const override;
         void setPort(uint16_t port) override;
     private:
         sockaddr_in6 m_addr;

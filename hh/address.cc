@@ -314,7 +314,7 @@ namespace hh {
     IPv4Address::IPv4Address(uint32_t address, uint16_t port) {
         memset(&m_addr, 0, sizeof(m_addr));
         m_addr.sin_family = AF_INET;
-        m_addr.sin_port = byteswapOnLittleEndian<uint32_t>(port);
+        m_addr.sin_port = byteswapOnLittleEndian(port);
         m_addr.sin_addr.s_addr = byteswapOnLittleEndian(address);
     }
 
@@ -336,7 +336,7 @@ namespace hh {
 
 // 0xC0A80101 是一个32位的16进制数
     std::ostream& IPv4Address::insert(std::ostream& os) const {
-        uint32_t addr = byteswapOnLittleEndian(m_addr.sin_addr.s_addr);
+        uint32_t addr = byteswapOnBigEndian(m_addr.sin_addr.s_addr);
         os << ((addr >> 24) & 0xff) << "."
            << ((addr >> 16) & 0xff) << "."
            << ((addr >> 8) & 0xff) << "."
@@ -351,7 +351,7 @@ namespace hh {
         }
         sockaddr_in broadcast_addr(m_addr);
         broadcast_addr.sin_addr.s_addr |=
-                byteswapOnLittleEndian(creataMask<uint32_t>(prefix_len));
+                byteswapOnBigEndian(creataMask<uint32_t>(prefix_len));
         return std::make_shared<IPv4Address>(broadcast_addr);
     }
 
@@ -360,8 +360,8 @@ namespace hh {
             return nullptr;
         }
         sockaddr_in broadcast_addr(m_addr);
-        broadcast_addr.sin_addr.s_addr &=
-                byteswapOnBigEndian(creataMask<uint32_t>(prefix_len));
+        broadcast_addr.sin_addr.s_addr &=byteswapOnLittleEndian(
+                creataMask<uint32_t>(prefix_len));
         return std::make_shared<IPv4Address>(broadcast_addr);
     }
 
@@ -369,7 +369,7 @@ namespace hh {
         sockaddr_in subnet_mask;
         memset(&subnet_mask, 0, sizeof(subnet_mask));
         subnet_mask.sin_family = AF_INET;
-        subnet_mask.sin_addr.s_addr = ~byteswapOnLittleEndian(creataMask<uint32_t>(prefix_len));
+        subnet_mask.sin_addr.s_addr = ~byteswapOnBigEndian(creataMask<uint32_t>(prefix_len));
         return std::make_shared<IPv4Address>(subnet_mask);
     }
 
@@ -377,7 +377,7 @@ namespace hh {
  * 获取端口
  * @return
  */
-    uint32_t IPv4Address::getPort() const {
+    uint16_t IPv4Address::getPort() const {
         return byteswapOnLittleEndian(m_addr.sin_port);
     }
 
@@ -393,10 +393,10 @@ namespace hh {
         m_addr = address;
     }
 
-    IPv4Address::ptr IPv4Address::Create(const std::string &address, uint16_t port) {
+    IPv4Address::ptr IPv4Address::Create(const char* address, uint16_t port) {
         IPv4Address::ptr ret(new IPv4Address);
         ret->m_addr.sin_port = byteswapOnLittleEndian(port);
-        int result = inet_pton(AF_INET, address.c_str(), &ret->m_addr.sin_addr);
+        int result = inet_pton(AF_INET, address, &ret->m_addr.sin_addr);
         if (result <= 0) {
             HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::DEBUG) << "inet_pton fail" << std::endl;
             return nullptr;
@@ -469,7 +469,7 @@ namespace hh {
         return std::make_shared<IPv6Address>(subnet_mask);
     }
 
-    uint32_t IPv6Address::getPort() const {
+    uint16_t IPv6Address::getPort() const {
         return byteswapOnLittleEndian(m_addr.sin6_port);
     }
 

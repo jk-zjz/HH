@@ -28,6 +28,8 @@ void test_AddressIPv4(){
     }
 }
 int main(){
+    int a = 0x123456;
+    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO)<<a;
     test_Address_ip();
     test_Address_net();
     test_AddressIPv4();
