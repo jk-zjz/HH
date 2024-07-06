@@ -119,11 +119,12 @@ namespace hh {
         void write(const void *buf, size_t size);
 
         void read(void *buf, size_t size);
+        void read(void *buf, size_t size, size_t position) const;
 
         // 读写文件
-        void writeToFile(const std::string &name) const;
+        bool writeToFile(const std::string &name) const;
 
-        void readFromFile(const std::string &name);
+        bool readFromFile(const std::string &name);
 
         // 获取位置
         size_t getPosition() const { return m_position; }
@@ -133,24 +134,27 @@ namespace hh {
         // 获取大小
         size_t getBaseSize() const { return m_baseSize; }
 
-        // 获取剩余大小
-        size_t getRemainSize() const { return m_capacity - m_position; }
+        // 获取剩余未处理的大小
+        size_t getRemainSize() const { return m_size - m_position; }
 
         bool isLittleEndian() const;
 
         void setLittleEndian(bool value = true);
 
-    private:
-        void addCapacity(size_t value);
 
-        size_t getCapacity() const { return m_capacity; }
+        std::string toString() const;
+        std::string toHexString() const;
+    private:
+        void addCapacity(size_t size);
+
+        size_t getCapacity() const { return m_capacity - m_position;}
 
     private:
-        size_t m_baseSize;  // 基础大小
-        size_t m_position;  // 位置
-        size_t m_capacity;  // 分配容量
+        size_t m_baseSize;  // 内存快大小
+        size_t m_position;  // 处理位置偏移
+        size_t m_capacity;  // 当前总容量
         int8_t m_endian;    // 大小端
-        size_t m_size;      // 实际容量
+        size_t m_size;      // 数据的大小
         Node *m_root;       // 根节点
         Node *m_cur;        // 当前节点
     };
