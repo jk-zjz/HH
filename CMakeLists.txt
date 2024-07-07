@@ -77,3 +77,10 @@ target_link_libraries(socket_test yaml-cpp::yaml-cpp
         ${PTHREAD}
         dl)
 redefine_file_macro(socket_test)
+
+
+add_executable(bytearray_test tests/bytearray_test.cc ${CPP_G})
+target_link_libraries(bytearray_test yaml-cpp::yaml-cpp
+        ${PTHREAD}
+        dl)
+redefine_file_macro(bytearray_test)

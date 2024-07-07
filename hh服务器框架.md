@@ -743,7 +743,58 @@ Zigzag 是将无符号的数据或者有符号的数据都转换为无符号
     -((-(-2))<<1-1) = 3   101  >> 1  10 +1 = -11 就还原 -2
 
 ```
+```
+ByteArray    | m_root 主节点 用来标准第一个节点
+    |        | m_cur 当前使用节点
+    |--------| m_size ByteArray实体中存储的数据大小
+    |        | m_endian  大小端
+    |        | m_capacity 这一个实体类的大小
+    |        | m_position 当前处理位置
+    |        | m_baseSize 一个节点的大小
+    |       
+    |--------|可以存储未压缩的 8bit 16bit 32bit 64bit
+             |可以存储压缩的  32bit 64bit
+             |可以将节点数据存储到文件
+             |以及读取文件数据
+             |使用tostring            
+```
+```c++
+int main(int argc, char **argv) {
+    hh::ByteArray::ptr ba(new hh::ByteArray(4096));
+    hh::ByteArray::ptr ba2(new hh::ByteArray(4096));
+    std::vector<int32_t> vec;
+    for (int32_t i = 0; i < 100; ++i) {
+        // 通过未压缩方式存储
+        ba->writeFint32(i);
+        // 通过压缩方式存储 7bit 与 Zigzag
+        ba2->writeInt32(i);
+    }
+// 设置偏移量到0
+    ba->setPosition(0);
+    ba2->setPosition(0);
 
+// 读取数据
+    for (int32_t i = 0; i < 100; ++i) {
+        int32_t v = ba->readFint32();
+        HH_LOG_FAT_INFO(g_logger, "v:= %d  i=%d", v, i)
+    }
+// 文件存储
+    ba2->writeToFile("./test.txt");
+    hh::ByteArray::ptr ba3(new hh::ByteArray(4096 * 2));
+    // 读取文件
+    ba3->readFromFile("./test.txt");
+    // 因为写入了，所以要设置偏移量为0
+    ba3->setPosition(0);
+    if (ba3->toString() == ba2->toString()) {
+        HH_LOG_INFO(g_logger, "ba3 == ba2");
+    }
+
+    return 0;
+}
+
+
+
+```
 ## http协议开发
 
 ## 分布式协议
