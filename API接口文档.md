@@ -326,4 +326,78 @@
 | hh::Socket::cancelAccept        | 取消接收连接事件      | 设置 |      |      |        |                                                   |
 | hh::Socket::cancelAll           | 取消所有事件        | 设置 |      |      |
 
+## ByteArray API
+
+| ByteArray API                       | 说明           | 备注     | 有无重载 | 是否为虚 | 类是否为父类 | 父类 |
+|-------------------------------------|--------------|--------|------|------|--------|----| 
+| ByteArray::ByteArray                | 构造函数         |        |      |      |        |    |
+| ByteArray::~ByteArray               | 析构函数         |        |      |      |        |    |
+| ByteArray::writeFuint8              | 写入8位有符号整数    |        |      |      |        |    |
+| ByteArray::writeFuint16             | 写入16位无符号整数   |        |      |      |        |    |
+| ByteArray::writeFuint32             | 写入32位无符号整数   |        |      |      |        |    |
+| ByteArray::writeFuint64             | 写入64位无符号整数   |        |      |      |        |    |
+| ByteArray::writeFint8               | 写入8位有符号整数    |        |      |      |        |    |
+| ByteArray::writeFint16              | 写入16位有符号整数   |        |      |      |        |    |
+| ByteArray::writeFint32              | 写入32位有符号整数   |        |      |      |        |    |
+| ByteArray::writeFint64              | 写入64位有符号整数   |        |      |      |        |    |
+| ByteArray::writeUint32              | 压缩写入32位无符号整数 |        |      |      |        |    |
+| ByteArray::writeUint64              | 压缩写入64位无符号整数 |        |      |      |        |    |
+| ByteArray::writeInt32               | 压缩写入32位有符号整数 |        |      |      |        |    |
+| ByteArray::writeInt64               | 压缩写入64位有符号整数 |        |      |      |        |    |
+| ByteArray::writeDouble              | 写入64位浮点数     |        |      |      |        |    |
+| ByteArray::writeFloat               | 写入32位浮点数     |        |      |      |        |    |
+| ByteArray::writeString16            | 写入16位字符串     |        |      |      |        |    |
+| ByteArray::writeString32            | 写入32位字符串     |        |      |      |        |    |
+| ByteArray::writeString64            | 写入64位字符串     |        |      |      |        |    |
+| ByteArray::writeStringVint          | 写入字符串        | 明确长度   |      |      |        |    |
+| ByteArray::writeStringWithoutLength | 写入字符串        | 不明确长度  |      |      |        |    |
+| ByteArray::readFuint8               | 读取8位无符号整数    |        |      |      |        |    |
+| ByteArray::readFint8                | 读取8位有符号整数    |        |      |      |        |    |
+| ByteArray::readFuint16              | 读取16位无符号整数   |        |      |      |        |    |
+| ByteArray::readFint16               | 读取16位有符号整数   |        |      |      |        |    |
+| ByteArray::readFuint32              | 读取32位无符号整数   |        |      |      |        |    |
+| ByteArray::readFint32               | 读取32位有符号整数   |        |      |      |        |    |
+| ByteArray::readFuint64              | 读取64位无符号整数   |        |      |
+| ByteArray::readFint64               | 读取64位有符号整数   |        |      |      |        |
+| ByteArray::readUint32               | 读取压缩32位无符号整数 |        |      |      |        |    |
+| ByteArray::readUint64               | 读取压缩64位无符号整数 |        |      |      |        |    |
+| ByteArray::readInt32                | 读取压缩32位有符号整数 |        |      |      |        |    |
+| ByteArray::readInt64                | 读取压缩64位有符号整数 |        |      |
+| ByteArray::readDouble               | 读取64位浮点数     |        |      |      |        |    |
+| ByteArray::readFloat                | 读取32位浮点数     |        |      |
+| ByteArray::readString16             | 读取16位字符串     |        |      |      |        |    |
+| ByteArray::readString32             | 读取32位字符串     |        |      |      |
+| ByteArray::readString64             | 读取64位字符串     |        |      |      |        |    |
+| ByteArray::readStringVint           | 读取字符串        | 读取64   |      |      |        |    |
+| ByteArray::clear                    | 清空           |        |      |      |        |    |
+| ByteArray::write                    | 写入           |        |      |      |        |    |
+| ByteArray::read                     | 读取           |        |      |      |        |    |
+| ByteArray::read                     | 读取           | 读取无副作用 |      |      |        |    |
+| ByteArray::setPosition              | 设置当前处理位置     |        |      |      |        |    |
+| ByteArray::getPosition              | 获取当前处理位置     |        |      |      |        |    |
+| ByteArray::writeToFile              | 写入文件         |        |      |      |        |    |
+| ByteArray::readFromFile             | 读取文件         |        |      |      |        |    |
+| ByteArray::toString                 | 将数据转换为字符串    |        |      |      |        |    |
+| ByteArray::ByteArray                | 构造函数         |        |      |      |        |    |
+| ByteArray::getRemainSize            | 获取剩余大小       |        |      |      |        |    |
+| ByteArray::getBaseSize              | 获取基础大小       |        |      |      |        |    |
+| ByteArray::isLittleEndian           | 是否是小端        |        |      |      |        |    |
+| ByteArray::setLittleEndian          | 设置是否是小端      |        |      |      |        |    |
+| ByteArray::getReadBuffers           | 获取读取缓冲区      | 无副作用   | 是    |      |        |    |
+| ByteArray::getWriteBuffers          | 获取写入缓冲区      |        |      |      |        |    |
+| ByteArray::getSize                  | 获取大小         |        |      |      |        |    |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

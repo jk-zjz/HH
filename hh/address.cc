@@ -160,7 +160,7 @@ namespace hh {
             node = host;
         }
 
-        std::cout << "Resolving node: " << node << ", service: " << (service ? service : "null") << std::endl;
+        HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "Resolving node: " << node << ", service: " << (service ? service : "null");
 
         int error = getaddrinfo(node.c_str(), service, &hints, &results);
         if (error) {
@@ -336,7 +336,7 @@ namespace hh {
 
 // 0xC0A80101 是一个32位的16进制数
     std::ostream& IPv4Address::insert(std::ostream& os) const {
-        uint32_t addr = byteswapOnBigEndian(m_addr.sin_addr.s_addr);
+        uint32_t addr = byteswapOnLittleEndian(m_addr.sin_addr.s_addr);
         os << ((addr >> 24) & 0xff) << "."
            << ((addr >> 16) & 0xff) << "."
            << ((addr >> 8) & 0xff) << "."
@@ -351,25 +351,26 @@ namespace hh {
         }
         sockaddr_in broadcast_addr(m_addr);
         broadcast_addr.sin_addr.s_addr |=
-                byteswapOnBigEndian(creataMask<uint32_t>(prefix_len));
+                byteswapOnLittleEndian(creataMask<uint32_t>(prefix_len));
         return std::make_shared<IPv4Address>(broadcast_addr);
     }
 
     IPAddress::ptr IPv4Address::networkAddress(uint32_t prefix_len) {
-        if (prefix_len > 32) {
+        if(prefix_len > 32) {
             return nullptr;
         }
-        sockaddr_in broadcast_addr(m_addr);
-        broadcast_addr.sin_addr.s_addr &=byteswapOnLittleEndian(
+
+        sockaddr_in baddr(m_addr);
+        baddr.sin_addr.s_addr &= byteswapOnLittleEndian(
                 creataMask<uint32_t>(prefix_len));
-        return std::make_shared<IPv4Address>(broadcast_addr);
+        return IPv4Address::ptr(new IPv4Address(baddr));
     }
 
     IPAddress::ptr IPv4Address::subnetMask(uint32_t prefix_len) {
         sockaddr_in subnet_mask;
         memset(&subnet_mask, 0, sizeof(subnet_mask));
         subnet_mask.sin_family = AF_INET;
-        subnet_mask.sin_addr.s_addr = ~byteswapOnBigEndian(creataMask<uint32_t>(prefix_len));
+        subnet_mask.sin_addr.s_addr = ~byteswapOnLittleEndian(creataMask<uint32_t>(prefix_len));
         return std::make_shared<IPv4Address>(subnet_mask);
     }
 

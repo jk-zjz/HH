@@ -37,7 +37,7 @@ int main(){
     HH_LOG_INFO(g_logger,addr->toString());
     auto au = addr->broadcastAddress(24);
     HH_LOG_INFO(g_logger,au->toString());
-    auto an = addr->networkAddress(24);
+    auto an = addr->networkAddress(8);
     HH_LOG_INFO(g_logger,an->toString());
     auto af =addr->subnetMask(24);
     HH_LOG_INFO(g_logger,af->toString());

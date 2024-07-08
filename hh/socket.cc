@@ -81,6 +81,7 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
         Socket::ptr sock(new Socket(m_family, m_type, m_protocol));
         // 提取连接
         int newsock = ::accept(m_sock, nullptr, nullptr);
+        std::cout<<newsock;
         if(newsock == -1) {
             // 提取失败
             HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)<<"accept error,errno="<<errno<<",error="<<strerror(errno);
@@ -285,6 +286,7 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
         switch(m_family){
             case AF_INET:
                 ret.reset(new IPv4Address());
+                break;
             case AF_INET6:
                 ret.reset(new IPv6Address());
                 break;
@@ -318,6 +320,7 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
         switch(m_family){
             case AF_INET:
                 ret.reset(new IPv4Address());
+                break;
             case AF_INET6:
                 ret.reset(new IPv6Address());
                 break;

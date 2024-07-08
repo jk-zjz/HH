@@ -32,7 +32,7 @@ void printNode(const YAML::Node& node) {
     }
 }
 void yaml(){
-    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/ip.yml");
     printNode(root);
    // HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<root;
 }
@@ -47,7 +47,7 @@ void Confgi(){
     }
 
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<g_int_value_config_->toString();
-    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/ip.yml");
     hh::Config::loadFromYaml(root);
 
 
@@ -82,7 +82,7 @@ void test(){
         HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<i.first<<"  "<<i.second;
     }
     std::cout<<int_list->toString()<<std::endl;
-    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/ip.yml");
     hh::Config::loadFromYaml(root);
     vec = int_list->getValue();
     m_set= int_set->getValue();
@@ -160,7 +160,7 @@ void user_T(){
         std::cout<<new_user.ToString()<<"---"<<od_user.ToString()<<"\n";
     });
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<user_->toString();
-    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
+    YAML::Node root = YAML::LoadFile("/home/hh/HH/bin/conf/ip.yml");
     hh::Config::loadFromYaml(root);
     HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)<<user_->toString();
     for(auto &i:user_map->getValue()){
@@ -190,7 +190,7 @@ void logconfigtest(){
 //    std::cout<<roots->getLevel()<<std::endl;
 //    HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);
 //    HH_LOG_LEVEL_CHAIN(HH_LOG_NAME("ot"),hh::LogLevel::INFO);
-//    root = YAML::LoadFile("/home/hh/HH/bin/conf/test.yml");
+//    root = YAML::LoadFile("/home/hh/HH/bin/conf/ip.yml");
 //    hh::Config::loadFromYaml(root);
 //    roots=HH_LOG_NAME("root");
 //    HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);

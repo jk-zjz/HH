@@ -71,7 +71,6 @@ namespace hh {
 
         void writeStringF64(const std::string &value);
 
-        // 写入变长压缩
         void writeStringVint(const std::string &value);
 
         void writeStringWithoutLength(const std::string &value);

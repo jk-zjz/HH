@@ -27,6 +27,7 @@ log(日志模块)
         |
     Appender(日志输出地)
 ```
+
 ```c++
 config(配置模块)
 
@@ -42,6 +43,7 @@ config(配置模块)
         |
     Config(静态配置器)
 ```
+
 ```c++
 thread(线程模块)
 
@@ -53,6 +55,7 @@ pthread pthread_create
 互斥量 mutex
 信号量 semaphore
 ```
+
 ```c++
 fiber(协程模块)
 
@@ -63,6 +66,7 @@ Thread ----> Master_Fiber<----->sub_fiber
                    v
                 sub_fiber
 ```
+
 ```c++
 schedule(协程调度模块) 
 IOManager (epoll) -->scheduler(继承)
@@ -87,6 +91,7 @@ PutMaessage()将任务放人meassage_queue(队列)
 
 IOManager(IO协程调度模块)
 ```
+
 ```c++
 TimerManager(定时器模块)
 
@@ -108,11 +113,13 @@ Timer（定时器类） <-------TimerManager（定时器管理类）
 TimerManager 通过set红黑树管理定时器，通过写入唤醒epoll_wait(),计算最近定时器时间
 并且设置执行，获取定时器过期任务，添加调度器任务列表执行
 ```
+
 ```c++
 hook(IO函数与socket函数的hook)
 
 基本IO（read,read......）函数的hook与socket函数hook
 ```
+
 ```c++
 socket(socket模块)
 
@@ -160,9 +167,7 @@ ByteArray    | m_root 主节点 用来标准第一个节点
              |可以存储压缩的  32bit 64bit
              |可以将节点数据存储到文件
              |以及读取文件数据
-             |使用tostring                  
-            
-
+             |使用tostring
 ```
 
 ## HH 所需的第三方库
