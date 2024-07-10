@@ -878,6 +878,18 @@ int main(int argc, char **argv) {
 }
 ```
 ## http协议开发
+HTTP/1.1 -API  
+HttpRequest  
+HttpResponse  
+```
+url: http://www.hhap.cn:80/page/xxx?id=10#fr
+    http 协议
+    www.hhap.cn 主机名
+    80 端口
+    /page/xxx 路径
+    id=10 参数
+    #fr 锚点
+```
 
 ## 分布式协议
 
