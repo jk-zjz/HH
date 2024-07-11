@@ -57,7 +57,8 @@ namespace hh {
         HttpRequest::HttpRequest(uint8_t version , bool close):
         m_method(HttpMethod::GET),
         m_close(close),
-        m_version(version){
+        m_version(version),
+        m_path("/"){
         }
         void HttpRequest::setHeader(const std::string &key, const std::string &val){
             m_headers[key] = val;
@@ -122,7 +123,7 @@ namespace hh {
             os<<httpMethodToString(m_method)<<" "
             <<m_path
             <<(m_query.empty()?"":"?")<<m_query
-            <<(m_fragment.empty()?"":"#")<<m_fragment
+            <<(m_fragment.empty()?"":"#")<<m_fragment<<" "
             <<"HTTP/"<<(uint32_t)(m_version>>4)<<"."<<(uint32_t)(m_version&0x0f)<<"\r\n";
             os<<"connection:"<<(m_close?"closed":"keep-alive")<<"\r\n";
 
@@ -138,5 +139,45 @@ namespace hh {
             }
             return os;
         }
+
+        HttpResponse::HttpResponse(uint8_t version, bool close):
+        m_version(version),
+        m_close(close),
+        m_status(HttpStatus::OK){
+        }
+        void HttpResponse::setHeader(const std::string &key, const std::string &val){
+            m_headers[key] = val;
+        }
+        std::string HttpResponse::getHeader(const std::string &key, const std::string &default_value)const {
+            auto it = m_headers.find(key);
+            return it == m_headers.end() ? default_value : it->second;
+        };
+        void HttpResponse::delHeader(const std::string &key){
+            m_headers.erase(key);
+        }
+        bool HttpResponse::hasHeader(const std::string &key, std::string *value){
+            if(m_headers.find(key) != m_headers.end()){
+                *value = m_headers[key];
+                return true;
+            }
+            return false;
+        }
+        std::ostream &HttpResponse::dump(std::ostream &os){
+            os<<"HTTP/"<<(uint32_t)(m_version>>4)<<"."<<(uint32_t)(m_version&0x0f)<<" "
+            <<(uint32_t)m_status<<" "
+            <<(m_reason.empty()?httpStatusToString(m_status):m_reason)<<"\r\n";
+            os<<"connection:"<<(m_close?"closed":"keep-alive")<<"\r\n";
+            for(auto &i : m_headers){
+                if(strcasecmp(i.first.c_str(),"connection") != 0){
+                    os<<i.first<<":"<<i.second<<"\r\n";
+                }
+            }
+            if(!m_body.empty()){
+                os<<"content-length:"<<m_body.size()<<"\r\n\r\n"<<m_body;
+            }else{
+                os<<"\r\n";
+            }
+            return os;
+        };
     }
 }

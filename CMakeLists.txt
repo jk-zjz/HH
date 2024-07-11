@@ -107,3 +107,12 @@ target_link_libraries(bytearray_test yaml-cpp::yaml-cpp
         ${PTHREAD}
         dl)
 redefine_file_macro(bytearray_test)
+
+
+add_executable(http_test tests/http_test.cc
+        ${CPP_G}
+        ${HTTP_SOURCES})
+target_link_libraries(http_test yaml-cpp::yaml-cpp
+        ${PTHREAD}
+        dl)
+redefine_file_macro(http_test)

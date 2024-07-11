@@ -890,6 +890,8 @@ url: http://www.hhap.cn:80/page/xxx?id=10#fr
     id=10 参数
     #fr 锚点
 ```
+ragel 状态机 做http的解析
+
 
 ## 分布式协议
 

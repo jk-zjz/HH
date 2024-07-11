@@ -151,7 +151,52 @@ namespace hh {
                 return strcasecmp(lhs.c_str(), rhs.c_str())<0;
             }
         };
+        /**
+         * 获取返回获取成功，否则失败
+         * @tparam T
+         * @param m
+         * @param key
+         * @param value
+         * @param def
+         * @return
+         */
+        template<class MapType ,class T>
+        bool checkGetAs(const MapType &m, const std::string &key, T &value, const T &def = T()) {
+            auto it = m.find(key);
+            if (it == m.end()) {
+                value = def;
+                return false;
+            }
+            try {
+                value = boost::lexical_cast<T>(it->second);
+                return true;
+            } catch (...) {
+                value = def;
+            }
+            return false;
+        }
 
+        /**
+         * 通过返回值的方式获取
+         * @tparam T
+         * @param m
+         * @param key
+         * @param def
+         * @return
+         */
+        template<class MapType ,class T>
+        T getAs(const MapType &m, const std::string &key, const T &def = T()) {
+            auto i = m.find(key);
+            if (i == m.end()) {
+                return def;
+            }
+            try {
+                return boost::lexical_cast<T>(i->second);
+            } catch (...) {
+                return def;
+            }
+            return def;
+        }
         class  HttpRequest{
         public:
             typedef std::shared_ptr<HttpRequest> ptr;
@@ -163,13 +208,9 @@ namespace hh {
 
             void setMethod(const HttpMethod &v) { m_method = v; }
 
-            HttpStatus getStatus() const { return m_status; }
+            uint8_t getVersion() const { return m_version; }
 
-            void setStatus(const HttpStatus &v) { m_status = v; }
-
-            std::string getVersion() const { return m_version; }
-
-            void setVersion(const std::string &v) { m_version = v; }
+            void setVersion(const uint8_t &v) { m_version = v; }
 
             std::string getPath() const { return m_path; }
 
@@ -255,58 +296,10 @@ namespace hh {
                 return getAs(m_cookies, key, def);
             }
         private:
-            /**
-             * 获取返回获取成功，否则失败
-             * @tparam T
-             * @param m
-             * @param key
-             * @param value
-             * @param def
-             * @return
-             */
-            template<class T>
-            bool checkGetAs(const MapType &m, const std::string &key, T &value, const T &def = T()) {
-                auto it = m.find(key);
-                if (it == m.end()) {
-                    value = def;
-                    return false;
-                }
-                try {
-                    value = boost::lexical_cast<T>(it->second);
-                    return true;
-                } catch (...) {
-                    value = def;
-                }
-                return false;
-            }
-
-            /**
-             * 通过返回值的方式获取
-             * @tparam T
-             * @param m
-             * @param key
-             * @param def
-             * @return
-             */
-            template<class T>
-            T getAs(const MapType &m, const std::string &key, const T &def = T()) {
-                auto i = m.find(key);
-                if (i == m.end()) {
-                    return def;
-                }
-                try {
-                    return boost::lexical_cast<T>(i->second);
-                } catch (...) {
-                    return def;
-                }
-                return def;
-            }
-
         private:
             HttpMethod m_method;    // 请求方法
-            HttpStatus m_status;    // 状态码
             bool m_close;           // 是否关闭
-            uint8_t m_version;  // 版本
+            uint8_t m_version;      // 版本
             std::string m_path;     // 路径
             std::string m_query;    // 查询
             std::string m_fragment; // 片段
@@ -315,6 +308,47 @@ namespace hh {
             MapType m_params;       // 参数
             MapType m_cookies;      // cookie
         };
+        class HttpResponse {
+        public:
+            typedef std::shared_ptr<HttpResponse> ptr;
+            typedef std::map<std::string, std::string, CaseInsensitiveLess> MapType;
+            HttpResponse(uint8_t version = 0x11, bool close = true);
+
+            HttpStatus getStatus() const { return m_status; }
+            void setStatus(const HttpStatus &v) { m_status = v; }
+            std::string getReason() const { return m_reason; }
+            void setReason(const std::string &v) { m_reason = v; }
+            std::string getBody() const { return m_body; }
+            void setBody(const std::string &v) { m_body = v; }
+            MapType &getHeaders() { return m_headers; }
+            const MapType &getHeaders() const { return m_headers; }
+            void setClose(bool v) { m_close = v; }
+            bool isClose() const { return m_close; }
+
+            void setHeader(const std::string &key, const std::string &val);
+            std::string getHeader(const std::string &key, const std::string &default_value = "") const;
+            void delHeader(const std::string &key);
+
+            bool hasHeader(const std::string &key, std::string *value);
+            std::ostream &dump(std::ostream &os);
+            template<class T>
+            bool checkGetHeader(const std::string &key, T &value, const T &def = T()) {
+                return checkGetAs(m_headers, key, value, def);
+            }
+            template<class T>
+            T getHeaderAs(const std::string &key, const T &def = T()) {
+                return getAs(m_headers, key, def);
+            }
+
+        private:
+            uint8_t m_version;      // 版本
+            bool m_close;           // 是否关闭
+            HttpStatus m_status;    // 状态码
+            std::string m_reason;   // 状态码,后部分
+            std::string m_body;     // 请求体
+            MapType m_headers;      // 头
+        };
+
     }
 }
 
