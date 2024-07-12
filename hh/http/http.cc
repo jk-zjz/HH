@@ -17,7 +17,7 @@ namespace hh {
         }
 
         // 指针转请求方法
-        HttpMethod CharsToHttpMethod(const char *m) {
+        HttpMethod CharsToHttpMethod(const char *m){
 #define XX(num, name, string) \
             if(strcmp(m, #string) == 0){ \
                 return HttpMethod::name;\

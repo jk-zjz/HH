@@ -890,7 +890,18 @@ url: http://www.hhap.cn:80/page/xxx?id=10#fr
     id=10 参数
     #fr 锚点
 ```
-ragel 状态机 做http的解析
+ragel 有限状态机 做http的解析
+
+[ragel](https://www.colm.net/open-source/ragel/)
+```
+可以自定义下载与安装
+ragel 下载依赖需要先安装 colm
+
+也可以使用 yum安装
+
+yum intsall ragel -y;
+
+```
 
 
 ## 分布式协议

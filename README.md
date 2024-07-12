@@ -182,7 +182,7 @@ cd ./boost_1_63_0
 //安装
 sudo ./b2 install
 ```
-[yaml](git clone https://github.com/jbeder/yaml-cpp.git)  
+[yaml](https://github.com/jbeder/yaml-cpp.git)  
 ```
 //拉取仓库
 git clone https://github.com/jbeder/yaml-cpp.git
@@ -195,5 +195,14 @@ make
 sudo make install
     //默认路径 /usr/local/include/yaml-cpp
 ```
+[ragel](https://www.colm.net/open-source/ragel/)
+```
+可以自定义下载与安装
+ragel 下载依赖需要先安装 colm
 
+也可以使用 yum安装
+
+yum intsall ragel -y;
+
+```
 
