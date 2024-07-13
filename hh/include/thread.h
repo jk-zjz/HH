@@ -467,6 +467,7 @@ namespace hh {
          * m_id - 成员变量ID，类型为pid_t，用于存储进程ID。
          * m_thread - 成员变量线程标识符，类型为pthread_t，用于标识线程。
          * m_cb - 成员变量回调函数，类型为std::function<void()>，用于存储一个无参数的回调函数。
+         * m_semaphore - 成员变量信号量，类型为Semaphore，用于控制线程的启动。
          */
         std::string m_name;
         pid_t m_id = -1;

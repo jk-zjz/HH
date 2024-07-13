@@ -18,6 +18,7 @@ namespace hh{
             size_t execute(char *data, size_t len);
             HttpRequest::ptr getData() const { return m_data; }
             void setError(int v) { m_error = v; }
+            uint64_t getContentLength() const;
         private:
             http_parser m_parser;
             HttpRequest::ptr m_data;
@@ -35,6 +36,7 @@ namespace hh{
             size_t execute(char *data, size_t len);
             HttpResponse::ptr getData() const { return m_data; }
             void setError(int v) { m_error = v; }
+            uint64_t getContentLength() const;
         private:
             httpclient_parser m_parser;
             HttpResponse::ptr m_data;

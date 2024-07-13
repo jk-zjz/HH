@@ -269,7 +269,9 @@ namespace hh {
             bool hasParam(const std::string &key,std::string *value);
             bool hasCookie(const std::string &key,std::string *value);
 
-            std::ostream &dump(std::ostream &os);
+            std::ostream &dump(std::ostream &os)const;
+
+            std::string toString()const;
             template<class T>
             bool checkGetHeader(const std::string &key, T &value, const T &def = T()) {
                 return checkGetAs(m_headers, key, value, def);
@@ -325,12 +327,16 @@ namespace hh {
             void setClose(bool v) { m_close = v; }
             bool isClose() const { return m_close; }
 
+            void setVersion(const uint8_t &v) { m_version = v; }
+            uint8_t getVersion() const { return m_version; }
+
             void setHeader(const std::string &key, const std::string &val);
             std::string getHeader(const std::string &key, const std::string &default_value = "") const;
             void delHeader(const std::string &key);
 
             bool hasHeader(const std::string &key, std::string *value);
-            std::ostream &dump(std::ostream &os);
+            std::ostream &dump(std::ostream &os) const;
+            std::string toString() const;
             template<class T>
             bool checkGetHeader(const std::string &key, T &value, const T &def = T()) {
                 return checkGetAs(m_headers, key, value, def);

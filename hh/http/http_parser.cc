@@ -108,22 +108,46 @@ namespace hh {
             return m_error || http_parser_has_error(&m_parser);
         };
         size_t HttpRequestParser::execute(char *data, size_t len){
+            size_t data_size = strlen(data);
             size_t offset = http_parser_execute(&m_parser,data,len,0);
             memmove(data,data+offset,len-offset);
+            std::string tmp(data,data_size-offset);
+            m_data->setBody(tmp);
             return offset;
         }
 
-        void on_response_field(void *data, const char *field, size_t flen, const char *value, size_t vlen){
+        uint64_t HttpRequestParser::getContentLength() const {
+            return m_data->getHeaderAs<uint64_t>("Content-Length",0);
+        }
 
+        void on_response_field(void *data, const char *field, size_t flen, const char *value, size_t vlen){
+            HttpResponseParser* parser = static_cast<HttpResponseParser*>(data);
+            if(flen == 0){
+                HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::WARN)<<"invalid http field";
+                parser->setError(1002);
+                return;
+            }
+            parser->getData()->setHeader(std::string(field,flen),std::string(value,vlen));
         }
         void on_response_reason(void *data, const char *at, size_t length){
-
+            HttpResponseParser* parser = static_cast<HttpResponseParser*>(data);
+            parser->getData()->setReason(std::string(at,length));
         }
         void on_response_status(void *data, const char *at, size_t length){
-
+            HttpResponseParser* parser = static_cast<HttpResponseParser*>(data);
+            HttpStatus s = (HttpStatus)boost::lexical_cast<int>(std::string(at,length));
+            parser->getData()->setStatus(s);
         }
         void on_response_version(void *data, const char *at, size_t length){
-
+            HttpResponseParser* parser = static_cast<HttpResponseParser*>(data);
+            if(strncmp(at,"HTTP/1.0",length)==0){
+                parser->getData()->setVersion(0x10);
+            }else if(strncmp(at,"HTTP/1.1",length)==0){
+                parser->getData()->setVersion(0x11);
+            }else{
+                HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::WARN)<<"invalid http version:"<<std::string(at,length);
+                parser->setError(1001);
+            }
         }
         void on_response_header(void *data, const char *at, size_t length){
 
@@ -135,7 +159,7 @@ namespace hh {
 
         }
 
-        HttpResponseParser::HttpResponseParser(){
+        HttpResponseParser::HttpResponseParser():m_error(0){
             httpclient_parser_init(&m_parser);
             m_data.reset(new HttpResponse);
             m_parser.http_field = on_response_field;
@@ -149,14 +173,23 @@ namespace hh {
             m_parser.data = this;
         };
         int HttpResponseParser::isFinish(){
-            return 0;
+            return httpclient_parser_finish(&m_parser);
         };
         int HttpResponseParser::isError(){
-            return 0;
+            return m_error || httpclient_parser_has_error(&m_parser);
         }
 
         size_t HttpResponseParser::execute(char *data, size_t len) {
-            return 0;
+            size_t data_size = strlen(data);
+            size_t offset = httpclient_parser_execute(&m_parser,data,len,0);
+            memmove(data,data+offset,len-offset);
+            std::string tmp(data,data_size-offset);
+            m_data->setBody(tmp);
+            return offset;
+        }
+
+        uint64_t HttpResponseParser::getContentLength() const {
+            return m_data->getHeaderAs<uint64_t>("Content-Length",0);
         };
 
 

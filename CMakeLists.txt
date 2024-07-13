@@ -116,3 +116,12 @@ target_link_libraries(http_test yaml-cpp::yaml-cpp
         ${PTHREAD}
         dl)
 redefine_file_macro(http_test)
+
+
+add_executable(HttpParser_test tests/HttpParser_test.cc
+        ${CPP_G}
+        ${HTTP_SOURCES})
+target_link_libraries(HttpParser_test yaml-cpp::yaml-cpp
+        ${PTHREAD}
+        dl)
+redefine_file_macro(HttpParser_test)

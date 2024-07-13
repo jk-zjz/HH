@@ -8,7 +8,7 @@ namespace hh {
         // 字符串转请求方法
         HttpMethod stringToHttpMethod(const std::string &m) {
 #define XX(num, name, string) \
-            if(strcmp(m.c_str(), #string) == 0){ \
+            if(strncmp(m.c_str(), #string,m.size())) == 0){ \
                 return HttpMethod::name;\
             }                 \
             HTTP_METHOD_MAP(XX);
@@ -19,7 +19,7 @@ namespace hh {
         // 指针转请求方法
         HttpMethod CharsToHttpMethod(const char *m){
 #define XX(num, name, string) \
-            if(strcmp(m, #string) == 0){ \
+            if(strncmp(m, #string,strlen(m)) == 0){ \
                 return HttpMethod::name;\
                 }             \
                 HTTP_METHOD_MAP(XX);
@@ -119,25 +119,35 @@ namespace hh {
             return false;
         }
 
-        std::ostream &HttpRequest::dump(std::ostream &os) {
+        std::ostream &HttpRequest::dump(std::ostream &os) const{
             os<<httpMethodToString(m_method)<<" "
             <<m_path
             <<(m_query.empty()?"":"?")<<m_query
             <<(m_fragment.empty()?"":"#")<<m_fragment<<" "
             <<"HTTP/"<<(uint32_t)(m_version>>4)<<"."<<(uint32_t)(m_version&0x0f)<<"\r\n";
             os<<"connection:"<<(m_close?"closed":"keep-alive")<<"\r\n";
-
+            if(!m_body.empty()){
+                os<<"content-length:"<<m_body.size()<<"\r\n";
+            }
             for(auto &i : m_headers){
-                if(strcasecmp(i.first.c_str(),"connection")){
+                if(strcasecmp(i.first.c_str(),"connection") != 0
+                   && (strcasecmp(i.first.c_str(),"content-length") != 0
+                       || m_body.size()==0)){
                     os<<i.first<<":"<<i.second<<"\r\n";
                 }
             }
             if(!m_body.empty()){
-                os<<"content-length:"<<m_body.size()<<"\r\n\r\n"<<m_body;
+                os<<"\r\n"<<m_body;
             }else{
                 os<<"\r\n";
             }
             return os;
+        }
+
+        std::string HttpRequest::toString() const {
+            std::stringstream ss;
+            dump(ss);
+            return ss.str();
         }
 
         HttpResponse::HttpResponse(uint8_t version, bool close):
@@ -162,22 +172,34 @@ namespace hh {
             }
             return false;
         }
-        std::ostream &HttpResponse::dump(std::ostream &os){
+        std::ostream &HttpResponse::dump(std::ostream &os)const{
             os<<"HTTP/"<<(uint32_t)(m_version>>4)<<"."<<(uint32_t)(m_version&0x0f)<<" "
             <<(uint32_t)m_status<<" "
             <<(m_reason.empty()?httpStatusToString(m_status):m_reason)<<"\r\n";
             os<<"connection:"<<(m_close?"closed":"keep-alive")<<"\r\n";
+            if(!m_body.empty()){
+                os<<"content-length:"<<m_body.size()<<"\r\n";
+            }
             for(auto &i : m_headers){
-                if(strcasecmp(i.first.c_str(),"connection") != 0){
+                if(strcasecmp(i.first.c_str(),"connection") != 0
+                && (strcasecmp(i.first.c_str(),"content-length") != 0
+                || m_body.size()==0)){
                     os<<i.first<<":"<<i.second<<"\r\n";
                 }
             }
             if(!m_body.empty()){
-                os<<"content-length:"<<m_body.size()<<"\r\n\r\n"<<m_body;
+                os<<"\r\n"<<m_body;
             }else{
                 os<<"\r\n";
             }
+
             return os;
+        }
+
+        std::string HttpResponse::toString() const {
+            std::stringstream ss;
+            dump(ss);
+            return ss.str();
         };
     }
 }
