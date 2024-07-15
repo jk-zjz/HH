@@ -202,5 +202,6 @@ namespace hh {
     hh::Address::ptr m_remoteAddress;
 
     };
+    std::ostream &operator<<(std::ostream &os, const Socket &sock);
 }
 #endif //HH_SOCKET_H

@@ -371,7 +371,9 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
         <<"]";
         return os;
     }
-
+    std::ostream &operator<<(std::ostream &os, const Socket &sock){
+        return sock.dump(os);
+    }
     // 取消事件
     bool Socket::cancelRead() {
         return hh::IOManager::GetThis()->cancelEvent(m_sock, hh::IOManager::READ);
