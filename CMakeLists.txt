@@ -125,3 +125,19 @@ target_link_libraries(HttpParser_test yaml-cpp::yaml-cpp
         ${PTHREAD}
         dl)
 redefine_file_macro(HttpParser_test)
+
+add_executable(Tcp_server_test tests/Tcp_server_test.cc
+        ${CPP_G}
+        ${HTTP_SOURCES})
+target_link_libraries(Tcp_server_test yaml-cpp::yaml-cpp
+        ${PTHREAD}
+        dl)
+redefine_file_macro(Tcp_server_test)
+
+add_executable(echo_server examples/echo_server.cc
+        ${CPP_G}
+        ${HTTP_SOURCES})
+target_link_libraries(echo_server yaml-cpp::yaml-cpp
+        ${PTHREAD}
+        dl)
+redefine_file_macro(echo_server)

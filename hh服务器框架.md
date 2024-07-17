@@ -903,6 +903,29 @@ yum intsall ragel -y;
 
 ```
 ## TCP_Server
+```
+重点使用了io_manager
+
+通过两个iomanager 来实现提取accept和工作
+
+
+基于tcp_server 封装了一个EchoServer
+实现发什么显示什么
+```
+```c++
+// tcp_server.h
+protected:
+    virtual void handleClient(Socket::ptr client);
+    // 监听socket
+    virtual void startAccept(Socket::ptr socke);
+//通过实现handleClient来实现处理客户端链接信息
+
+// 可看echo_server.cc
+// 实现的一个简单的tcp链接，发什么显示什么与HttpRequestParser,实现协议解析
+```
+## Stream 针对文件/socket封装
+read/write // 读指定大小不强制  
+readFixSize/WriteFixSize // 读取指定大小强制
 
 ## 分布式协议
 
