@@ -37,8 +37,10 @@ int main(int argc, char **argv) {
     hh::Scheduler sc(2, true, "test");
     sc.start();
     HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "schedule";
+    hh::Fiber::ptr fb(new hh::Fiber(fun23));
     sc.schedule(&test_fiber);
     sc.schedule(&fun23);
+    sc.schedule(fb);
     sc.stop();
     HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "over";
 //    hh::Scheduler sc;

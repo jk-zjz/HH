@@ -1,38 +1,38 @@
-//
-// Created by 35148 on 2024/5/23.
-//
-#include <memory>
-
 #include "hh.h"
-#include "fiber.h"
-#include "scheduler.h"
+
 static hh::Logger::ptr g_logger = HH_LOG_ROOT();
-void func1(){
-    HH_LOG_INFO(g_logger,"RUN_IN_ BEGIN");
+
+void run_in_fiber() {
+    HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "run_in_fiber begin";
     hh::Fiber::YieldToHold();
-    HH_LOG_INFO(g_logger,"RUN_IN_ END");
+    HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "run_in_fiber end";
     hh::Fiber::YieldToHold();
-    HH_LOG_INFO(g_logger,"RUN_IN_ END")
 }
-void func2(){
+
+void test_fiber() {
+    HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "main begin -1";
     {
         hh::Fiber::GetThis();
-        HH_LOG_INFO(g_logger, "main begin")
-        hh::Fiber::ptr f1(new hh::Fiber(func1));
-        f1->call();
-        HH_LOG_INFO(g_logger, "main swapIn")
-        f1->call();
-        HH_LOG_INFO(g_logger,"{main end")
-        f1->call();
+        HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "main begin";
+        hh::Fiber::ptr fiber(new hh::Fiber(run_in_fiber));
+        fiber->swapIn();
+        HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "main after swapIn";
+        fiber->swapIn();
+        HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "main after end";
+        fiber->swapIn();
     }
+    HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::INFO) << "main after end2";
 }
-int main(){
+
+int main(int argc, char** argv) {
     hh::Thread::SetName("main");
-    std::vector<hh::Thread::ptr>ps;
-    for(int i=0;i<3;i++){
-        ps.push_back(std::make_shared<hh::Thread>(&func2,"name_"+std::to_string(i)));
+
+    std::vector<hh::Thread::ptr> thrs;
+    for(int i = 0; i < 3; ++i) {
+        thrs.push_back(hh::Thread::ptr(
+                new hh::Thread(&test_fiber, "name_" + std::to_string(i))));
     }
-    for(auto& i:ps){
+    for(auto i : thrs) {
         i->join();
     }
     return 0;

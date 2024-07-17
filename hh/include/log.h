@@ -118,14 +118,14 @@ namespace hh {
         void format(const char * fat,...);
         void format(const char * fat,va_list al);
     private:
-        const char *m_file = nullptr;  //文件名
+        const char *m_file = nullptr;   //文件名
         uint32_t m_line = 0;            //行号
         uint32_t m_elapse = 0;          //启动-->时间
         uint32_t m_threadId = 0;        //线程id
         uint32_t m_fiberId = 0;         //协程id
-        uint64_t m_time = 0;              //时间戳
-        std::stringstream m_ss;          //内容
-        std::string m_threadName;         //线程名称
+        uint64_t m_time = 0;            //时间戳
+        std::stringstream m_ss;         //内容
+        std::string m_threadName;       //线程名称
 
         std::shared_ptr<Logger> m_logger; //获取日志器
         LogLevel::Level m_level; //日志级别
@@ -214,7 +214,7 @@ namespace hh {
         MutexType m_mutex;                                  //互斥锁
     };
     //日志器--std::enable_shared_from_this<Logger>用于传递自己
-    class Logger : public std::enable_shared_from_this<Logger> {
+    class  Logger : public std::enable_shared_from_this<Logger> {
     friend class LoggerManager;
     public:
         typedef std::shared_ptr<Logger> ptr;

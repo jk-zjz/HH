@@ -624,6 +624,8 @@ namespace hh {
             return nullptr;
         }
     }
-
+    std::ostream &operator<<(std::ostream& os, const Address& addr){
+        return addr.insert(os);
+    }
 
 }

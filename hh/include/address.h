@@ -171,6 +171,6 @@ namespace hh{
     private:
         struct sockaddr m_addr;
     };
-
+    std::ostream &operator<<(std::ostream& os, const Address& addr);
 }
 #endif //HH_ADDRESS_H
