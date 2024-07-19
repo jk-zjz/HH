@@ -927,6 +927,17 @@ protected:
 read/write // 读指定大小不强制  
 readFixSize/WriteFixSize // 读取指定大小强制
 
+HttpSession/HttpConnection
+server.accept socket 是 HttpsSession
+client.connect socket 是 HttpConnection
+
+HttpServer : TcpServer
+
+
+             Servlet  <----- FunctionServlet
+                |
+                |
+        ServletDispatcher
 ## 分布式协议
 
 ## 推荐系统

@@ -354,7 +354,8 @@ namespace hh {
             std::string m_body;     // 请求体
             MapType m_headers;      // 头
         };
-
+        std::ostream &operator<<(std::ostream &os, const HttpRequest &req);
+        std::ostream &operator<<(std::ostream &os, const HttpResponse &rsp);
     }
 }
 

@@ -17,12 +17,12 @@ namespace hh {
         }
 
         // 指针转请求方法
-        HttpMethod CharsToHttpMethod(const char *m){
+        HttpMethod CharsToHttpMethod(const char* m) {
 #define XX(num, name, string) \
-            if(strncmp(m, #string,strlen(m)) == 0){ \
-                return HttpMethod::name;\
-                }             \
-                HTTP_METHOD_MAP(XX);
+    if(strncmp(#string, m, strlen(#string)) == 0) { \
+        return HttpMethod::name; \
+    }
+            HTTP_METHOD_MAP(XX);
 #undef XX
             return HttpMethod::INVALID_METHOD;
         }
@@ -34,12 +34,12 @@ namespace hh {
         };
 
         // 请求方法转字符串
-        const char *httpMethodToString(const HttpMethod &m) {
-            uint32_t index = (uint32_t) m;
-            if (index >= (sizeof(s_method_string) / sizeof(s_method_string[0]))) {
+        const char* httpMethodToString(const HttpMethod& m) {
+            uint32_t idx = (uint32_t)m;
+            if(idx >= (sizeof(s_method_string) / sizeof(s_method_string[0]))) {
                 return "<unknown>";
             }
-            return s_method_string[index];
+            return s_method_string[idx];
         }
 
         // 状态码转字符串
@@ -201,5 +201,11 @@ namespace hh {
             dump(ss);
             return ss.str();
         };
+        std::ostream &operator<<(std::ostream &os, const HttpRequest &req){
+            return req.dump(os);
+        }
+        std::ostream &operator<<(std::ostream &os, const HttpResponse &rsp){
+            return rsp.dump(os);
+        }
     }
 }

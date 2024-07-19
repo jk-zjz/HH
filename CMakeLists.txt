@@ -141,3 +141,11 @@ target_link_libraries(echo_server yaml-cpp::yaml-cpp
         ${PTHREAD}
         dl)
 redefine_file_macro(echo_server)
+
+add_executable(httpserver_test tests/httpserver_test.cc
+        ${CPP_G}
+        ${HTTP_SOURCES})
+target_link_libraries(httpserver_test yaml-cpp::yaml-cpp
+        ${PTHREAD}
+        dl)
+redefine_file_macro(httpserver_test)

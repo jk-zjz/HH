@@ -19,6 +19,9 @@ namespace hh{
             HttpRequest::ptr getData() const { return m_data; }
             void setError(int v) { m_error = v; }
             uint64_t getContentLength() const;
+        public:
+            static uint64_t getHttpRequestBufferSize();
+            static uint64_t getHttpResponseMaxBodySize();
         private:
             http_parser m_parser;
             HttpRequest::ptr m_data;
@@ -33,7 +36,7 @@ namespace hh{
             HttpResponseParser();
             int isFinish();
             int isError();
-            size_t execute(char *data, size_t len);
+            size_t execute(char* data, size_t len, bool chunck);
             HttpResponse::ptr getData() const { return m_data; }
             void setError(int v) { m_error = v; }
             uint64_t getContentLength() const;

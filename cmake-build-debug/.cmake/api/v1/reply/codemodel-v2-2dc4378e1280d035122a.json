@@ -1,0 +1,177 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "HH",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "HttpParser_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HttpParser_test-Debug-3ea96af9971ef4849759.json",
+					"name" : "HttpParser_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Tcp_server_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Tcp_server_test-Debug-64c151e699b4f4a2aa0b.json",
+					"name" : "Tcp_server_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "address_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-address_test-Debug-1e5eee457f27f13401b3.json",
+					"name" : "address_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bytearray_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bytearray_test-Debug-d302bc0c28ad902b88f6.json",
+					"name" : "bytearray_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "config_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-config_test-Debug-27b425a199fc8a61b230.json",
+					"name" : "config_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "echo_server::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-echo_server-Debug-804460893358258a2acb.json",
+					"name" : "echo_server",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hook_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hook_test-Debug-bb20d2b78682ffd1d757.json",
+					"name" : "hook_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "http_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-http_test-Debug-783244cf7e7118243975.json",
+					"name" : "http_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "iomanager_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-iomanager_test-Debug-cacefde2b66d033d6fe8.json",
+					"name" : "iomanager_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "log_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-log_test-Debug-9af6ce194dcec2b06a3d.json",
+					"name" : "log_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "pthread_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-pthread_test-Debug-42cf43e5b8d00b0f313c.json",
+					"name" : "pthread_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "scheduler_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-scheduler_test-Debug-4d85ca3366007fe97aa4.json",
+					"name" : "scheduler_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "socket_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-socket_test-Debug-dc54bdd38eedac5678b0.json",
+					"name" : "socket_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "utils_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-utils_test-Debug-518c966d31ba8a653465.json",
+					"name" : "utils_test",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/hh/HH/cmake-build-debug",
+		"source" : "/home/hh/HH"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

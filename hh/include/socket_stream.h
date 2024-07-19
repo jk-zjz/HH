@@ -11,6 +11,9 @@ namespace hh{
     public:
         typedef std::shared_ptr<SocketStream> ptr;
         SocketStream(hh::Socket::ptr sock, bool owner = true);
+
+        SocketStream();
+
         ~SocketStream();
         int read(ByteArray::ptr ba, size_t size) override;
         int read(void *buf, size_t size) override;

@@ -102,39 +102,46 @@ void test() {
 
 #undef XX
 }
+void test3(){
+    hh::ByteArray::ptr ba(new hh::ByteArray(4096));
+    ba->writeUint32(322);
+    ba->setPosition(0);
+    uint32_t jk = ba->readUint32();
+    std::cout<<jk<<std::endl;
+}
 
 int main(int argc, char **argv) {
     //test();
     //test2();
-
-    hh::ByteArray::ptr ba(new hh::ByteArray(4096));
-    hh::ByteArray::ptr ba2(new hh::ByteArray(4096));
-    std::vector<int32_t> vec;
-    for (int32_t i = 0; i < 100; ++i) {
-        // 通过未压缩方式存储
-        ba->writeFint32(i);
-        // 通过压缩方式存储 7bit 与 Zigzag
-        ba2->writeInt32(i);
-    }
-// 设置偏移量到0
-    ba->setPosition(0);
-    ba2->setPosition(0);
-
-// 读取数据
-    for (int32_t i = 0; i < 100; ++i) {
-        int32_t v = ba->readFint32();
-        HH_LOG_FAT_INFO(g_logger, "v:= %d  i=%d", v, i)
-    }
-// 文件存储
-    ba2->writeToFile("./test.txt");
-    hh::ByteArray::ptr ba3(new hh::ByteArray(4096 * 2));
-    // 读取文件
-    ba3->readFromFile("./test.txt");
-    // 因为写入了，所以要设置偏移量为0
-    ba3->setPosition(0);
-    if (ba3->toString() == ba2->toString()) {
-        HH_LOG_INFO(g_logger, "ba3 == ba2");
-    }
+    test3();
+//    hh::ByteArray::ptr ba(new hh::ByteArray(4096));
+//    hh::ByteArray::ptr ba2(new hh::ByteArray(4096));
+//    std::vector<int32_t> vec;
+//    for (int32_t i = 0; i < 100; ++i) {
+//        // 通过未压缩方式存储
+//        ba->writeFint32(i);
+//        // 通过压缩方式存储 7bit 与 Zigzag
+//        ba2->writeInt32(i);
+//    }
+//// 设置偏移量到0
+//    ba->setPosition(0);
+//    ba2->setPosition(0);
+//
+//// 读取数据
+//    for (int32_t i = 0; i < 100; ++i) {
+//        int32_t v = ba->readFint32();
+//        HH_LOG_FAT_INFO(g_logger, "v:= %d  i=%d", v, i)
+//    }
+//// 文件存储
+//    ba2->writeToFile("./test.txt");
+//    hh::ByteArray::ptr ba3(new hh::ByteArray(4096 * 2));
+//    // 读取文件
+//    ba3->readFromFile("./test.txt");
+//    // 因为写入了，所以要设置偏移量为0
+//    ba3->setPosition(0);
+//    if (ba3->toString() == ba2->toString()) {
+//        HH_LOG_INFO(g_logger, "ba3 == ba2");
+//    }
 
     return 0;
 }

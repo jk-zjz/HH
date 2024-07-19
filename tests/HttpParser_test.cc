@@ -5,12 +5,12 @@
 
 //#include <string>
 //#include "http_parser.h"
-//#include "log.h"
+#include "log.h"
 //
-//static hh::Logger::ptr g_logger = HH_LOG_ROOT();
+static hh::Logger::ptr g_logger = HH_LOG_ROOT();
 //
 //const char test_request_data[] = "POST / HTTP/1.1\r\n"
-//                                 "Host: www.sylar.top\r\n"
+//                                 "Host: www.hh.top\r\n"
 //                                 "Content-Length: 10\r\n\r\n"
 //                                 "1234567890";
 //
@@ -66,9 +66,8 @@
 #include "http_parser.h"
 #include <iostream>
 #include "log.h"
-static  hh::Logger::ptr g_logger = HH_LOG_ROOT();
 const char test_request_data[] = "POST / HTTP/1.1\r\n"
-                                 "Host: www.sylar.top\r\n"
+                                 "Host: www.hh.top\r\n"
                                  "Content-Length: 10\r\n\r\n"
                                  "1234567890";
 
@@ -76,14 +75,14 @@ void test_request() {
     hh::http::HttpRequestParser parser;
     std::string tmp = test_request_data;
     size_t s = parser.execute(&tmp[0], tmp.size());
-    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "execute rt=" << s
-                                                    << "has_error=" << parser.isError()
-                                                    << " is_finished=" << parser.isFinish()
-                                                    << " total=" << tmp.size()
-                                                    << " content_length=" << parser.getContentLength();
+     HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "execute rt=" << s
+                              << "has_error=" << parser.isError()
+                              << " is_finished=" << parser.isFinish()
+                              << " total=" << tmp.size()
+                              << " content_length=" << parser.getContentLength();
     tmp.resize(tmp.size() - s);
-    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << parser.getData()->toString();
-    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << tmp;
+     HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << parser.getData()->toString();
+     HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << tmp;
 }
 
 const char test_response_data[] = "HTTP/1.1 200 OK\r\n"
@@ -104,45 +103,23 @@ const char test_response_data[] = "HTTP/1.1 200 OK\r\n"
 void test_response() {
     hh::http::HttpResponseParser parser;
     std::string tmp = test_response_data;
-    size_t s = parser.execute(&tmp[0], tmp.size());
-    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "execute rt=" << s
-                                                    << " has_error=" << parser.isError()
-                                                    << " is_finished=" << parser.isFinish()
-                                                    << " total=" << tmp.size()
-                                                    << " content_length=" << parser.getContentLength()
-                                                    << " tmp[s]=" << tmp[s];
+    size_t s = parser.execute(&tmp[0], tmp.size(), true);
+     HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "execute rt=" << s
+                              << " has_error=" << parser.isError()
+                              << " is_finished=" << parser.isFinish()
+                              << " total=" << tmp.size()
+                              << " content_length=" << parser.getContentLength()
+                              << " tmp[s]=" << tmp[s];
 
     tmp.resize(tmp.size() - s);
 
-    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << parser.getData()->toString();
-    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO)<< tmp;
+     HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << parser.getData()->toString();
+     HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << tmp;
 }
 
-void test_request_parser(){
-    std::string buff = "GET /api/sort?id=1 HTTP/1.1\r\n"
-                       "Host: www.baidu.com\r\n"
-                       "Connection: keep-alive\r\n"
-                       "Upgrade-Insecure-Requests: 1\r\n"
-                       "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36\r\n\r\n"
-                       "{\"id\":1,\"jsonrpc\":2.0,\"method\":\"sum\",\"params\":[1,2,4]}\r\n";
-    hh::http::HttpRequestParser parser;
-    parser.execute(&buff[0],buff.size());
-    std::cout<<parser.getData()->toString();
-}
-void test_rsponse_parser(){
-    std::string buff = "HTTP/1.1 200 OK\r\n"
-                       "Connection: keep-alive\r\n"
-                       "xxx:1\r\n"
-                       "Content-Length: 20\r\n\r\n";
-    hh::http::HttpResponseParser parser;
-    parser.execute(&buff[0],buff.size());
-    std::cout<<parser.getData()->toString();
-}
-int main(int argc, char **argv){
-    test_request_parser();
-    test_rsponse_parser();
+int main(int argc, char** argv) {
     test_request();
-    std::cout<<"-------------------------"<<std::endl;
+     HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "--------------";
     test_response();
     return 0;
 }
@@ -155,7 +132,7 @@ int main(int argc, char **argv){
 static hh::Logger::ptr g_logger = HH_LOG_ROOT();
 
 const char test_request_data[] = "POST / HTTP/1.1\r\n"
-                                 "Host: www.sylar.top\r\n"
+                                 "Host: www.hh.top\r\n"
                                  "Content-Length: 10\r\n\r\n"
                                  "1234567890";
 

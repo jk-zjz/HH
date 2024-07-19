@@ -15,22 +15,29 @@ namespace hh {
 
         static uint64_t s_http_request_buffer_size = 0;
         static uint64_t s_http_response_max_body_size = 0;
-
-        struct _RequestSizeInit {
-            _RequestSizeInit(){
-                s_http_request_buffer_size = g_http_request_buffer_size->getValue();
-                s_http_response_max_body_size = g_http_response_max_body_size->getValue();
-                g_http_request_buffer_size->addOcb(
-                        [](const uint64_t& old_value, const uint64_t& new_value){
-                            s_http_request_buffer_size = new_value;
-                        });
-                g_http_response_max_body_size->addOcb(
-                        [](const uint64_t& old_value, const uint64_t& new_value){
-                            s_http_response_max_body_size = new_value;
-                        });
-            }
-        };
-        static _RequestSizeInit s_init;
+        uint64_t HttpRequestParser::getHttpRequestBufferSize(){
+            return s_http_request_buffer_size;
+        }
+        uint64_t HttpRequestParser::getHttpResponseMaxBodySize(){
+            return s_http_response_max_body_size;
+        }
+        namespace {
+            struct _RequestSizeInit {
+                _RequestSizeInit(){
+                    s_http_request_buffer_size = g_http_request_buffer_size->getValue();
+                    s_http_response_max_body_size = g_http_response_max_body_size->getValue();
+                    g_http_request_buffer_size->addOcb(
+                            [](const uint64_t& old_value, const uint64_t& new_value){
+                                s_http_request_buffer_size = new_value;
+                            });
+                    g_http_response_max_body_size->addOcb(
+                            [](const uint64_t& old_value, const uint64_t& new_value){
+                                s_http_response_max_body_size = new_value;
+                            });
+                }
+            };
+            static _RequestSizeInit s_init;
+        }
         void on_request_method(void *data, const char *at, size_t length){
             HttpRequestParser* parser = static_cast<HttpRequestParser*>(data);
             HttpMethod m = CharsToHttpMethod(at);
@@ -68,7 +75,7 @@ namespace hh {
             HttpRequestParser* parser = static_cast<HttpRequestParser*>(data);
             if(flen == 0){
                 HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::WARN)<<"invalid http field";
-                parser->setError(1002);
+                //parser->setError(1002);
                 return;
             }
             parser->getData()->setHeader(std::string(field,flen),std::string(value,vlen));
@@ -107,12 +114,9 @@ namespace hh {
         int HttpRequestParser::isError(){
             return m_error || http_parser_has_error(&m_parser);
         };
-        size_t HttpRequestParser::execute(char *data, size_t len){
-            size_t data_size = strlen(data);
-            size_t offset = http_parser_execute(&m_parser,data,len,0);
-            memmove(data,data+offset,len-offset);
-            std::string tmp(data,data_size-offset);
-            m_data->setBody(tmp);
+        size_t HttpRequestParser::execute(char* data, size_t len) {
+            size_t offset = http_parser_execute(&m_parser, data, len, 0);
+            memmove(data, data + offset, (len - offset));
             return offset;
         }
 
@@ -124,7 +128,7 @@ namespace hh {
             HttpResponseParser* parser = static_cast<HttpResponseParser*>(data);
             if(flen == 0){
                 HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::WARN)<<"invalid http field";
-                parser->setError(1002);
+                //parser->setError(1002);
                 return;
             }
             parser->getData()->setHeader(std::string(field,flen),std::string(value,vlen));
@@ -179,14 +183,16 @@ namespace hh {
             return m_error || httpclient_parser_has_error(&m_parser);
         }
 
-        size_t HttpResponseParser::execute(char *data, size_t len) {
-            size_t data_size = strlen(data);
-            size_t offset = httpclient_parser_execute(&m_parser,data,len,0);
-            memmove(data,data+offset,len-offset);
-            std::string tmp(data,data_size-offset);
-            m_data->setBody(tmp);
+        size_t HttpResponseParser::execute(char* data, size_t len, bool chunck) {
+            if(chunck) {
+                httpclient_parser_init(&m_parser);
+            }
+            size_t offset = httpclient_parser_execute(&m_parser, data, len, 0);
+
+            memmove(data, data + offset, (len - offset));
             return offset;
         }
+
 
         uint64_t HttpResponseParser::getContentLength() const {
             return m_data->getHeaderAs<uint64_t>("Content-Length",0);
