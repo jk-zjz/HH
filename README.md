@@ -134,6 +134,13 @@ socket(socket模块)
        [socket]
         (套接字)   
         
+        
+封装Address类，封装IPAddress类，封装IPv4Address类，封装IPv6Address类，封装UnixAddress类，
+
+socket  
+connect  
+accept  bind listen
+read write close        
 ```
 
 
@@ -169,9 +176,65 @@ ByteArray    | m_root 主节点 用来标准第一个节点
              |以及读取文件数据
              |使用tostring
 ```
+## http协议开发
+```c++
+HTTP/1.1 -API  格式
+
+HttpRequest     收请求
+HttpResponse    发请求
+
+url 格式
+http://www.hhap.cn:80/page/xxx?id=10#fr
+  |         |       |      |     |   |
+http 协议    |       |      |     |   |
+        www.hhap.cn主机名   |     |   |
+                    |      |     |   |
+                80 端口    |      |   |
+                    /page/xxx 路径|   |
+                            id=10 参数|
+                                   #fr 锚点
+                                   
+                    ragel 有限状态机 做http的解析
+                            通过ragel解析http请求
+                                    |
+HttpResponse->解析HttpResponseParser-|-解析到HttpRequestParser<-HttpRequest
+                                    |
+                              使用回调函数处理请求
+```
+```c++
+封装Tcp_Server 基类
+        |
+        |----------提供绑定(虚函数)
+        |----------提供启动跳转(虚函数)
+        |----------提供handleClient(重点虚函数)
+        |----------提供startAccept(重点虚函数)
+
+提供 echo_server 测试  ------>   tcp_server
+        |
+        |-------> 重写handleClient,完成回复代码
+```
+```c++
+封装stream流便于 file && socket
+      |
+      |------提供多种写入读取方式
+      |------提供固定读入写出
+
+        
+      SocketStream <----- stream
+            ^
+            |
+            |
+            |
+        HttpSession
+            |------->是server accept 的socket
+            
+提供 http_server 测试 ----->   http_server  
+        |
+        |-------> 重写handleClient,完成回复代码
+```
 
 ## HH 所需的第三方库
-[boost库](http://www.boost.org/users/download/)  
+[boost库](http://www.boost.org/users/download/)
 ```
 http://www.boost.org/users/download/
 
@@ -182,7 +245,8 @@ cd ./boost_1_63_0
 //安装
 sudo ./b2 install
 ```
-[yaml](https://github.com/jbeder/yaml-cpp.git)  
+
+[yaml](https://github.com/jbeder/yaml-cpp.git)
 ```
 //拉取仓库
 git clone https://github.com/jbeder/yaml-cpp.git
