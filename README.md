@@ -47,7 +47,9 @@ config(配置模块)
 ```c++
 thread(线程模块)
 
-Thread(线程类) ，Mutex(锁......)  
+作用域 hh::
+    
+Thread(线程类) ,Mutex(锁......)  
 使用的为  
 pthread 封装  
 pthread pthread_create 
@@ -59,6 +61,8 @@ pthread pthread_create
 ```c++
 fiber(协程模块)
 
+    作用域 hh::
+    
 Thread ----> Master_Fiber<----->sub_fiber
                    ^
                    |
@@ -85,9 +89,8 @@ meassage_queue
 异步IO,等待数据返回，epoll_wait
 
 流程
-poll_wait等待IO事件的发生，当有事件发生时，epoll通知IOManager进行处理。
-PutMaessage()将任务放人meassage_queue(队列)
-通过single()唤醒wait线程进行RecvMessage()执行
+通过IOManager 继承scheduler,通过匿名管道实现协程调度
+    当有任务到达,会唤醒向匿名管道内写入
 
 IOManager(IO协程调度模块)
 ```
@@ -232,7 +235,24 @@ HttpResponse->解析HttpResponseParser-|-解析到HttpRequestParser<-HttpRequest
         |
         |-------> 重写handleClient,完成回复代码
 ```
+```c++
+## Stream 针对文件/socket封装
+read/write // 读指定大小不强制  
+readFixSize/WriteFixSize // 读取指定大小强制
 
+HttpSession/HttpConnection
+server.accept socket 是 HttpsSession
+client.connect socket 是 HttpConnection
+
+HttpServer : TcpServer
+
+                             servlet 的回调函数
+             Servlet  <----- FunctionServlet
+                |
+                |
+        ServletDispatcher
+          Servlet管理类
+```
 ## HH 所需的第三方库
 [boost库](http://www.boost.org/users/download/)
 ```

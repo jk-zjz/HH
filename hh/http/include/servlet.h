@@ -80,6 +80,14 @@ namespace hh{
             // 锁
             RWMutexType m_mutex;
         };
+        class NotFoundServlet : public Servlet{
+        public:
+            typedef std::shared_ptr<NotFoundServlet> ptr;
+            NotFoundServlet();
+            int32_t handle(hh::http::HttpRequest::ptr request,
+                                   hh::http::HttpResponse::ptr response,
+                                   hh::http::HttpSession::ptr session) override;
+        };
     }
 }
 

@@ -6,11 +6,11 @@
 static hh::Logger::ptr g_logger = HH_LOG_ROOT();
 void test(){
     auto addr =hh::Address::lookupAny("0.0.0.0:33023");
-    auto addr2 = hh::UnixAddress::ptr(new hh::UnixAddress("/tmp/bbll_"));
+//    auto addr2 = hh::UnixAddress::ptr(new hh::UnixAddress("/tmp/bbll_"));
     std::vector<hh::Address::ptr>addrs;
     addrs.emplace_back(addr);
-    addrs.emplace_back(addr2);
-    hh::TcpServer::ptr tcp(new hh::TcpServer);
+//    addrs.emplace_back(addr2);
+    hh::http::TcpServer::ptr tcp(new hh::http::TcpServer);
     std::vector<hh::Address::ptr>fails;
     while(!tcp->bind(addrs,fails)){
         sleep(2);

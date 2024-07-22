@@ -933,11 +933,12 @@ client.connect socket 是 HttpConnection
 
 HttpServer : TcpServer
 
-
+                             servlet 的回调函数
              Servlet  <----- FunctionServlet
                 |
                 |
         ServletDispatcher
+          Servlet管理类
 ## 分布式协议
 
 ## 推荐系统

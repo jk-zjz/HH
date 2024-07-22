@@ -6,7 +6,7 @@
 #include "bytearray.h"
 #include "http_parser.h"
 static hh::Logger::ptr g_logger = HH_LOG_ROOT();
-class EchoServer:public hh::TcpServer{
+class EchoServer:public hh::http::TcpServer{
 public:
     EchoServer(int type):m_type(type){};
     void handleClient(hh::Socket::ptr client)override;

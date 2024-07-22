@@ -11,13 +11,13 @@ namespace hh {
                    hh::IOManager *worker,
                    hh::IOManager *accept_worker):
                 TcpServer(worker,accept_worker),
-                m_isKeepalive(keepalive){
+                m_isKeepalive(keepalive),
+                m_dispatch(new ServletDispatch()){
         }
         void HttpServer::handleClient(Socket::ptr client){
             HttpSession::ptr session(new HttpSession(client));
             do{
                 auto req = session->recvRequest();
-                std::cout<<req->toString();
                 if(!req){
                     HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::WARN)
                     <<"recv http request fail erron = "<<errno<<" errstr = "
@@ -26,8 +26,9 @@ namespace hh {
                 }
                 HttpResponse::ptr rsp(new HttpResponse(req->getVersion(),
                                                        req->isClose() || !m_isKeepalive));
-                rsp->setHeader("Server","hh/1.0.0");
-                rsp->setBody("hello hh");
+                m_dispatch->handle(req,rsp,session);
+//                rsp->setHeader("Server","hh/1.0.0");
+//                rsp->setBody("hello hh");
                 session->sendResponse(rsp);
             } while (m_isKeepalive);
             session->close();
