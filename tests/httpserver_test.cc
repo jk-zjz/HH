@@ -15,6 +15,7 @@ void run(){
                            hh::http::HttpResponse::ptr rsp,
                            hh::http::HttpSession::ptr session){
 
+                std::cout<<req->toString();
                 rsp->setBody("<h1>SB<h1>");
                rsp->setHeader("Content-Type","text/html; charset=utf-8");
                rsp->setHeader("Server","HH/1.0.0");

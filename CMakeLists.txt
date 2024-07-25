@@ -149,3 +149,12 @@ target_link_libraries(httpserver_test yaml-cpp::yaml-cpp
         ${PTHREAD}
         dl)
 redefine_file_macro(httpserver_test)
+
+
+add_executable(httpConnection_test tests/httpConnection_test.cc
+        ${CPP_G}
+        ${HTTP_SOURCES})
+target_link_libraries(httpConnection_test yaml-cpp::yaml-cpp
+        ${PTHREAD}
+        dl)
+redefine_file_macro(httpConnection_test)

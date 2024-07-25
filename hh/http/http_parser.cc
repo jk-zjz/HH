@@ -10,25 +10,49 @@ namespace hh {
         static hh::ConfigVar<uint64_t>::ptr g_http_request_buffer_size =
                 hh::Config::Lookup("http.request.buffer_size",(uint64_t)4*1024,"http request buffer size");
 
-        static hh::ConfigVar<uint64_t>::ptr g_http_response_max_body_size =
+        static hh::ConfigVar<uint64_t>::ptr g_http_request_max_body_size =
+                hh::Config::Lookup("http.response.max_body_size",(uint64_t)64*1024*1024,"http request max body size");
+
+        static hh::ConfigVar<uint64_t>::ptr g_http_response_buffer_size =
+                hh::Config::Lookup("http.response.buffer_size",(uint64_t)4*1024,"http response buffer size");
+
+           static hh::ConfigVar<uint64_t>::ptr g_http_response_max_body_size =
                 hh::Config::Lookup("http.response.max_body_size",(uint64_t)64*1024*1024,"http response max body size");
 
         static uint64_t s_http_request_buffer_size = 0;
+        static uint64_t s_http_request_max_body_size = 0;
+        static uint64_t s_http_response_buffer_size = 0;
         static uint64_t s_http_response_max_body_size = 0;
         uint64_t HttpRequestParser::getHttpRequestBufferSize(){
             return s_http_request_buffer_size;
         }
-        uint64_t HttpRequestParser::getHttpResponseMaxBodySize(){
+        uint64_t HttpRequestParser::getHttpRequestMaxBodySize(){
+            return s_http_request_max_body_size;
+        }
+        uint64_t HttpResponseParser::getHttpResponseBufferSize(){
+            return s_http_response_buffer_size;
+        }
+        uint64_t HttpResponseParser::getHttpResponseMaxBodySize() {
             return s_http_response_max_body_size;
         }
         namespace {
             struct _RequestSizeInit {
                 _RequestSizeInit(){
                     s_http_request_buffer_size = g_http_request_buffer_size->getValue();
+                    s_http_request_max_body_size = g_http_response_max_body_size->getValue();
+                    s_http_response_buffer_size = g_http_response_buffer_size->getValue();
                     s_http_response_max_body_size = g_http_response_max_body_size->getValue();
                     g_http_request_buffer_size->addOcb(
                             [](const uint64_t& old_value, const uint64_t& new_value){
                                 s_http_request_buffer_size = new_value;
+                            });
+                    g_http_response_max_body_size->addOcb(
+                            [](const uint64_t& old_value, const uint64_t& new_value){
+                                s_http_request_max_body_size = new_value;
+                            });
+                    g_http_response_buffer_size->addOcb(
+                            [](const uint64_t& old_value, const uint64_t& new_value){
+                                s_http_response_buffer_size = new_value;
                             });
                     g_http_response_max_body_size->addOcb(
                             [](const uint64_t& old_value, const uint64_t& new_value){
@@ -59,6 +83,17 @@ namespace hh {
         void on_request_query(void *data, const char *at, size_t length){
             HttpRequestParser* parser = static_cast<HttpRequestParser*>(data);
             parser->getData()->setQuery(std::string(at,length));
+
+            std::string item;
+            std::stringstream ss(parser->getData()->getQuery());
+            while (std::getline(ss, item, '&')) {
+                std::size_t pos = item.find('=');
+                if (pos != std::string::npos) {
+                    std::string key = item.substr(0, pos);
+                    std::string value = item.substr(pos + 1);
+                    parser->getData()->setQueryData(key,value);
+                }
+            }
         }
         void on_request_version(void *data, const char *at, size_t length){
             HttpRequestParser* parser = static_cast<HttpRequestParser*>(data);
@@ -123,6 +158,7 @@ namespace hh {
         uint64_t HttpRequestParser::getContentLength() const {
             return m_data->getHeaderAs<uint64_t>("Content-Length",0);
         }
+
 
         void on_response_field(void *data, const char *field, size_t flen, const char *value, size_t vlen){
             HttpResponseParser* parser = static_cast<HttpResponseParser*>(data);

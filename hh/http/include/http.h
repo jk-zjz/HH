@@ -9,6 +9,8 @@
 #include <memory>
 #include <map>
 #include <boost/lexical_cast.hpp>
+#include <unordered_map>
+#include <utility>
 
 namespace hh {
     namespace http {
@@ -244,6 +246,8 @@ namespace hh {
 
             bool isClose() const { return m_close; }
 
+            std::unordered_map<std::string, std::string> getQueryData()const{return m_query_data;};
+            void setQueryData(const std::string& name,std::string value){m_query_data[name]=std::move(value);}
             // 设置
             void setHeader(const std::string &key, const std::string &val);
 
@@ -304,6 +308,7 @@ namespace hh {
             uint8_t m_version;      // 版本
             std::string m_path;     // 路径
             std::string m_query;    // 查询
+            std::unordered_map<std::string,std::string> m_query_data;   // get参数
             std::string m_fragment; // 片段
             std::string m_body;     // 请求体
             MapType m_headers;      // 头

@@ -1,15 +1,17 @@
 //
-// Created by 35148 on 2024/7/19.
+// Created by 35148 on 2024/7/25.
 //
-#include "http_session.h"
+#include "http_connection.h"
 namespace hh{
     namespace http{
-        HttpSession::HttpSession(Socket::ptr sock, bool owner):
-        hh::SocketStream (sock,owner){
+
+        HttpConnection::HttpConnection(Socket::ptr sock, bool owner)
+        : SocketStream(sock, owner) {
         }
-        HttpRequest::ptr HttpSession::recvRequest() {
-            HttpRequestParser::ptr parser(new HttpRequestParser);
-            uint64_t buff_size = HttpRequestParser::getHttpRequestBufferSize();
+
+        HttpResponse::ptr HttpConnection::recvResponse()  {
+            HttpResponseParser::ptr parser(new HttpResponseParser);
+            uint64_t buff_size = HttpResponseParser::getHttpResponseBufferSize();
             //uint64_t buff_size = 100;
             std::shared_ptr<char> buffer(
                     new char[buff_size], [](char* ptr){
@@ -25,7 +27,7 @@ namespace hh{
                     return nullptr;
                 }
                 len += offset;
-                size_t nparse = parser->execute(data, len);
+                size_t nparse = parser->execute(data, len, false);
                 if(parser->isError()) {
                     close();
                     return nullptr;
@@ -66,9 +68,9 @@ namespace hh{
             return parser->getData();
         }
 
-        int HttpSession::sendResponse(HttpResponse::ptr rsp){
-            std::string string = rsp->toString();
-            return writeFixSize(string.c_str(),string.size());
+        int HttpConnection::sendRequest(HttpRequest::ptr rsp) {
+            std::string str = rsp->toString();
+            return writeFixSize(str.c_str(), str.size());
         }
     }
 }
