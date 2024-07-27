@@ -5,7 +5,7 @@
 #include <algorithm>
 
 namespace hh {
-    bool hh::Timer::Compare::operator()(const hh::Timer::ptr &lhs, const hh::Timer::ptr &rhs) {
+    bool Timer::Compare::operator()(const std::shared_ptr<Timer> &lhs, const std::shared_ptr<Timer> &rhs) const {
         if(!lhs && !rhs) {
             return false;
         }

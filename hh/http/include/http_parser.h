@@ -40,6 +40,7 @@ namespace hh{
             HttpResponse::ptr getData() const { return m_data; }
             void setError(int v) { m_error = v; }
             uint64_t getContentLength() const;
+            httpclient_parser& getClientParser()  { return m_parser; }
         public:
             static uint64_t getHttpResponseBufferSize();
             static uint64_t getHttpResponseMaxBodySize();

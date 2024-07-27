@@ -1,0 +1,2 @@
+/usr/bin/ar qc libhttpclient_parser.a CMakeFiles/httpclient_parser.dir/hh/http/httpclient_parser.cpp.o
+/usr/bin/ranlib libhttpclient_parser.a

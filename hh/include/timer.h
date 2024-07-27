@@ -39,7 +39,7 @@ namespace hh {
     private:
         // 比较函数
         struct Compare {
-            bool operator()(const Timer::ptr &lhs, const Timer::ptr &rhs);
+            bool operator()(const std::shared_ptr<Timer>& lhs, const std::shared_ptr<Timer>& rhs) const;
         };
 
     };

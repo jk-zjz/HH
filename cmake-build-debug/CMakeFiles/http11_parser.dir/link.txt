@@ -1,0 +1,2 @@
+/usr/bin/ar qc libhttp11_parser.a CMakeFiles/http11_parser.dir/hh/http/http11_parser.cpp.o
+/usr/bin/ranlib libhttp11_parser.a
