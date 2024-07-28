@@ -125,5 +125,113 @@ namespace hh{
             std::string str = rsp->toString();
             return writeFixSize(str.c_str(), str.size());
         }
+
+        HttpResult::ptr HttpConnection::DoGet(const std::string &url, uint64_t timeout_ms,
+                                              const std::map<std::string, std::string> &headers,
+                                              const std::string &body) {
+            Uri::ptr uri = Uri::Create(url);
+            if(!uri){
+                HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR) << "invalid url " << url;
+                return std::make_shared<HttpResult>(HttpResult::Error::INVALID_URL,
+                                                    "invalid url " + url,nullptr);
+            }
+            return DoGet(uri, timeout_ms, headers, body);
+        }
+
+        HttpResult::ptr HttpConnection::DoGet(const Uri::ptr uri, uint64_t timeout_ms,
+                                              const std::map<std::string, std::string> &headers,
+                                              const std::string &body) {
+
+            return DoRequest(HttpMethod::GET, uri, timeout_ms, headers, body);
+        }
+
+        HttpResult::ptr HttpConnection::DoPost(const std::string &url, uint64_t timeout_ms,
+                                               const std::map<std::string, std::string> &headers,
+                                               const std::string &body) {
+            Uri::ptr uri = Uri::Create(url);
+            if(!uri){
+                HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR) << "invalid url " << url;
+                return std::make_shared<HttpResult>(HttpResult::Error::INVALID_URL,
+                                                    "invalid url " + url,nullptr);
+            }
+            return DoPost(uri, timeout_ms, headers, body);
+        }
+
+        HttpResult::ptr HttpConnection::DoPost(const Uri::ptr uri, uint64_t timeout_ms,
+                                               const std::map<std::string, std::string> &headers,
+                                               const std::string &body) {
+            return DoRequest(HttpMethod::POST, uri, timeout_ms, headers, body);
+        }
+
+        HttpResult::ptr HttpConnection::DoRequest(HttpMethod method, const std::string &url, uint64_t timeout_ms,
+                                                  const std::map<std::string, std::string> &headers,
+                                                  const std::string &body) {
+            Uri::ptr uri = Uri::Create(url);
+            if(!uri){
+                HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR) << "invalid url " << url;
+                return std::make_shared<HttpResult>(HttpResult::Error::INVALID_URL,
+                                                    "invalid url " + url,nullptr);
+            }
+            return DoRequest(method, uri, timeout_ms, headers, body);
+        }
+
+        HttpResult::ptr HttpConnection::DoRequest(HttpMethod method, const Uri::ptr uri, uint64_t timeout_ms,
+                                                  const std::map<std::string, std::string> &headers,
+                                                  const std::string &body) {
+            HttpRequest::ptr rsp = std::make_shared<HttpRequest>();
+            rsp->setPath(uri->getPath());
+            rsp->setQuery(uri->getQuery());
+            rsp->setMethod(method);
+            bool has_host = false;
+            for(auto & i: headers){
+                if(strcasecmp(i.first.c_str(), "Connection") == 0){
+                    if(strcasecmp(i.second.c_str(), "keep-alive") == 0){
+                        rsp->setClose(false);
+                    }
+                    continue;
+                }
+                if(!has_host && strcasecmp(i.first.c_str(), "host") == 0){
+                    has_host = !i.second.empty();
+                }
+                rsp->setHeader(i.first, i.second);
+            }
+            if(!has_host){
+                rsp->setHeader("Host", uri->getHost());
+            }
+            rsp->setBody(body);
+            return DoRequest(rsp, uri, timeout_ms);
+        }
+
+        HttpResult::ptr HttpConnection::DoRequest(HttpRequest::ptr req, Uri::ptr uri, uint64_t timeout_ms) {
+            Address::ptr addr = uri->createAddress();
+            if(!addr){
+                return std::make_shared<HttpResult>(HttpResult::Error::INVALID_HOST,
+                                                    "invalid host " + uri->getHost(),nullptr);
+            }
+            std::cout<<*addr<<std::endl;
+            Socket::ptr sock = Socket::CreateTCP(addr);
+            sock->setRecvTimeout(timeout_ms);
+            if(!sock->connect(addr, timeout_ms)){
+                return std::make_shared<HttpResult>(HttpResult::Error::CONNECT_FAIL,
+                                                    "connect fail " + uri->getHost(),nullptr);
+            }
+            HttpConnection::ptr conn = std::make_shared<HttpConnection>(sock);
+            int rt = conn->sendRequest(req);
+            if(rt == 0){
+                return std::make_shared<HttpResult>(HttpResult::Error::SEND_CLOSE_BY_PEER,
+                                                    "send request closed by peer " + addr->toString(),nullptr);
+            }
+            if(rt < 0){
+                return std::make_shared<HttpResult>(HttpResult::Error::SEND_SOCKET_ERROR,
+                                                    "send request socket error " + addr->toString(),nullptr);
+            }
+            auto rsp = conn->recvResponse();
+            if(!rsp){
+                return std::make_shared<HttpResult>(HttpResult::Error::TIMEOUT
+                                                    ,"recv response timeout" + addr->toString()
+                                                    + "timeout_ms :" + std::to_string(timeout_ms),nullptr);
+            }
+            return std::make_shared<HttpResult>(HttpResult::Error::OK,"OK",rsp);
+        }
     }
 }

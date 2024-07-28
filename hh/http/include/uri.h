@@ -45,10 +45,10 @@ namespace hh {
             Address::ptr createAddress() const;
             static Uri::ptr Create(const std::string& url);
             Uri();
-            std::string toString() const;
-            std::ostream & dump(std::ostream& os) const;
+            std::string toString();
+            std::ostream & dump(std::ostream& os);
         private:
-             bool isDefaultPort() const;
+             bool isDefaultPort();
         private:
             std::string m_scheme;       // 协议
             std::string m_userinfo;     // 用户信息
