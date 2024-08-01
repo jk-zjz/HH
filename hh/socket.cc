@@ -48,6 +48,9 @@ static  hh::Logger::ptr g_logger = HH_LOG_NAME("system");
     }
 
     void Socket::setRecvTimeout(int64_t v) {
+        if(v <= 0){
+            return ;
+        }
         // 设置接收超时时间
         struct timeval tv;
         tv.tv_sec = (int) v / 1000;

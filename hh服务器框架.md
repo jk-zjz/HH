@@ -939,6 +939,20 @@ HttpServer : TcpServer
                 |
         ServletDispatcher
           Servlet管理类
+## 收发信息封装
+```
+      (服务器accept的连接)
+        HttpSession（核心为recvRequest）
+             |
+             |
+             V
+         SocketStream 基于stream封装的read write，关闭...
+             |
+             V 
+           Stream 虚方法read/write 以及实现的readFixSize/wirteFixSize
+       (客户端connect的连接)
+        HttpConnection
+```
 ## 分布式协议
 
 ## 推荐系统

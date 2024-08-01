@@ -27,8 +27,11 @@ void test(){
 ////        std::cout<<"res:"<<sharedPtr->toString()<<std::endl;
 //    }
     HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO)<<"===============================";
-    const hh::http::HttpResult::ptr &get = hh::http::HttpConnection::DoGet("https://www.baidu.com",300);
-    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO)<<(get->response?get->response->toString():"error")<<std::endl;
+    std::map<std::string,std::string>head;
+    auto r = hh::http::HttpConnection::DoGet("http://www.sylar.top/blog/",1000);
+    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "result=" << (int)r->result
+                             << " error=" << r->error
+                             << " rsp=" << (r->response ? r->response->toString() : "");
 }
 int main(int args,char ** argv){
     hh::IOManager iom(2);
