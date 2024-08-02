@@ -23,8 +23,8 @@ namespace hh{
         hh::Socket::ptr getSocket() const { return m_socket;}
         bool isConnected();
     protected:
-        hh::Socket::ptr m_socket;
-        bool m_owner;
+        hh::Socket::ptr m_socket;   // socket
+        bool m_owner;               // 是否拥有socket
     };
 }
 #endif //HH_SOCKET_STREAM_H

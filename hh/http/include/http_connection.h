@@ -33,6 +33,7 @@ namespace hh{
             Error result;
             std::string error;
             HttpResponse::ptr response;
+            std::string toString();
         };
         class HttpConnectionPool;
 
@@ -79,8 +80,8 @@ namespace hh{
                                              uint64_t timeout_ms);
 
             HttpConnection(Socket::ptr sock, bool owner = true);
-            ~HttpConnection();
             HttpResponse::ptr recvResponse();
+            ~HttpConnection();
             int sendRequest(HttpRequest::ptr rsp);
         private:
             uint64_t m_createTime = 0;
@@ -90,10 +91,11 @@ namespace hh{
             typedef std::shared_ptr<HttpConnectionPool> ptr;
             typedef Mutex MutexType;
             HttpConnectionPool(const std::string &host,
-                              uint32_t port,
-                              uint32_t max_size = 100,
-                              uint32_t max_alive_time = 300000,
-                              uint32_t max_request = 10);
+                               const std::string& vhost,
+                               uint32_t port,
+                               uint32_t max_size = 100,
+                               uint32_t max_alive_time = 300000,
+                               uint32_t max_request = 10);
             HttpConnection::ptr getConnection();
 
             HttpResult::ptr doGet(const std::string &url,

@@ -14,6 +14,23 @@ find_package(Boost COMPONENTS url REQUIRED)
 
 # 读取源文件
 aux_source_directory("./hh" CPP_G)
+cmake_minimum_required(VERSION 3.29)
+include(cmake/utils.cmake)
+project(HH)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+# 设置生成的可执行文件的输出目录
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined")
+
+# 查找yaml库
+find_package(yaml-cpp REQUIRED)
+find_package(Boost COMPONENTS url REQUIRED)
+
+# 读取源文件
+aux_source_directory("./hh" CPP_G)
 aux_source_directory("./hh/http" HTTP_SOURCES)
 
 # 添加头文件目录
@@ -23,10 +40,16 @@ include_directories(
         ${YAML_CPP_INCLUDE_DIRS}
 )
 
+# 创建一个对象库，包含所有 CPP_G 和 HTTP_SOURCES 中的 .cc 文件
+add_library(common_objs OBJECT ${CPP_G} ${HTTP_SOURCES})
+target_include_directories(common_objs PRIVATE "./hh/include/" "./hh/http/include" ${YAML_CPP_INCLUDE_DIRS})
+target_compile_features(common_objs PUBLIC cxx_std_17)
+target_link_libraries(common_objs PRIVATE yaml-cpp::yaml-cpp pthread dl Boost::url)
+
 # 定义一个函数来处理可执行文件的创建和链接
 function(add_test_executable name srcs)
-    add_executable(${name} ${srcs} ${CPP_G} ${HTTP_SOURCES})
-    target_link_libraries(${name} PRIVATE yaml-cpp::yaml-cpp pthread dl Boost::url)
+    add_executable(${name} ${srcs})
+    target_link_libraries(${name} PRIVATE common_objs yaml-cpp::yaml-cpp pthread dl Boost::url)
     redefine_file_macro(${name}) # 如果这是必要的，确保宏被正确定义
 endfunction()
 
@@ -51,3 +74,4 @@ add_test_executable(httpUrl_test tests/httpUrl_test.cc)
 
 # 如果需要安装可执行文件，可以添加如下代码
 # install(TARGETS log_test config_test ... DESTINATION bin)
+

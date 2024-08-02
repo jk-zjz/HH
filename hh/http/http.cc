@@ -156,6 +156,13 @@ namespace hh {
         m_status(HttpStatus::OK){
         }
         void HttpResponse::setHeader(const std::string &key, const std::string &val){
+            if(strcasecmp(key.c_str(), "connection") == 0){
+                if(strcasecmp(val.c_str(),"keep-alive") == 0){
+                    m_close = false;
+                }else{
+                    m_close = true;
+                }
+            }
             m_headers[key] = val;
         }
         std::string HttpResponse::getHeader(const std::string &key, const std::string &default_value)const {

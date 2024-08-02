@@ -5,6 +5,17 @@
 #include "iomanage.h"
 #include "log.h"
 static hh::Logger::ptr g_logger = HH_LOG_ROOT();
+void test2(){
+    hh::http::HttpConnectionPool::ptr pool
+    (new hh::http::HttpConnectionPool("www.sylar.top","",
+                                      80,10,300*10,10));
+    hh::IOManager::GetThis()->addTimer(1000,[pool](){
+        auto it = pool->doGet("/",3000);
+        if(it){
+            HH_LOG_INFO(g_logger,it->toString());
+        }
+        },true);
+}
 void test(){
 //     hh::IPAddress::ptr ptr = hh::Address::lookupAnyIPAddress("www.sylar.top:80");
 //     if(!ptr){
@@ -26,12 +37,13 @@ void test(){
 //    if(sharedPtr){
 ////        std::cout<<"res:"<<sharedPtr->toString()<<std::endl;
 //    }
-    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO)<<"===============================";
-    std::map<std::string,std::string>head;
-    auto r = hh::http::HttpConnection::DoGet("http://www.sylar.top/blog/",1000);
-    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "result=" << (int)r->result
-                             << " error=" << r->error
-                             << " rsp=" << (r->response ? r->response->toString() : "");
+//    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO)<<"===============================";
+//    std::map<std::string,std::string>head;
+//    auto r = hh::http::HttpConnection::DoGet("http://www.sylar.top/blog/",1000);
+//    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) << "result=" << (int)r->result
+//                             << " error=" << r->error
+//                             << " rsp=" << (r->response ? r->response->toString() : "");
+    test2();
 }
 int main(int args,char ** argv){
     hh::IOManager iom(2);

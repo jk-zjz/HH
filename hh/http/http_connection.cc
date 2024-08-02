@@ -219,6 +219,7 @@ namespace hh {
             }
             sock->setRecvTimeout(timeout_ms);
             HttpConnection::ptr conn = std::make_shared<HttpConnection>(sock);
+
             int rt = conn->sendRequest(req);
             if (rt == 0) {
                 return std::make_shared<HttpResult>(HttpResult::Error::SEND_CLOSE_BY_PEER,
@@ -237,10 +238,16 @@ namespace hh {
             return std::make_shared<HttpResult>(HttpResult::Error::OK, "OK", rsp);
         }
 
+        HttpConnection::~HttpConnection() {
+            HH_LOG_DEBUG(g_logger, "HttpConnection::~HttpConnection");
+        }
+
         HttpConnectionPool::HttpConnectionPool(const std::string &host,
+                                               const std::string& vhost,
                                                uint32_t port, uint32_t max_size,
                                                uint32_t max_alive_time, uint32_t max_request) :
                 m_host(host),
+                m_vhost(vhost),
                 m_port(port), m_max_size(max_size), m_max_alive_time(max_alive_time),
                 m_max_request(max_request) {
         }
@@ -260,8 +267,8 @@ namespace hh {
                     invalid_conns.push_back(conn);
                     continue;
                 }
-                // 创建时间 + 最大存活时间 > 当前时间,已经无效
-                if(conn->m_createTime + m_max_alive_time > now_time) {
+                // 创建时间 + 最大存活时间 < 当前时间,已经无效
+                if(conn->m_createTime + m_max_alive_time <= now_time) {
                     invalid_conns.push_back(conn);
                     continue;
                 }
@@ -275,35 +282,49 @@ namespace hh {
             m_total -= invalid_conns.size();
             if(!ptr){
                 // 没有链接了
-                hh::Address::ptr addr = hh::Address::lookupAny(m_host);
+                IPAddress::ptr addr = Address::lookupAnyIPAddress(m_host);
                 if(!addr){
                     HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR) << "invalid host " << m_host;
                     return nullptr;
                 }
+                addr->setPort(m_port);
                 Socket::ptr sock = hh::Socket::CreateTCP(addr);
                 if(!sock){
                     HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR) << "connect " << m_host << ":" << m_port << " failed";
                     return nullptr;
                 }
                 if(!sock->connect(addr)){
-                    HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR) << "connect " << m_host << ":" << m_port << " failed";
+                    HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR) << "connect " <<addr->toString()<<" failed";
                     return nullptr;
                 }
                 ptr = new HttpConnection(sock);
                 ++m_total;
             }
-            return HttpConnection::ptr(ptr,std::bind(&HttpConnectionPool::ReleasePtr,
-                                                     std::placeholders::_1, this));
+            return HttpConnection::ptr(ptr, std::bind(&HttpConnectionPool::ReleasePtr
+                    , std::placeholders::_1, this));
         }
 
         void HttpConnectionPool::ReleasePtr(HttpConnection* ptr, HttpConnectionPool* pool) {
-
+            uint64_t  k = hh::GetCurrentMS();
+            //HH_LOG_INFO(g_logger, "HttpConnectionPool::ReleasePtr---"+std::to_string(ptr->m_createTime+pool->m_max_alive_time)+"----"+std::to_string(k));
+            if(!ptr->isConnected()
+            || ((ptr->m_createTime + pool->m_max_alive_time) <= hh::GetCurrentMS())){
+                delete ptr;
+                --pool->m_total;
+                return ;
+            }
+            MutexType::Lock lock(pool->m_mutex);
+//            if(pool->m_total == pool->m_max_size){
+//
+//            }
+            pool->m_conns.push_back(ptr);
+            lock.unlock();
         }
         HttpResult::ptr HttpConnectionPool::doGet(const std::string &url, uint64_t timeout_ms,
                                                   const std::map<std::string, std::string> &headers,
                                                   const std::string &body) {
 
-            return hh::http::HttpResult::ptr();
+            return doRequest(HttpMethod::GET, url, timeout_ms, headers, body);
         }
 
         HttpResult::ptr
@@ -330,7 +351,7 @@ namespace hh {
                                                    const std::map<std::string, std::string> &headers,
                                                    const std::string &body) {
 
-            return hh::http::HttpResult::ptr();
+            return doRequest(HttpMethod::POST, url, timeout_ms, headers, body);
         }
 
         HttpResult::ptr HttpConnectionPool::doRequest(HttpMethod method, const std::string &url, uint64_t timeout_ms,
@@ -339,6 +360,7 @@ namespace hh {
             HttpRequest::ptr req = std::make_shared<HttpRequest>();
             req->setPath(url);
             req->setMethod(method);
+            req->setClose(false);
             bool has_host = false;
             for (auto &i: headers) {
                 if (strcasecmp(i.first.c_str(), "Connection") == 0) {
@@ -385,6 +407,7 @@ namespace hh {
                                                     "pool host: "+m_host+"port: "+std::to_string(m_port), nullptr);
             }
             sock->setRecvTimeout(timeout_ms);
+            HH_LOG_INFO(g_logger, "\n"+req->toString());
             int rt = conn->sendRequest(req);
             if (rt == 0) {
                 return std::make_shared<HttpResult>(HttpResult::Error::SEND_CLOSE_BY_PEER,
@@ -401,6 +424,14 @@ namespace hh {
                                                     + "timeout_ms :" + std::to_string(timeout_ms), nullptr);
             }
             return std::make_shared<HttpResult>(HttpResult::Error::OK, "OK", rsp);
+        }
+
+        std::string HttpResult::toString() {
+            std::stringstream ss;
+            ss << "[HttpResult error=" << error
+               << " result=" << (int)result
+               << " response=" << (response ? response->toString() : "") << "]";
+            return ss.str();
         }
     }
 }
