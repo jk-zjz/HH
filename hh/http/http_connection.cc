@@ -280,6 +280,7 @@ namespace hh {
                 delete i;
             }
             m_total -= invalid_conns.size();
+
             if(!ptr){
                 // 没有链接了
                 IPAddress::ptr addr = Address::lookupAnyIPAddress(m_host);
@@ -305,18 +306,18 @@ namespace hh {
         }
 
         void HttpConnectionPool::ReleasePtr(HttpConnection* ptr, HttpConnectionPool* pool) {
-            uint64_t  k = hh::GetCurrentMS();
-            //HH_LOG_INFO(g_logger, "HttpConnectionPool::ReleasePtr---"+std::to_string(ptr->m_createTime+pool->m_max_alive_time)+"----"+std::to_string(k));
+            ptr->m_request++;
             if(!ptr->isConnected()
-            || ((ptr->m_createTime + pool->m_max_alive_time) <= hh::GetCurrentMS())){
+            || ((ptr->m_createTime + pool->m_max_alive_time) <= hh::GetCurrentMS())
+            || (ptr->m_request >= pool->m_max_request)){
                 delete ptr;
                 --pool->m_total;
                 return ;
             }
             MutexType::Lock lock(pool->m_mutex);
-//            if(pool->m_total == pool->m_max_size){
-//
-//            }
+            if((uint32_t)pool->m_total > pool->m_max_size){
+                return;
+            }
             pool->m_conns.push_back(ptr);
             lock.unlock();
         }

@@ -85,6 +85,7 @@ namespace hh{
             int sendRequest(HttpRequest::ptr rsp);
         private:
             uint64_t m_createTime = 0;
+            uint64_t m_request = 0;
         };
         class HttpConnectionPool{
         public:

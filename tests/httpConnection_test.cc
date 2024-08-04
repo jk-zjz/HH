@@ -8,7 +8,7 @@ static hh::Logger::ptr g_logger = HH_LOG_ROOT();
 void test2(){
     hh::http::HttpConnectionPool::ptr pool
     (new hh::http::HttpConnectionPool("www.sylar.top","",
-                                      80,10,300*10,10));
+                                      80,10,3000*10,5));
     hh::IOManager::GetThis()->addTimer(1000,[pool](){
         auto it = pool->doGet("/",3000);
         if(it){
