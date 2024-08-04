@@ -1,0 +1,6 @@
+<map id="hh::FileLogAppender" name="hh::FileLogAppender">
+<area shape="rect" id="node1" title=" " alt="" coords="5,247,147,273"/>
+<area shape="rect" id="node2" href="$classhh_1_1LogAppender.html" title=" " alt="" coords="16,171,136,197"/>
+<area shape="rect" id="node3" href="$classhh_1_1Mutex.html" title="互斥量" alt="" coords="36,81,116,108"/>
+<area shape="rect" id="node4" href="$classhh_1_1Noncopyable.html" title="对象无法拷贝,赋值" alt="" coords="17,5,135,32"/>
+</map>

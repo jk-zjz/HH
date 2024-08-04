@@ -1,0 +1,544 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: hh::Address类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classhh_1_1Address.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public 类型</a> &#124;
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-static-methods">静态 Public 成员函数</a> &#124;
+<a href="classhh_1_1Address-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">hh::Address类 参考<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+类 hh::Address 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Address__inherit__graph.png" border="0" usemap="#ahh_1_1Address_inherit__map" alt="Inheritance graph"/></div>
+<map name="ahh_1_1Address_inherit__map" id="ahh_1_1Address_inherit__map">
+<area shape="rect" title=" " alt="" coords="225,5,317,32"/>
+<area shape="rect" href="classhh_1_1IPAddress.html" title=" " alt="" coords="83,80,187,107"/>
+<area shape="rect" href="classhh_1_1UnixAddress.html" title=" " alt="" coords="212,80,331,107"/>
+<area shape="rect" href="classhh_1_1UnknownAddress.html" title=" " alt="" coords="355,80,502,107"/>
+<area shape="rect" href="classhh_1_1IPv4Address.html" title=" " alt="" coords="5,155,124,181"/>
+<area shape="rect" href="classhh_1_1IPv6Address.html" title=" " alt="" coords="148,155,267,181"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public 类型</h2></td></tr>
+<tr class="memitem:a69a976c5a363e695095f42ca17dddb6f"><td class="memItemLeft" align="right" valign="top"><a id="a69a976c5a363e695095f42ca17dddb6f"></a>
+typedef std::shared_ptr&lt; <a class="el" href="classhh_1_1Address.html">Address</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
+<tr class="separator:a69a976c5a363e695095f42ca17dddb6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a02aed492bd96e5f5d037071dfc3faf77"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Address.html#a02aed492bd96e5f5d037071dfc3faf77">getFamily</a> () const</td></tr>
+<tr class="separator:a02aed492bd96e5f5d037071dfc3faf77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00de71fa0abe793141fdfc51cf2191f1"><td class="memItemLeft" align="right" valign="top"><a id="a00de71fa0abe793141fdfc51cf2191f1"></a>
+virtual sockaddr *&#160;</td><td class="memItemRight" valign="bottom"><b>getAddr</b> () const =0</td></tr>
+<tr class="separator:a00de71fa0abe793141fdfc51cf2191f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0ecee93416930383af31a6692281d2f"><td class="memItemLeft" align="right" valign="top"><a id="ad0ecee93416930383af31a6692281d2f"></a>
+virtual socklen_t&#160;</td><td class="memItemRight" valign="bottom"><b>getAddrLen</b> () const =0</td></tr>
+<tr class="separator:ad0ecee93416930383af31a6692281d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a070a425fadeb1a49f01b148207200001"><td class="memItemLeft" align="right" valign="top"><a id="a070a425fadeb1a49f01b148207200001"></a>
+virtual std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>insert</b> (std::ostream &amp;os) const =0</td></tr>
+<tr class="separator:a070a425fadeb1a49f01b148207200001"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af93f29585f077e9ea3f27b0943576939"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Address.html#af93f29585f077e9ea3f27b0943576939">toString</a> () const</td></tr>
+<tr class="separator:af93f29585f077e9ea3f27b0943576939"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a277b2d7cccfcba0fbe3a0305e4b6ced9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Address.html#a277b2d7cccfcba0fbe3a0305e4b6ced9">operator&lt;</a> (const <a class="el" href="classhh_1_1Address.html">Address</a> &amp;rhs) const</td></tr>
+<tr class="separator:a277b2d7cccfcba0fbe3a0305e4b6ced9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5f33b86864f71793bfc3343d51262a7"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Address.html#aa5f33b86864f71793bfc3343d51262a7">operator==</a> (const <a class="el" href="classhh_1_1Address.html">Address</a> &amp;rhs) const</td></tr>
+<tr class="separator:aa5f33b86864f71793bfc3343d51262a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ea95dbdc65747e69424d37565fd9c4"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Address.html#a43ea95dbdc65747e69424d37565fd9c4">operator!=</a> (const <a class="el" href="classhh_1_1Address.html">Address</a> &amp;rhs) const</td></tr>
+<tr class="separator:a43ea95dbdc65747e69424d37565fd9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+静态 Public 成员函数</h2></td></tr>
+<tr class="memitem:a937ba000a838a51e930c9f35679476ce"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Address.html#a937ba000a838a51e930c9f35679476ce">lookup</a> (std::vector&lt; Address::ptr &gt; &amp;result, const std::string &amp;host, int family=AF_INET, int type=0, int protocol=0)</td></tr>
+<tr class="memdesc:a937ba000a838a51e930c9f35679476ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">查找给定主机名对应的IP地址，并将结果存入输出向量中。  <a href="classhh_1_1Address.html#a937ba000a838a51e930c9f35679476ce">更多...</a><br /></td></tr>
+<tr class="separator:a937ba000a838a51e930c9f35679476ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa67b395c6291c4caeb6b0852d9e6566f"><td class="memItemLeft" align="right" valign="top">static Address::ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Address.html#aa67b395c6291c4caeb6b0852d9e6566f">lookupAny</a> (const std::string &amp;host, int family=AF_INET, int type=0, int protocol=0)</td></tr>
+<tr class="separator:aa67b395c6291c4caeb6b0852d9e6566f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b02e7148b247b7a81870ce38c0ee928"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classhh_1_1IPAddress.html">IPAddress</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Address.html#a0b02e7148b247b7a81870ce38c0ee928">lookupAnyIPAddress</a> (const std::string &amp;host, int family=AF_INET, int type=0, int protocol=0)</td></tr>
+<tr class="separator:a0b02e7148b247b7a81870ce38c0ee928"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fd3c4ca7825c266b159f22fe6f13f14"><td class="memItemLeft" align="right" valign="top"><a id="a6fd3c4ca7825c266b159f22fe6f13f14"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetInterfaceAddresses</b> (std::multimap&lt; std::string, std::pair&lt; Address::ptr, uint32_t &gt;&gt; &amp;result, int family=AF_INET)</td></tr>
+<tr class="separator:a6fd3c4ca7825c266b159f22fe6f13f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a142f8ac85477301435465e8dda6428f5"><td class="memItemLeft" align="right" valign="top"><a id="a142f8ac85477301435465e8dda6428f5"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetInterfaceAddresses</b> (std::vector&lt; std::pair&lt; Address::ptr, uint32_t &gt;&gt; &amp;result, const std::string &amp;iface, int family=AF_INET)</td></tr>
+<tr class="separator:a142f8ac85477301435465e8dda6428f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0228421bb18c16275abc144d79e42a6d"><td class="memItemLeft" align="right" valign="top"><a id="a0228421bb18c16275abc144d79e42a6d"></a>
+static Address::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>create</b> (const sockaddr *addr, socklen_t len)</td></tr>
+<tr class="separator:a0228421bb18c16275abc144d79e42a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock">
+<p class="definition">在文件 <a class="el" href="address_8h_source.html">address.h</a> 第 <a class="el" href="address_8h_source.html#l00017">17</a> 行定义.</p>
+</div><h2 class="groupheader">成员函数说明</h2>
+<a id="a02aed492bd96e5f5d037071dfc3faf77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02aed492bd96e5f5d037071dfc3faf77">&#9670;&nbsp;</a></span>getFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int hh::Address::getFamily </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>获取地址族 </p><dl class="section return"><dt>返回</dt><dd>地址族 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="address_8cc_source.html">address.cc</a> 第 <a class="el" href="address_8cc_source.html#l00043">43</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a937ba000a838a51e930c9f35679476ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a937ba000a838a51e930c9f35679476ce">&#9670;&nbsp;</a></span>lookup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool hh::Address::lookup </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; Address::ptr &gt; &amp;&#160;</td>
+          <td class="paramname"><em>result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>family</em> = <code>AF_INET</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>protocol</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>查找给定主机名对应的IP地址，并将结果存入输出向量中。 </p>
+<p>此函数执行DNS查询，将主机名解析为一个或多个IP地址。支持指定地址族、套接字类型和协议。</p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">result</td><td>输出参数，用于存储查找到的Address对象的智能指针集合。 </td></tr>
+    <tr><td class="paramname">host</td><td>要查询的主机名或域名。 </td></tr>
+    <tr><td class="paramname">family</td><td>地址族，如AF_INET（IPv4，默认）或AF_INET6（IPv6）。 </td></tr>
+    <tr><td class="paramname">type</td><td>套接字类型，默认为0，通常自动选择合适类型（如SOCK_STREAM）。 </td></tr>
+    <tr><td class="paramname">protocol</td><td>IP协议，默认为0，通常自动匹配合适的协议（如IPPROTO_TCP）。</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>如果查找操作成功执行，则返回true；否则返回false。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="address_8cc_source.html">address.cc</a> 第 <a class="el" href="address_8cc_source.html#l00132">132</a> 行定义.</p>
+
+<p class="reference">被这些函数引用 <a class="el" href="address_8cc_source.html#l00189">lookupAny()</a> , 以及 <a class="el" href="address_8cc_source.html#l00209">lookupAnyIPAddress()</a>.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Address_a937ba000a838a51e930c9f35679476ce_icgraph.png" border="0" usemap="#aclasshh_1_1Address_a937ba000a838a51e930c9f35679476ce_icgraph" alt=""/></div>
+<map name="aclasshh_1_1Address_a937ba000a838a51e930c9f35679476ce_icgraph" id="aclasshh_1_1Address_a937ba000a838a51e930c9f35679476ce_icgraph">
+<area shape="rect" title="查找给定主机名对应的IP地址，并将结果存入输出向量中。" alt="" coords="275,31,413,57"/>
+<area shape="rect" href="classhh_1_1Address.html#aa67b395c6291c4caeb6b0852d9e6566f" title=" " alt="" coords="35,5,197,32"/>
+<area shape="rect" href="classhh_1_1Address.html#a0b02e7148b247b7a81870ce38c0ee928" title=" " alt="" coords="5,56,227,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa67b395c6291c4caeb6b0852d9e6566f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa67b395c6291c4caeb6b0852d9e6566f">&#9670;&nbsp;</a></span>lookupAny()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Address::ptr hh::Address::lookupAny </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>family</em> = <code>AF_INET</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>protocol</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>根据给定的主机名、地址族、类型和协议，查找并返回第一个匹配的地址对象。</p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>要查找的主机名或IP地址。 </td></tr>
+    <tr><td class="paramname">family</td><td>地址族，如AF_INET用于IPv4，AF_INET6用于IPv6。 </td></tr>
+    <tr><td class="paramname">type</td><td>地址类型，如 SOCK_STREAM 用于TCP，SOCK_DGRAM 用于UDP。 </td></tr>
+    <tr><td class="paramname">protocol</td><td>协议，对应于地址类型，如TCP或UDP的协议号。 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>如果找到匹配的地址，则返回一个指向地址对象的指针；否则返回nullptr。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="address_8cc_source.html">address.cc</a> 第 <a class="el" href="address_8cc_source.html#l00189">189</a> 行定义.</p>
+
+<p class="reference">引用了 <a class="el" href="address_8cc_source.html#l00132">lookup()</a>.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Address_aa67b395c6291c4caeb6b0852d9e6566f_cgraph.png" border="0" usemap="#aclasshh_1_1Address_aa67b395c6291c4caeb6b0852d9e6566f_cgraph" alt=""/></div>
+<map name="aclasshh_1_1Address_aa67b395c6291c4caeb6b0852d9e6566f_cgraph" id="aclasshh_1_1Address_aa67b395c6291c4caeb6b0852d9e6566f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,167,32"/>
+<area shape="rect" href="classhh_1_1Address.html#a937ba000a838a51e930c9f35679476ce" title="查找给定主机名对应的IP地址，并将结果存入输出向量中。" alt="" coords="215,5,353,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0b02e7148b247b7a81870ce38c0ee928"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b02e7148b247b7a81870ce38c0ee928">&#9670;&nbsp;</a></span>lookupAnyIPAddress()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classhh_1_1IPAddress.html">IPAddress</a> &gt; hh::Address::lookupAnyIPAddress </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>family</em> = <code>AF_INET</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>protocol</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>查找给定主机名、地址族、类型和协议下的任意IP地址，并将其转换为IPAddress对象返回。</p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>要查询的主机名或IP地址字符串。 </td></tr>
+    <tr><td class="paramname">family</td><td>指定地址族，例如AF_INET（IPv4）或AF_INET6（IPv6）。 </td></tr>
+    <tr><td class="paramname">type</td><td>地址对应的套接字类型，如SOCK_STREAM（TCP）或SOCK_DGRAM（UDP）。 </td></tr>
+    <tr><td class="paramname">protocol</td><td>指定的协议类型，如IPPROTO_TCP或IPPROTO_UDP。 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>查找到的第一个IPAddress对象的智能指针，如果没有找到则返回nullptr。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="address_8cc_source.html">address.cc</a> 第 <a class="el" href="address_8cc_source.html#l00209">209</a> 行定义.</p>
+
+<p class="reference">引用了 <a class="el" href="address_8cc_source.html#l00132">lookup()</a>.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Address_a0b02e7148b247b7a81870ce38c0ee928_cgraph.png" border="0" usemap="#aclasshh_1_1Address_a0b02e7148b247b7a81870ce38c0ee928_cgraph" alt=""/></div>
+<map name="aclasshh_1_1Address_a0b02e7148b247b7a81870ce38c0ee928_cgraph" id="aclasshh_1_1Address_a0b02e7148b247b7a81870ce38c0ee928_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,227,32"/>
+<area shape="rect" href="classhh_1_1Address.html#a937ba000a838a51e930c9f35679476ce" title="查找给定主机名对应的IP地址，并将结果存入输出向量中。" alt="" coords="275,5,413,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a43ea95dbdc65747e69424d37565fd9c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43ea95dbdc65747e69424d37565fd9c4">&#9670;&nbsp;</a></span>operator!=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool hh::Address::operator!= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classhh_1_1Address.html">Address</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>不相等 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p class="definition">在文件 <a class="el" href="address_8cc_source.html">address.cc</a> 第 <a class="el" href="address_8cc_source.html#l00095">95</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a277b2d7cccfcba0fbe3a0305e4b6ced9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a277b2d7cccfcba0fbe3a0305e4b6ced9">&#9670;&nbsp;</a></span>operator&lt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool hh::Address::operator&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classhh_1_1Address.html">Address</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>比较地址 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p class="definition">在文件 <a class="el" href="address_8cc_source.html">address.cc</a> 第 <a class="el" href="address_8cc_source.html#l00062">62</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aa5f33b86864f71793bfc3343d51262a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5f33b86864f71793bfc3343d51262a7">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool hh::Address::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classhh_1_1Address.html">Address</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>比较地址 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p class="definition">在文件 <a class="el" href="address_8cc_source.html">address.cc</a> 第 <a class="el" href="address_8cc_source.html#l00085">85</a> 行定义.</p>
+
+</div>
+</div>
+<a id="af93f29585f077e9ea3f27b0943576939"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af93f29585f077e9ea3f27b0943576939">&#9670;&nbsp;</a></span>toString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string hh::Address::toString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>获取地址字符串 </p><dl class="section return"><dt>返回</dt><dd>地址字符串 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="address_8cc_source.html">address.cc</a> 第 <a class="el" href="address_8cc_source.html#l00051">51</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>hh/include/<a class="el" href="address_8h_source.html">address.h</a></li>
+<li>hh/<a class="el" href="address_8cc_source.html">address.cc</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacehh.html">hh</a></li><li class="navelem"><a class="el" href="classhh_1_1Address.html">Address</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

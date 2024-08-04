@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: hh::http::HttpConnection类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classhh_1_1http_1_1HttpConnection.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public 类型</a> &#124;
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-static-methods">静态 Public 成员函数</a> &#124;
+<a href="#friends">友元</a> &#124;
+<a href="classhh_1_1http_1_1HttpConnection-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">hh::http::HttpConnection类 参考</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+类 hh::http::HttpConnection 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1http_1_1HttpConnection__inherit__graph.png" border="0" usemap="#ahh_1_1http_1_1HttpConnection_inherit__map" alt="Inheritance graph"/></div>
+<map name="ahh_1_1http_1_1HttpConnection_inherit__map" id="ahh_1_1http_1_1HttpConnection_inherit__map">
+<area shape="rect" title=" " alt="" coords="5,155,171,181"/>
+<area shape="rect" href="classhh_1_1SocketStream.html" title=" " alt="" coords="25,80,151,107"/>
+<area shape="rect" href="classhh_1_1Stream.html" title=" " alt="" coords="45,5,131,32"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<div class="dynheader">
+hh::http::HttpConnection 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1http_1_1HttpConnection__coll__graph.png" border="0" usemap="#ahh_1_1http_1_1HttpConnection_coll__map" alt="Collaboration graph"/></div>
+<map name="ahh_1_1http_1_1HttpConnection_coll__map" id="ahh_1_1http_1_1HttpConnection_coll__map">
+<area shape="rect" title=" " alt="" coords="5,155,171,181"/>
+<area shape="rect" href="classhh_1_1SocketStream.html" title=" " alt="" coords="25,80,151,107"/>
+<area shape="rect" href="classhh_1_1Stream.html" title=" " alt="" coords="45,5,131,32"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public 类型</h2></td></tr>
+<tr class="memitem:a131bfff24640451a186e5bc2746f2e2d"><td class="memItemLeft" align="right" valign="top"><a id="a131bfff24640451a186e5bc2746f2e2d"></a>
+typedef std::shared_ptr&lt; <a class="el" href="classhh_1_1http_1_1HttpConnection.html">HttpConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
+<tr class="separator:a131bfff24640451a186e5bc2746f2e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_types_classhh_1_1SocketStream"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classhh_1_1SocketStream')"><img src="closed.png" alt="-"/>&#160;Public 类型 继承自 <a class="el" href="classhh_1_1SocketStream.html">hh::SocketStream</a></td></tr>
+<tr class="memitem:a6d8be8ebeb0df94243743003189294c9 inherit pub_types_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="a6d8be8ebeb0df94243743003189294c9"></a>
+typedef std::shared_ptr&lt; <a class="el" href="classhh_1_1SocketStream.html">SocketStream</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
+<tr class="separator:a6d8be8ebeb0df94243743003189294c9 inherit pub_types_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_types_classhh_1_1Stream"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classhh_1_1Stream')"><img src="closed.png" alt="-"/>&#160;Public 类型 继承自 <a class="el" href="classhh_1_1Stream.html">hh::Stream</a></td></tr>
+<tr class="memitem:acb2145311d4eea7d0ea6b2cd87ea27f4 inherit pub_types_classhh_1_1Stream"><td class="memItemLeft" align="right" valign="top"><a id="acb2145311d4eea7d0ea6b2cd87ea27f4"></a>
+typedef std::shared_ptr&lt; <a class="el" href="classhh_1_1Stream.html">Stream</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
+<tr class="separator:acb2145311d4eea7d0ea6b2cd87ea27f4 inherit pub_types_classhh_1_1Stream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a561d7107203164a264993d6dc94e6568"><td class="memItemLeft" align="right" valign="top"><a id="a561d7107203164a264993d6dc94e6568"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>HttpConnection</b> (Socket::ptr sock, bool owner=true)</td></tr>
+<tr class="separator:a561d7107203164a264993d6dc94e6568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ed9920fdcb8e93be1278b538352ea47"><td class="memItemLeft" align="right" valign="top"><a id="a7ed9920fdcb8e93be1278b538352ea47"></a>
+HttpResponse::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>recvResponse</b> ()</td></tr>
+<tr class="separator:a7ed9920fdcb8e93be1278b538352ea47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97c566a0638ff1b2d8c7ff7a751d5793"><td class="memItemLeft" align="right" valign="top"><a id="a97c566a0638ff1b2d8c7ff7a751d5793"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>sendRequest</b> (HttpRequest::ptr rsp)</td></tr>
+<tr class="separator:a97c566a0638ff1b2d8c7ff7a751d5793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classhh_1_1SocketStream"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhh_1_1SocketStream')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="classhh_1_1SocketStream.html">hh::SocketStream</a></td></tr>
+<tr class="memitem:a73ccb696fc706380727ba1b6a4b568b1 inherit pub_methods_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="a73ccb696fc706380727ba1b6a4b568b1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SocketStream</b> (hh::Socket::ptr sock, bool owner=true)</td></tr>
+<tr class="separator:a73ccb696fc706380727ba1b6a4b568b1 inherit pub_methods_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6012e205503aec444672ee3718e7128 inherit pub_methods_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="ab6012e205503aec444672ee3718e7128"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>read</b> (ByteArray::ptr ba, size_t size) override</td></tr>
+<tr class="separator:ab6012e205503aec444672ee3718e7128 inherit pub_methods_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa53fb6fdd00a7b4f78b4b4e60b8c3b5c inherit pub_methods_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="aa53fb6fdd00a7b4f78b4b4e60b8c3b5c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>read</b> (void *buf, size_t size) override</td></tr>
+<tr class="separator:aa53fb6fdd00a7b4f78b4b4e60b8c3b5c inherit pub_methods_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a912e9c0f0f6e161abce5764f3df0077a inherit pub_methods_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="a912e9c0f0f6e161abce5764f3df0077a"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (ByteArray::ptr ba, size_t size) override</td></tr>
+<tr class="separator:a912e9c0f0f6e161abce5764f3df0077a inherit pub_methods_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9230f5d19361629aa9f246d1346b336 inherit pub_methods_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="ab9230f5d19361629aa9f246d1346b336"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (const void *buf, size_t size) override</td></tr>
+<tr class="separator:ab9230f5d19361629aa9f246d1346b336 inherit pub_methods_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80775126ce02d92d400e9f747139952f inherit pub_methods_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="a80775126ce02d92d400e9f747139952f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>close</b> () override</td></tr>
+<tr class="separator:a80775126ce02d92d400e9f747139952f inherit pub_methods_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a347639a46412afea0efe49897aa1c33e inherit pub_methods_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="a347639a46412afea0efe49897aa1c33e"></a>
+hh::Socket::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>getSocket</b> () const</td></tr>
+<tr class="separator:a347639a46412afea0efe49897aa1c33e inherit pub_methods_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7ac7cb48674be410089c029150661b5 inherit pub_methods_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="af7ac7cb48674be410089c029150661b5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isConnected</b> ()</td></tr>
+<tr class="separator:af7ac7cb48674be410089c029150661b5 inherit pub_methods_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classhh_1_1Stream"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhh_1_1Stream')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="classhh_1_1Stream.html">hh::Stream</a></td></tr>
+<tr class="memitem:a20d8d9c9567fe33d9e9fd885d1429306 inherit pub_methods_classhh_1_1Stream"><td class="memItemLeft" align="right" valign="top"><a id="a20d8d9c9567fe33d9e9fd885d1429306"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>readFixSize</b> (void *buf, size_t size)</td></tr>
+<tr class="separator:a20d8d9c9567fe33d9e9fd885d1429306 inherit pub_methods_classhh_1_1Stream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d76c3cc893d23e4e9e12a8318addff6 inherit pub_methods_classhh_1_1Stream"><td class="memItemLeft" align="right" valign="top"><a id="a6d76c3cc893d23e4e9e12a8318addff6"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>readFixSize</b> (ByteArray::ptr ba, size_t size)</td></tr>
+<tr class="separator:a6d76c3cc893d23e4e9e12a8318addff6 inherit pub_methods_classhh_1_1Stream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab00cefd9d67c2611b2af6e466d93064c inherit pub_methods_classhh_1_1Stream"><td class="memItemLeft" align="right" valign="top"><a id="ab00cefd9d67c2611b2af6e466d93064c"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>writeFixSize</b> (const void *buf, size_t size)</td></tr>
+<tr class="separator:ab00cefd9d67c2611b2af6e466d93064c inherit pub_methods_classhh_1_1Stream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a106db0fca700554aab8e2498ff735f91 inherit pub_methods_classhh_1_1Stream"><td class="memItemLeft" align="right" valign="top"><a id="a106db0fca700554aab8e2498ff735f91"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>writeFixSize</b> (ByteArray::ptr ba, size_t size)</td></tr>
+<tr class="separator:a106db0fca700554aab8e2498ff735f91 inherit pub_methods_classhh_1_1Stream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+静态 Public 成员函数</h2></td></tr>
+<tr class="memitem:abdd98bb4a2159755be6cd55412c74c19"><td class="memItemLeft" align="right" valign="top">static HttpResult::ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1http_1_1HttpConnection.html#abdd98bb4a2159755be6cd55412c74c19">DoGet</a> (const std::string &amp;url, uint64_t timeout_ms, const std::map&lt; std::string, std::string &gt; &amp;headers={}, const std::string &amp;body=&quot;&quot;)</td></tr>
+<tr class="separator:abdd98bb4a2159755be6cd55412c74c19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86ba6be75361d5d4f754f719f02f3df0"><td class="memItemLeft" align="right" valign="top"><a id="a86ba6be75361d5d4f754f719f02f3df0"></a>
+static HttpResult::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>DoGet</b> (const Uri::ptr uri, uint64_t timeout_ms, const std::map&lt; std::string, std::string &gt; &amp;headers={}, const std::string &amp;body=&quot;&quot;)</td></tr>
+<tr class="separator:a86ba6be75361d5d4f754f719f02f3df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad83ae18b560bcb7a3650f918522f5a85"><td class="memItemLeft" align="right" valign="top"><a id="ad83ae18b560bcb7a3650f918522f5a85"></a>
+static HttpResult::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>DoPost</b> (const std::string &amp;url, uint64_t timeout_ms, const std::map&lt; std::string, std::string &gt; &amp;headers={}, const std::string &amp;body=&quot;&quot;)</td></tr>
+<tr class="separator:ad83ae18b560bcb7a3650f918522f5a85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59e43e79229829565e3f12f2dd062d9e"><td class="memItemLeft" align="right" valign="top"><a id="a59e43e79229829565e3f12f2dd062d9e"></a>
+static HttpResult::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>DoPost</b> (const Uri::ptr uri, uint64_t timeout_ms, const std::map&lt; std::string, std::string &gt; &amp;headers={}, const std::string &amp;body=&quot;&quot;)</td></tr>
+<tr class="separator:a59e43e79229829565e3f12f2dd062d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a665692a07adb570342308a99db4ccf82"><td class="memItemLeft" align="right" valign="top"><a id="a665692a07adb570342308a99db4ccf82"></a>
+static HttpResult::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>DoRequest</b> (HttpMethod method, const std::string &amp;url, uint64_t timeout_ms, const std::map&lt; std::string, std::string &gt; &amp;headers={}, const std::string &amp;body=&quot;&quot;)</td></tr>
+<tr class="separator:a665692a07adb570342308a99db4ccf82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6a6825367773bf6ac68aa393621b3e9"><td class="memItemLeft" align="right" valign="top"><a id="ae6a6825367773bf6ac68aa393621b3e9"></a>
+static HttpResult::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>DoRequest</b> (HttpMethod method, const Uri::ptr uri, uint64_t timeout_ms, const std::map&lt; std::string, std::string &gt; &amp;headers={}, const std::string &amp;body=&quot;&quot;)</td></tr>
+<tr class="separator:ae6a6825367773bf6ac68aa393621b3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34b849ffe43809763db89a67f2736cfe"><td class="memItemLeft" align="right" valign="top"><a id="a34b849ffe43809763db89a67f2736cfe"></a>
+static HttpResult::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>DoRequest</b> (HttpRequest::ptr rsp, Uri::ptr uri, uint64_t timeout_ms)</td></tr>
+<tr class="separator:a34b849ffe43809763db89a67f2736cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+友元</h2></td></tr>
+<tr class="memitem:ab0ebe12cfc12798e7a08d6de4e1c849f"><td class="memItemLeft" align="right" valign="top"><a id="ab0ebe12cfc12798e7a08d6de4e1c849f"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>HttpConnectionPool</b></td></tr>
+<tr class="separator:ab0ebe12cfc12798e7a08d6de4e1c849f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+额外继承的成员函数</h2></td></tr>
+<tr class="inherit_header pro_attribs_classhh_1_1SocketStream"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classhh_1_1SocketStream')"><img src="closed.png" alt="-"/>&#160;Protected 属性 继承自 <a class="el" href="classhh_1_1SocketStream.html">hh::SocketStream</a></td></tr>
+<tr class="memitem:a6d0f3d62cfa5ead9044cb7bc337d2c7b inherit pro_attribs_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="a6d0f3d62cfa5ead9044cb7bc337d2c7b"></a>
+hh::Socket::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>m_socket</b></td></tr>
+<tr class="separator:a6d0f3d62cfa5ead9044cb7bc337d2c7b inherit pro_attribs_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a493ce4bd729472b515820724be3153ea inherit pro_attribs_classhh_1_1SocketStream"><td class="memItemLeft" align="right" valign="top"><a id="a493ce4bd729472b515820724be3153ea"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_owner</b></td></tr>
+<tr class="separator:a493ce4bd729472b515820724be3153ea inherit pro_attribs_classhh_1_1SocketStream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock">
+<p class="definition">在文件 <a class="el" href="http__connection_8h_source.html">http_connection.h</a> 第 <a class="el" href="http__connection_8h_source.html#l00040">40</a> 行定义.</p>
+</div><h2 class="groupheader">成员函数说明</h2>
+<a id="abdd98bb4a2159755be6cd55412c74c19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdd98bb4a2159755be6cd55412c74c19">&#9670;&nbsp;</a></span>DoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">HttpResult::ptr hh::http::HttpConnection::DoGet </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>timeout_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>headers</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>body</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>获取请求 </p><dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td></td></tr>
+    <tr><td class="paramname">timeout_ms</td><td></td></tr>
+    <tr><td class="paramname">headers</td><td></td></tr>
+    <tr><td class="paramname">body</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd></dd></dl>
+
+<p class="definition">在文件 <a class="el" href="http__connection_8cc_source.html">http_connection.cc</a> 第 <a class="el" href="http__connection_8cc_source.html#l00130">130</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>hh/http/include/<a class="el" href="http__connection_8h_source.html">http_connection.h</a></li>
+<li>hh/http/<a class="el" href="http__connection_8cc_source.html">http_connection.cc</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacehh.html">hh</a></li><li class="navelem"><b>http</b></li><li class="navelem"><a class="el" href="classhh_1_1http_1_1HttpConnection.html">HttpConnection</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

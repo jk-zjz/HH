@@ -1,0 +1,10 @@
+<map id="hh::Scheduler::start" name="hh::Scheduler::start">
+<area shape="rect" id="node1" title=" " alt="" coords="5,60,143,87"/>
+<area shape="rect" id="node2" href="$classhh_1_1Scheduler.html#a01206fd19107d3b52e11e56316815605" title=" " alt="" coords="197,31,325,58"/>
+<area shape="rect" id="node8" href="$structhh_1_1ScopedLockImpl.html#a2f82a02ceefa6affdce4fba8b3a8ce56" title="解锁" alt="" coords="191,82,332,124"/>
+<area shape="rect" id="node3" href="$classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="797,31,924,58"/>
+<area shape="rect" id="node4" href="$classhh_1_1Scheduler.html#a308a333e22d04e7281d88ccd4236f8f9" title="空转任务" alt="" coords="396,31,527,58"/>
+<area shape="rect" id="node7" href="$classhh_1_1Scheduler.html#a370be17c34fc19b5bfe18f1cc3b5095f" title=" " alt="" coords="380,82,543,108"/>
+<area shape="rect" id="node5" href="$classhh_1_1Scheduler.html#a2f9a90eafca4ee7bab59277e034e793f" title=" " alt="" coords="591,31,749,58"/>
+<area shape="rect" id="node6" href="$classhh_1_1Fiber.html#a99e55a5fbaf5089ec5d6e55c7a1995e4" title="将当前Fiber切换到挂起状态。" alt="" coords="595,82,745,108"/>
+</map>

@@ -1,0 +1,497 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: API接口文档</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('md_API_xE6_x8E_xA5_xE5_x8F_xA3_xE6_x96_x87_xE6_xA1_xA3.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title">API接口文档 </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><div align="center">&lt;font size='60'&gt;API接口文档&lt;/font&gt;</div><h2><a class="anchor" id="autotoc_md0"></a>
+LOG日志接口</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">LOG API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Logger.html">hh::Logger</a>   </td><td class="markdownTableBodyNone">日志器类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">否   </td><td class="markdownTableBodyNone">std::enable_shared_from_this&lt;Logger&gt;   </td></tr>
+</table>
+<p>| <a class="el" href="classhh_1_1Logger.html#acea81531779f03f6a8703687aa651350">hh::Logger::Log</a> | 日志输出方法 | 输出 | | | | <a class="el" href="classhh_1_1Logger.html#aebaf8396e00515a74f5d22dcf056fef4">hh::Logger::addAppender</a> | 日志输出添加方法 | 设置 | | | | hh::logger::delectAppender | 日志输出删除方法 | 设置 | | | | hh::logger::clearAppender | 日志输出清空方法 | 设置 | | | | hh::logger::setLevel | 日志输出等级设置方法 | 设置 | | | | hh::logger::setFileName | 日志输出文件设置方法 | 设置 | 有 | | | hh::logger::getLevel | 日志输出等级获取方法 | 获取 | | | | hh::logger::getName | 日志输出名称获取方法 | 获取 | | | | hh::logger::get_Fromatter | 日志输出格式获取方法 | 获取 | | | | <a class="el" href="classhh_1_1LogAppender.html">hh::LogAppender</a> | 日志输出器类 | | | | 是 | | hh::LogAppender::log | 日志输出方法 | 输出 | | 是 | | hh::LogAppender::setFormatter | 日志输出格式设置方法 | 设置 | | hh::LogAppender::set_level | 日志输出等级设置方法 | 设置 | | hh::LogAppender::setFatherFormatter | 设置是否为自定义格式 | 设置 | | hh::LogAppender::setFatherFormatter | 设置是否为自定义格式 | 设置 | | hh::LogAppender::get_level | 日志输出等级获取方法 | 获取 | | hh::LogAppender::getFormatter | 日志输出格式获取方法 | 获取 | | hh::LogAppender::getFatherFormatter | 日志输出格式获取方法 | 获取 | | <a class="el" href="classhh_1_1LogFormatter.html">hh::LogFormatter</a> | 日志输出格式类 | | | | 否 | | <a class="el" href="classhh_1_1LogFormatter.html#ac8ef3df3dfcf6cee04a44bfb52f09b4a">hh::LogFormatter::LogFormatter</a> | 通过格式字符串设置格式器 | 构造 | | <a class="el" href="classhh_1_1LogFormatter.html#a90d1b849d0a1a4b4b1bd942d24b8c228">hh::LogFormatter::format</a> | 格式化日志输出方法 | 输出 | | hh::LogFormatter::is_Error | 判断是否为错误日志等级 | 判断 | | <a class="el" href="classhh_1_1LogEventWrap.html">hh::LogEventWrap</a> | 日志事件管理类 | | | | 否 | | <a class="el" href="classhh_1_1LogEventWrap.html#a16af07c45f1bf06076ba4d3b20cae6f7">hh::LogEventWrap::LogEventWrap</a> | 日志事件管理类构造方法 | 构造 | | | | | <a class="el" href="classhh_1_1LogEventWrap.html#a2bd0c94ed41270b39ce9722d36744fb8">hh::LogEventWrap::~LogEventWrap</a> | 日志析构输出方法 | 输出 | | | | | <a class="el" href="classhh_1_1LogEventWrap.html#a72b574be05585b256b72dffca7085df4">hh::LogEventWrap::setSS</a> | 设置日志输出流内容 | 设置 | | | | | hh::LogEventWrap::getSS | 获取日志输出流内容 | 获取 | | | | | hh::LogEventWrap::getEvent | 获取日志事件 | 获取 | | | | | <a class="el" href="classhh_1_1LogEvent.html">hh::LogEvent</a> | 日志事件类 | | | | 否 | | hh::LogEvent::setSS | 设置日志输出流内容 | 设置 | | | | | <a class="el" href="classhh_1_1LogEvent.html#af68beb5fa4d9c5ced6259e3842514403">hh::LogEvent::format</a> | 可变参数格式化方法内容 | 设置 | 有 | | | | hh::LogEvent::setFormatter | 设置日志格式器 | 设置 | 有 | | | | hh::LogEvent::get_Formatter | 获取日志格式器 | 获取 | | | | | hh::LogEvent::getFile | 获取日志文件名 | 获取 | | | | | hh::LogEvent::Line | 获取日志行号 | 获取 | | | | | hh::LogEvent::getElapsed | 获取日志时间 | 获取 | | | | | hh::LogEvent::getThreadId | 获取日志线程号 | 获取 | | | | | hh::LogEvent::getFiberId | 获取日志协程号 | 获取 | | | | | hh::LogEvent::getContent | 获取日志内容 | 获取 | | | | | hh::LogEvent::getTime | 获取日志时间 | 获取 | | | | | hh::LogEvent::getSS | 获取日志输出流内容 | 获取 | | | | | hh::LogEvent::getLevel | 获取日志等级 | 获取 | | | | | hh::LogEvent::getLohger | 获取日志器 | 获取 | | | | | <a class="el" href="classhh_1_1LogLevel.html">hh::LogLevel</a> | 日志等级类 | | | | | | | <a class="el" href="classhh_1_1LogLevel.html#adbba9d447c847570f679d61ced6ec0c2">hh::LogLevel::ToString</a> | 日志等级转字符串 | 静态方法 | | | | | | <a class="el" href="classhh_1_1LogLevel.html#a7b285868ca8da78792221e7709ee28b7">hh::LogLevel::FromString</a> | 字符串转日志等级 | 静态方法 | | | | | | <a class="el" href="classhh_1_1FileLogAppender.html">hh::FileLogAppender</a> | 日志输出器类 | | | | | LogAppender | | <a class="el" href="classhh_1_1FileLogAppender.html#aa84dfe2d175041539eb4dca06f7a0da3">hh::FileLogAppender::FileLogAppender</a> | 日志输出器类构造方法 | 构造 | | | | | | <a class="el" href="classhh_1_1FileLogAppender.html#a9388dfbcee7af2718f2b706a1d1ad22f">hh::FileLogAppender::log</a> | 日志输出方法 | 输出 | | 虚方法的实现 | | | | <a class="el" href="classhh_1_1FileLogAppender.html#aaab6eccf6307d73087fb20ca78a1bfbe">hh::FileLogAppender::reopen</a> | 日志文件重开 | 设置 | | | | | | <a class="el" href="classhh_1_1StdoutLogAppender.html">hh::StdoutLogAppender</a> | 日志输出器类 | | | | | LogAppender | | <a class="el" href="classhh_1_1StdoutLogAppender.html#ad0898046b73b1ed9a4003fae947b7583">hh::StdoutLogAppender::log</a> | 日志输出方法 | 输出 | | 虚方法的实现 | | | | <a class="el" href="classhh_1_1LoggerManager.html">hh::LoggerManager</a> | 日志管理器类 | 基本为静态类返回 | | | | | | hh::LoggerManager::LoggerMgr | 关键静态类 | typedef hh::Singleton&lt;LoggerManager&gt; LoggerMgr | | | | | | hh::LoggerManager::getLogger | 获取日志器 | 获取 | | | | | | hh::LoggerManager::GetRoot | 获取根日志器 | 获取 | | | | | | hh::LoggerManager::getLoggers | 获取日志器集合 | 获取 | | | | | | hh::LoggerManager::setLogger | 设置日志器 | 设置 | | | | |</p>
+<h2><a class="anchor" id="autotoc_md1"></a>
+config 配置API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">CONFIG API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1ConfigVarBase.html">hh::ConfigVarBase</a>   </td><td class="markdownTableBodyNone">配置变量基类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::ConfigVarBase::getName   </td><td class="markdownTableBodyNone">获取配置变量名   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::ConfigVarBase::getDescription   </td><td class="markdownTableBodyNone">获取配置变量描述   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::ConfigVarBase::toString   </td><td class="markdownTableBodyNone">配置变量转字符串   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::ConfigVarBase::gettype   </td><td class="markdownTableBodyNone">获取配置变量类型   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::ConfigVarBase::fromString   </td><td class="markdownTableBodyNone">字符串转配置变量   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::ConfigVar&lt;T&gt;   </td><td class="markdownTableBodyNone">配置变量类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">ConfigVarBase    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::ConfigVar::toString   </td><td class="markdownTableBodyNone">配置变量转字符串   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::ConfigVar::fromString   </td><td class="markdownTableBodyNone">字符串转配置变量   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::ConfigVar::getValue   </td><td class="markdownTableBodyNone">获取配置变量值   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::ConfigVar::setValue   </td><td class="markdownTableBodyNone">设置配置变量值   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::ConfigVar::gettype   </td><td class="markdownTableBodyNone">获取配置变量类型   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::ConfigVar::getOcb   </td><td class="markdownTableBodyNone">获取配置变量回调函数   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::ConfigVar::addOcb   </td><td class="markdownTableBodyNone">添加配置变量回调函数   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::ConfigVar::deleteOcb   </td><td class="markdownTableBodyNone">删除配置变量回调函数   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::ConfigVar::eraseOcb   </td><td class="markdownTableBodyNone">删除配置变量回调函数   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Config.html">hh::Config</a>   </td><td class="markdownTableBodyNone">配置文件类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Config::Lookup   </td><td class="markdownTableBodyNone">查找配置变量   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone">有   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Config.html#ada50c92a13172813be5f2b4d39f9cbf0">hh::Config::loadFromYaml</a>   </td><td class="markdownTableBodyNone">从YAML文件加载配置   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Config::LookipBase   </td><td class="markdownTableBodyNone">查找配置变量基类   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Config.html#ac877b78218c25549473cecbeb7dc18b7">hh::Config::visit</a>   </td><td class="markdownTableBodyNone">遍历配置变量   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md2"></a>
+thread 线程池API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">THREAD API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Thread.html">hh::Thread</a>   </td><td class="markdownTableBodyNone">线程类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Thread::Thread   </td><td class="markdownTableBodyNone">线程类构造方法   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Thread::join   </td><td class="markdownTableBodyNone">线程等待   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Thread::run   </td><td class="markdownTableBodyNone">线程启动   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Thread::get_id   </td><td class="markdownTableBodyNone">获取线程ID   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Thread::GetName   </td><td class="markdownTableBodyNone">获取线程名   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Thread::SetName   </td><td class="markdownTableBodyNone">设置线程名   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Thread::GetThis   </td><td class="markdownTableBodyNone">获取当前线程   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::MUtex   </td><td class="markdownTableBodyNone">互斥锁类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1RWMutex.html" title="读写互斥量">hh::RWMutex</a>   </td><td class="markdownTableBodyNone">读写锁类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1NullMutex.html" title="空锁(用于调试)">hh::NullMutex</a>   </td><td class="markdownTableBodyNone">空互斥锁类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1NullRWMutex.html" title="空读写锁(用于调试)">hh::NullRWMutex</a>   </td><td class="markdownTableBodyNone">空读写锁类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::CASlock   </td><td class="markdownTableBodyNone">CAS锁类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::SpinLock   </td><td class="markdownTableBodyNone">旋锁类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md3"></a>
+fiber 协程API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">FIBER API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Fiber.html">hh::Fiber</a>   </td><td class="markdownTableBodyNone">协程类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Fiber::Fiber   </td><td class="markdownTableBodyNone">协程类构造方法   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Fiber.html#aa04d0f05f1a3aed3c2372e594b72e3b8">hh::Fiber::reset</a>   </td><td class="markdownTableBodyNone">重置协程   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Fiber.html#a58f0985b7da9f49c482b3b8a6eba47a8" title="将当前Fiber切换为执行状态。">hh::Fiber::swapIn</a>   </td><td class="markdownTableBodyNone">协程切换到当前协程   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Fiber.html#aef4d0b5ec62e18d48f63749f0228b1f2" title="从当前Fiber切换回调度器。">hh::Fiber::swapOut</a>   </td><td class="markdownTableBodyNone">当前协程切换到其他协程   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<p>| hh::Fiber::getState | 获取协程状态 | 获取 | | | | | hh::Fiber::getThis | 获取当前协程 | 获取 | | | | | | hh::Fiber::SetThis | 设置当前协程 | 设置 | | | | | | <a class="el" href="classhh_1_1Fiber.html#a99e55a5fbaf5089ec5d6e55c7a1995e4" title="将当前Fiber切换到挂起状态。">hh::Fiber::YieldToHold</a> | 协程切换到其他协程 | 设置 | | | | | | <a class="el" href="classhh_1_1Fiber.html#ad797d20f3ee2005ebd05feb9b29c25af" title="将当前Fiber切换到就绪状态。">hh::Fiber::YieldToReady</a> | 协程切换到其他协程 | 设置 | | | | | | hh::Fiber::GetTotalFibers | 获取当前协程数量 | 获取 | | | | | | hh::Fiber::Mainfunc | 协程主函数 | 获取 | | | | | | <a class="el" href="classhh_1_1Fiber.html#a35bbafbedebd13b286d4a464740d67fb" title="获取当前Fiber的ID。">hh::Fiber::getFiber_id</a> | 获取协程ID | 获取 | | | | |</p>
+<h2><a class="anchor" id="autotoc_md4"></a>
+scheduler 协程调度器API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">SCHEDULER API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Scheduler.html">hh::Scheduler</a>   </td><td class="markdownTableBodyNone">协程调度器类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Scheduler.html#a56476d47741e42c02f7d86483f7c50ba">hh::Scheduler::Scheduler</a>   </td><td class="markdownTableBodyNone">协程调度器类构造方法   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Scheduler.html#acc93d6d72c5ae6c5af894599361c2842">hh::Scheduler::start</a>   </td><td class="markdownTableBodyNone">协程调度器启动   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Scheduler.html#a8dee8d43aad4b6adcd5deda02b2e2867">hh::Scheduler::stop</a>   </td><td class="markdownTableBodyNone">协程调度器停止   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Scheduler.html#a370be17c34fc19b5bfe18f1cc3b5095f">hh::Scheduler::schedule</a>   </td><td class="markdownTableBodyNone">添加任务   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">有   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Scheduler::GetThis   </td><td class="markdownTableBodyNone">获取当前调度器   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Scheduler::GetMainFiber   </td><td class="markdownTableBodyNone">获取主协程   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Scheduler::getName   </td><td class="markdownTableBodyNone">获取调度器名   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Scheduler.html#abc762f8308fcf098a5d027646bf5e645">hh::Scheduler::switchTo</a>   </td><td class="markdownTableBodyNone">切换协程   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<p>| hh::Scheduler::dump | 协程调度器状态 | 获取 | | | | |\ | hh::Scheduler::tickle | 协程调度器调度 | 设置 | | | | | | <a class="el" href="classhh_1_1Scheduler.html#a2f9a90eafca4ee7bab59277e034e793f">hh::Scheduler::stopping</a> | 协程调度器停止 | 设置 | | | | | | hh::Scheduler::setThis | 设置当前调度器 | 设置 | | | | | | <a class="el" href="classhh_1_1Scheduler.html#a01206fd19107d3b52e11e56316815605">hh::Scheduler::run</a> | 协程调度器运行 | 设置 | | | | | | <a class="el" href="classhh_1_1Scheduler.html#a308a333e22d04e7281d88ccd4236f8f9" title="空转任务">hh::Scheduler::idle</a> | 协程调度器空闲 | 设置 | | | | | | hh::Scheduler::hasIdleThread | 协程调度器是否有空闲线程 | 设置 | | | | |</p>
+<h2><a class="anchor" id="autotoc_md5"></a>
+IOManager IO协程调度器API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><a class="el" href="classIOManager.html">IOManager</a> API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1IOManager.html">hh::IOManager</a>   </td><td class="markdownTableBodyNone">IO协程调度器类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">Scheduler,TimerManager    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1IOManager.html#a820ea4e8d0c3e6828e3effd4dcf6e04d">hh::IOManager::IOManager</a>   </td><td class="markdownTableBodyNone">IO协程调度器类构造方法   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1IOManager.html#aad8e7871c1e962247b4c3334949cbdb0">hh::IOManager::addEvent</a>   </td><td class="markdownTableBodyNone">添加事件   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1IOManager.html#af38d0bd1c3ac8e3abb7f49a6272bd405">hh::IOManager::cancelEvent</a>   </td><td class="markdownTableBodyNone">取消事件   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1IOManager.html#ad4eb56d47cf27fe0b1b0af2230046ae5">hh::IOManager::delEvent</a>   </td><td class="markdownTableBodyNone">删除事件   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1IOManager.html#adbf66da09817f09bfb4189023c771702">hh::IOManager::onTimerInsertedAtFront</a>   </td><td class="markdownTableBodyNone">添加事件回调   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1IOManager.html#ab58c26b893cc8add674fd00901cfcb23">hh::IOManager::stopping</a>   </td><td class="markdownTableBodyNone">停止调度器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::IOManager::tickle   </td><td class="markdownTableBodyNone">唤醒调度器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1IOManager.html#ae72bf1450906e8ab518793b8bf1cc7d3" title="空转任务">hh::IOManager::idle</a>   </td><td class="markdownTableBodyNone">空闲调度器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1IOManager.html#af10568cc6a84931f18b4c4288cbdd404">hh::IOManager::cancelAll</a>   </td><td class="markdownTableBodyNone">取消所有事件   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md6"></a>
+TimerManager 定时器调度器API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">TimerManager API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html">hh::TimerManager</a>   </td><td class="markdownTableBodyNone">定时器调度器类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::TimerManager::TimerManager   </td><td class="markdownTableBodyNone">定时器调度器类构造方法   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#ac902773f422424efcc34638c1ea46069">hh::TimerManager::addTimer</a>   </td><td class="markdownTableBodyNone">添加定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#a49c4edb54aff2d095bd3d71b43cea3dc">hh::TimerManager::addConditionTimer</a>   </td><td class="markdownTableBodyNone">添加条件定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#aeb71d99c2fa6b23fbab02703b58eb664">hh::TimerManager::getNextTimer</a>   </td><td class="markdownTableBodyNone">获取下一个定时器   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#a5582754399d281947ba8f0829977ff0a">hh::TimerManager::listExpiredCb</a>   </td><td class="markdownTableBodyNone">获取过期定时器回调   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#a858be9d64914fa5cc5e7609af5297f14">hh::TimerManager::hasTimer</a>   </td><td class="markdownTableBodyNone">判断是否有定时器   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::TimerManager::onTimerInsertedAtFront   </td><td class="markdownTableBodyNone">添加定时器回调   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#ac902773f422424efcc34638c1ea46069">hh::TimerManager::addTimer</a>   </td><td class="markdownTableBodyNone">添加定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::TimerManager::detectClockRollover   </td><td class="markdownTableBodyNone">检测时钟回滚   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::TimerManager::cancel   </td><td class="markdownTableBodyNone">取消定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::TimerManager::reset   </td><td class="markdownTableBodyNone">重置定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::TimerManager::refresh   </td><td class="markdownTableBodyNone">刷新定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Timer.html">hh::Timer</a>   </td><td class="markdownTableBodyNone">定时器类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">TimerManager，enable_shared_from_this    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Timer::Timer   </td><td class="markdownTableBodyNone">定时器类构造方法   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Timer.html#a5dbe9268792304d52490118c7a4189a5">hh::Timer::cancel</a>   </td><td class="markdownTableBodyNone">取消定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Timer.html#aca690a0d04f3cfb04fd71615195988da">hh::Timer::reset</a>   </td><td class="markdownTableBodyNone">重置定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Timer.html#a65601c17b50c409a8088183b4645752a">hh::Timer::refresh</a>   </td><td class="markdownTableBodyNone">刷新定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md7"></a>
+timer定时器API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">timer 定时器API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Timer.html">hh::Timer</a>   </td><td class="markdownTableBodyNone">定时器类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone">std::enable_shared_from_this&lt;Timer&gt;    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Timer::Timer   </td><td class="markdownTableBodyNone">定时器类构造方法   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Timer.html#a5dbe9268792304d52490118c7a4189a5">hh::Timer::cancel</a>   </td><td class="markdownTableBodyNone">取消定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Timer.html#aca690a0d04f3cfb04fd71615195988da">hh::Timer::reset</a>   </td><td class="markdownTableBodyNone">重置定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Timer.html#a65601c17b50c409a8088183b4645752a">hh::Timer::refresh</a>   </td><td class="markdownTableBodyNone">刷新定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html">hh::TimerManager</a>   </td><td class="markdownTableBodyNone">定时器调度器类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::TimerManager::TimerManager   </td><td class="markdownTableBodyNone">定时器调度器类构造方法   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#ac902773f422424efcc34638c1ea46069">hh::TimerManager::addTimer</a>   </td><td class="markdownTableBodyNone">添加定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#a49c4edb54aff2d095bd3d71b43cea3dc">hh::TimerManager::addConditionTimer</a>   </td><td class="markdownTableBodyNone">添加条件定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#aeb71d99c2fa6b23fbab02703b58eb664">hh::TimerManager::getNextTimer</a>   </td><td class="markdownTableBodyNone">获取下一个定时器   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#a5582754399d281947ba8f0829977ff0a">hh::TimerManager::listExpiredCb</a>   </td><td class="markdownTableBodyNone">获取过期定时器回调   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1TimerManager.html#a858be9d64914fa5cc5e7609af5297f14">hh::TimerManager::hasTimer</a>   </td><td class="markdownTableBodyNone">判断是否有定时器   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::TimerManager::onTimerInsertedAtFront   </td><td class="markdownTableBodyNone">添加定时器回调   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::TimerManager::detectClockRollover   </td><td class="markdownTableBodyNone">检测时钟回滚   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md8"></a>
+hook钩子API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">hook 钩子API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">sleep   </td><td class="markdownTableBodyNone">定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">sleep_f    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">usleep   </td><td class="markdownTableBodyNone">定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">usleep_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">nanosleep   </td><td class="markdownTableBodyNone">定时器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">nanosleep_f    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">socket   </td><td class="markdownTableBodyNone">创建socket   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">socket_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">accept   </td><td class="markdownTableBodyNone">提取socket   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">accept_f    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">connect   </td><td class="markdownTableBodyNone">连接服务器   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">connect_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">读取   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">read_f    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">readv   </td><td class="markdownTableBodyNone">分缓冲区读取   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">readv_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">recv   </td><td class="markdownTableBodyNone">可以使用宏来读取   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">recv_f    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">recvfrom   </td><td class="markdownTableBodyNone">可以存储发送方的地址src_addr   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">recvfrom_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">recvmsg   </td><td class="markdownTableBodyNone">描述了消息的缓冲区和辅助数据   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">recvmsg_f    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">write   </td><td class="markdownTableBodyNone">写   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">write_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">writev   </td><td class="markdownTableBodyNone">分缓冲区写   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">writev_f    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">send   </td><td class="markdownTableBodyNone">可以使用宏来写   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">send_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">sendto   </td><td class="markdownTableBodyNone">可以存储发送方的地址src_addr   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">sendto_f    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">sendmsg   </td><td class="markdownTableBodyNone">描述了发送的的缓冲区和辅助数据   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">sendmsg_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">close   </td><td class="markdownTableBodyNone">关闭   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">close_    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">fcntl   </td><td class="markdownTableBodyNone">设置文件描述符   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">fcntl_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ioctl   </td><td class="markdownTableBodyNone">设备输入输出操作的系统调用   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">ioctl    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">getsockopt   </td><td class="markdownTableBodyNone">获取句柄信息   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">getsockopt_f    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setsockopt   </td><td class="markdownTableBodyNone">设置句柄信息   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">setsockopt_f   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md9"></a>
+Address 地址API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Address 地址API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Address.html">hh::Address</a>   </td><td class="markdownTableBodyNone">地址类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Address.html#a937ba000a838a51e930c9f35679476ce" title="查找给定主机名对应的IP地址，并将结果存入输出向量中。">hh::Address::lookup</a>   </td><td class="markdownTableBodyNone">通用查询满版本(可以查询ip中的地址)   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Address.html#aa67b395c6291c4caeb6b0852d9e6566f">hh::Address::lookupAny</a>   </td><td class="markdownTableBodyNone">查询地址，不管是什么地址 ip或者为unix   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Address.html#a0b02e7148b247b7a81870ce38c0ee928">hh::Address::lookupAnyIPAddress</a>   </td><td class="markdownTableBodyNone">查询IP地址   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Address::GetInterfaceAddresses   </td><td class="markdownTableBodyNone">获取网卡地址   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Address::create   </td><td class="markdownTableBodyNone">创建地址   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Address.html#a02aed492bd96e5f5d037071dfc3faf77">hh::Address::getFamily</a>   </td><td class="markdownTableBodyNone">获取地址类型   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Address::getAddr   </td><td class="markdownTableBodyNone">获取地址   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Address::getAddrLen   </td><td class="markdownTableBodyNone">获取地址长度   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Address::insert   </td><td class="markdownTableBodyNone">为流缓冲区插入地址   </td><td class="markdownTableBodyNone">设置   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">是   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<p>| <a class="el" href="classhh_1_1Address.html">hh::Address</a>:ToString | 地址转换为字符串 | 获取 | | 是 | | | <a class="el" href="classhh_1_1IPAddress.html">hh::IPAddress</a> | IP地址类 | | | | 是 | Address | | <a class="el" href="classhh_1_1IPAddress.html#a26e18ff56259561d38fe3004d608b0a9">hh::IPAddress::Create</a> | 创建IP地址 | 构造 | | | | | | hh::IPAddress::broadcastAddress | 获取广播地址 | 获取 | | 是 | | | | hh::IPAddress::getPort | 获取端口 | 获取 | | 是 | | | | hh::IPAddress::setPort | 设置端口 | 设置 | | 是 | | | | hh::IPAddress::subnetMask | 获取子网掩码 | 获取 | | 是 | | | | hh::IPAddress::networkAddress | 获取网络地址 | 获取 | | 是 | | <a class="el" href="classhh_1_1IPv4Address.html">hh::IPv4Address</a> | IPv4地址类 | | | | | IPAddress | | hh::IPv4Address::Create | 创建IPv4地址 | 构造 | | | | | | <a class="el" href="classhh_1_1IPv4Address.html#ae063b289bd0acadb7cc1c6480fe12456">hh::IPv4Address::getAddr</a> | 获取地址 | 获取 | | | | | | <a class="el" href="classhh_1_1IPv4Address.html#a3a9850faf1b31d9a5235698f882abb26">hh::IPv4Address::getAddrLen</a> | 获取地址长度 | 获取 | | | | | | <a class="el" href="classhh_1_1IPv4Address.html#af309e6c6a7a103d083aae9c71a5c00e1">hh::IPv4Address::getPort</a> | 获取端口 | 获取 | | | | | | <a class="el" href="classhh_1_1IPv4Address.html#a3720a94f318e3740841986b6686e8a9f">hh::IPv4Address::setPort</a> | 设置端口 | 设置 | | | | | | hh::IPv4Address::subnetMask | 获取子网掩码 | 获取 | | | | | | hh::IPv4Address::networkAddress | 获取网络地址 | 获取 | | | | | | hh::IPv4Address::insert | 为流缓冲区插入地址 | 设置 | | | | | | <a class="el" href="classhh_1_1IPv6Address.html">hh::IPv6Address</a> | IPv6地址类 | | | | | IPAddress | | hh::IPv6Address::Create | 创建IPv6地址 | 构造 | | | | | | <a class="el" href="classhh_1_1IPv6Address.html#ad53de363732eec2c25069ad77f16c7a1">hh::IPv6Address::getAddr</a> | 获取地址 | 获取 | | | | | | hh::IPv6Address::getAddrLen | 获取地址长度 | 获取 | | | | | | hh::IPv6Address::getPort | 获取端口 | 获取 | | | | | | hh::IPv6Address::setPort | 设置端口 | 设置 | | | | | | hh::IPv6Address::subnetMask | 获取子网掩码 | 获取 | | | | | | hh::IPv6Address::networkAddress | 获取网络地址 | 获取 | | | | | | <a class="el" href="classhh_1_1IPv6Address.html#a61f2a39483b80ea9db698d4daa7d87be">hh::IPv6Address::insert</a> | 为流缓冲区插入地址 | 设置 | | | | hh::IPv6Address::broadcastAddress | 获取广播地址 | 获取 | | | | | | <a class="el" href="classhh_1_1UnixAddress.html">hh::UnixAddress</a> | Unix地址类 | | | | | Address | | hh::UnixAddress::getAddr | 获取地址 | 获取 | | | | | | hh::UnixAddress::getAddrLen | 获取地址长度 | | hh::UnixAddress::insert | 为流缓冲区插入地址 | 设置 | | | | | | hh::UnixAddress::setAddrLen | 设置地址长度 | 设置 | | | | | | <a class="el" href="classhh_1_1UnknownAddress.html">hh::UnknownAddress</a> | 未知地址类 | | | | | Address | | hh::UnknownAddress::getAddr | 获取地址 | 获取 | | | | | | hh::UnknownAddress::getAddrLen | 获取地址长度 | | hh::UnknownAddress::insert | 为流缓冲区插入地址 | 设置 | | | | |</p>
+<h2><a class="anchor" id="autotoc_md10"></a>
+socket API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">socket API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="classhh_1_1Socket.html">hh::Socket</a>   </td><td class="markdownTableBodyNone">套接字类   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">Noncopyable, std::enable_shared_from_this&lt;Socket&gt;    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Socket::CreateTCP   </td><td class="markdownTableBodyNone">创建TCP套接字   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Socket::CreateUDP   </td><td class="markdownTableBodyNone">创建UDP套接字   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Socket::CreateTCPSocket   </td><td class="markdownTableBodyNone">创建TCP套接字   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Socket::CreateUDPSocket   </td><td class="markdownTableBodyNone">创建UDP套接字   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Socket::CreateTCPSocket6   </td><td class="markdownTableBodyNone">创建TCP套接字   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Socket::CreateUDPSocket6   </td><td class="markdownTableBodyNone">创建UDP套接字   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Socket::CreateUnixTCPSocket   </td><td class="markdownTableBodyNone">创建Unix域TCP套接字   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">hh::Socket::CreateUnixUDPSocket   </td><td class="markdownTableBodyNone">创建Unix域UDP套接字   </td><td class="markdownTableBodyNone">构造   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">hh::Socket::getSendTimeout   </td><td class="markdownTableBodyNone">获取发送超时时间   </td><td class="markdownTableBodyNone">获取   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<p>| hh::Socket::getRecvTimeout | 获取接收超时时间 | 获取 | | | | | hh::Socket::setSendTimeout | 设置发送超时时间 | 获取 | | | | | | <a class="el" href="classhh_1_1Socket.html">hh::Socket</a>:setRecvTimeout | 设置接收超时时间 | 获取 | | | | | | <a class="el" href="classhh_1_1Socket.html#a2c8b37f8331c96b4604c74e949e10f9b">hh::Socket::getOption</a> | 获取套接字选项 | 获取 | | | | | | <a class="el" href="classhh_1_1Socket.html#a65a345ee48261454e6c293c33d802d5d">hh::Socket::setOption</a> | 设置套接字选项 | 设置 | | | | | | hh::Socket::accept | 接收连接 | 获取 | | | | | | hh::Socket::connect | 连接 | 设置 | | | | | | hh::Socket::bind | 绑定 | 设置 | | | | | | hh::Socket::listen | 监听 | 设置 | | | | | | hh::Socket::close | 关闭 | 设置 | | | | | | hh::Socket::init | 初始化 | 设置 | | | | | | <a class="el" href="classhh_1_1Socket.html#aaca71e42327b4fec84f4bbd192056fdf">hh::Socket::send</a> | 发送数据 | 设置 | 是 | | | | | <a class="el" href="classhh_1_1Socket.html#abcba95180f390128f3d53230fcafdbb7">hh::Socket::sendTo</a> | 发送数据 | 设置 | 是 | | | | | hh::Socket::recv | 接收数据 | 设置 | 是 | | | | | <a class="el" href="classhh_1_1Socket.html#a53ae980598c3743497b675b7b9d2aba5">hh::Socket::recvFrom</a> | 接收数据 | 设置 | 是 | | | | | hh::Socket::getLocalAddress | 获取本地地址 | 获取 | | | | | | hh::Socket::getPeerAddress | 获取对端地址 | 获取 | | | | | hh::Socket::isConnected | 是否连接 | 获取 | | | | | | hh::Socket::getFamily | 获取地址族 | 获取 | | | | | | hh::Socket::getType | 获取套接字类型 | 获取 | | | | | | hh::Socket::getProtocol | 获取协议 | 获取 | | | | | | hh::Socket::getSocket | 获取套接字 | 获取 | | | | | | hh::Socket::getError | 获取套接字错误 | 获取 | | | | | | hh::Socket::isValid | 是否有效 | 获取 | | | | | | hh::Socket::dump | 输出套接字信息 | 获取 | | | | | | hh::cancelRead | 取消读事件 | 设置 | | | | | | hh::cancelWrite | 取消写事件 | 设置 | | | | | | hh::Socket::cancelAccept | 取消接收连接事件 | 设置 | | | | | | hh::Socket::cancelAll | 取消所有事件 | 设置 | | |</p>
+<h2><a class="anchor" id="autotoc_md11"></a>
+ByteArray API</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">ByteArray API   </th><th class="markdownTableHeadNone">说明   </th><th class="markdownTableHeadNone">备注   </th><th class="markdownTableHeadNone">有无重载   </th><th class="markdownTableHeadNone">是否为虚   </th><th class="markdownTableHeadNone">类是否为父类   </th><th class="markdownTableHeadNone">父类    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::ByteArray   </td><td class="markdownTableBodyNone">构造函数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::~ByteArray   </td><td class="markdownTableBodyNone">析构函数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeFuint8   </td><td class="markdownTableBodyNone">写入8位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::writeFuint16   </td><td class="markdownTableBodyNone">写入16位无符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeFuint32   </td><td class="markdownTableBodyNone">写入32位无符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::writeFuint64   </td><td class="markdownTableBodyNone">写入64位无符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeFint8   </td><td class="markdownTableBodyNone">写入8位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::writeFint16   </td><td class="markdownTableBodyNone">写入16位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeFint32   </td><td class="markdownTableBodyNone">写入32位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::writeFint64   </td><td class="markdownTableBodyNone">写入64位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeUint32   </td><td class="markdownTableBodyNone">压缩写入32位无符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::writeUint64   </td><td class="markdownTableBodyNone">压缩写入64位无符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeInt32   </td><td class="markdownTableBodyNone">压缩写入32位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::writeInt64   </td><td class="markdownTableBodyNone">压缩写入64位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeDouble   </td><td class="markdownTableBodyNone">写入64位浮点数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::writeFloat   </td><td class="markdownTableBodyNone">写入32位浮点数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeString16   </td><td class="markdownTableBodyNone">写入16位字符串   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::writeString32   </td><td class="markdownTableBodyNone">写入32位字符串   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeString64   </td><td class="markdownTableBodyNone">写入64位字符串   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::writeStringVint   </td><td class="markdownTableBodyNone">写入字符串   </td><td class="markdownTableBodyNone">明确长度   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::writeStringWithoutLength   </td><td class="markdownTableBodyNone">写入字符串   </td><td class="markdownTableBodyNone">不明确长度   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::readFuint8   </td><td class="markdownTableBodyNone">读取8位无符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::readFint8   </td><td class="markdownTableBodyNone">读取8位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::readFuint16   </td><td class="markdownTableBodyNone">读取16位无符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::readFint16   </td><td class="markdownTableBodyNone">读取16位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ByteArray::readFuint32   </td><td class="markdownTableBodyNone">读取32位无符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">ByteArray::readFint32   </td><td class="markdownTableBodyNone">读取32位有符号整数   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
+</table>
+<p>| ByteArray::readFuint64 | 读取64位无符号整数 | | | | ByteArray::readFint64 | 读取64位有符号整数 | | | | | | ByteArray::readUint32 | 读取压缩32位无符号整数 | | | | | | | ByteArray::readUint64 | 读取压缩64位无符号整数 | | | | | | | ByteArray::readInt32 | 读取压缩32位有符号整数 | | | | | | | ByteArray::readInt64 | 读取压缩64位有符号整数 | | | | ByteArray::readDouble | 读取64位浮点数 | | | | | | | ByteArray::readFloat | 读取32位浮点数 | | | | ByteArray::readString16 | 读取16位字符串 | | | | | | | ByteArray::readString32 | 读取32位字符串 | | | | | ByteArray::readString64 | 读取64位字符串 | | | | | | | ByteArray::readStringVint | 读取字符串 | 读取64 | | | | | | ByteArray::clear | 清空 | | | | | | | ByteArray::write | 写入 | | | | | | | ByteArray::read | 读取 | | | | | | | ByteArray::read | 读取 | 读取无副作用 | | | | | | ByteArray::setPosition | 设置当前处理位置 | | | | | | | ByteArray::getPosition | 获取当前处理位置 | | | | | | | ByteArray::writeToFile | 写入文件 | | | | | | | ByteArray::readFromFile | 读取文件 | | | | | | | ByteArray::toString | 将数据转换为字符串 | | | | | | | ByteArray::ByteArray | 构造函数 | | | | | | | ByteArray::getRemainSize | 获取剩余大小 | | | | | | | ByteArray::getBaseSize | 获取基础大小 | | | | | | | ByteArray::isLittleEndian | 是否是小端 | | | | | | | ByteArray::setLittleEndian | 设置是否是小端 | | | | | | | ByteArray::getReadBuffers | 获取读取缓冲区 | 无副作用 | 是 | | | | | ByteArray::getWriteBuffers | 获取写入缓冲区 | | | | | | | ByteArray::getSize | 获取大小 | | | | | | </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

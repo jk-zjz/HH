@@ -1,0 +1,8 @@
+<map id="hh::Scheduler::run" name="hh::Scheduler::run">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,133,58"/>
+<area shape="rect" id="node2" href="$classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="599,31,725,58"/>
+<area shape="rect" id="node3" href="$classhh_1_1Scheduler.html#a308a333e22d04e7281d88ccd4236f8f9" title="空转任务" alt="" coords="197,31,328,58"/>
+<area shape="rect" id="node6" href="$classhh_1_1Scheduler.html#a370be17c34fc19b5bfe18f1cc3b5095f" title=" " alt="" coords="181,82,344,109"/>
+<area shape="rect" id="node4" href="$classhh_1_1Scheduler.html#a2f9a90eafca4ee7bab59277e034e793f" title=" " alt="" coords="392,31,551,58"/>
+<area shape="rect" id="node5" href="$classhh_1_1Fiber.html#a99e55a5fbaf5089ec5d6e55c7a1995e4" title="将当前Fiber切换到挂起状态。" alt="" coords="396,82,547,109"/>
+</map>

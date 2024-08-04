@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: HH 使用</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('md_README.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title">HH 使用 </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>HH 是一个轻量级的 HTTP 服务器 核心为协程实现，支持多线程，多进程，多协程，支持异步IO，支持HTTP/1.1和HTTP/2 如果需要了解API接口请了解<a href="https://github.com/jk-zjz/HH/blob/master/API%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3.md">API接口</a> <br  />
+ 如果需要了解如何使用<a href="https://github.com/jk-zjz/HH/blob/master/hh%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%A1%86%E6%9E%B6.md">使用</a> <br  />
+ </p>
+<h1><a class="anchor" id="autotoc_md37"></a>
+HH 编译</h1>
+<p>centos7 linux <br  />
+ gcc 9.1.0 <br  />
+ Cmake </p>
+<h1><a class="anchor" id="autotoc_md38"></a>
+HH 模块</h1>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">log(日志模块)</div>
+<div class="line"> </div>
+<div class="line">    log4j</div>
+<div class="line"> </div>
+<div class="line">    作用域 hh::</div>
+<div class="line"> </div>
+<div class="line">    Logger(日志器)</div>
+<div class="line">        |</div>
+<div class="line">        |------Formotter(日志格式)</div>
+<div class="line">        |</div>
+<div class="line">        |------LogLevel(日志级别)</div>
+<div class="line">        |</div>
+<div class="line">        |------LogEvent(日志事件)</div>
+<div class="line">        |</div>
+<div class="line">        |------LogEventWrap(宏的日志包装类)</div>
+<div class="line">        |</div>
+<div class="line">    Appender(日志输出地)</div>
+</div><!-- fragment --><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">config(配置模块)</div>
+<div class="line"> </div>
+<div class="line">    作用域 hh::</div>
+<div class="line"> </div>
+<div class="line">    ConfigVarBase(配置文件基类)</div>
+<div class="line">        |</div>
+<div class="line">        |------ConfigVar:ConfigVarBase(配置器)</div>
+<div class="line">        |</div>
+<div class="line">        |------LexicalCast&lt;std::string,std::list&lt;T&gt;&gt;(配置特化类)</div>
+<div class="line">        |</div>
+<div class="line">        |------......</div>
+<div class="line">        |</div>
+<div class="line">    Config(静态配置器)</div>
+</div><!-- fragment --><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">thread(线程模块)</div>
+<div class="line"> </div>
+<div class="line">作用域 hh::</div>
+<div class="line">    </div>
+<div class="line">Thread(线程类) ,Mutex(锁......)  </div>
+<div class="line">使用的为  </div>
+<div class="line">pthread 封装  </div>
+<div class="line">pthread pthread_create </div>
+<div class="line"> </div>
+<div class="line">互斥量 mutex</div>
+<div class="line">信号量 semaphore</div>
+</div><!-- fragment --><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">fiber(协程模块)</div>
+<div class="line"> </div>
+<div class="line">    作用域 hh::</div>
+<div class="line">    </div>
+<div class="line">Thread ----&gt; Master_Fiber&lt;-----&gt;sub_fiber</div>
+<div class="line">                   ^</div>
+<div class="line">                   |</div>
+<div class="line">                   |</div>
+<div class="line">                   v</div>
+<div class="line">                sub_fiber</div>
+</div><!-- fragment --><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">schedule(协程调度模块) </div>
+<div class="line">IOManager (epoll) --&gt;scheduler(继承)</div>
+<div class="line">     |</div>
+<div class="line">     |</div>
+<div class="line">     |</div>
+<div class="line">     V</div>
+<div class="line">  idle(重载)</div>
+<div class="line">  </div>
+<div class="line">PutMaessage(msg,) 信号量+1 ，single()</div>
+<div class="line">meassage_queue</div>
+<div class="line">    |</div>
+<div class="line">    |---Thread</div>
+<div class="line">    |---Thread</div>
+<div class="line">        wait()-信号量-1,RecvMessage(msg,)</div>
+<div class="line">异步IO,等待数据返回，epoll_wait</div>
+<div class="line"> </div>
+<div class="line">流程</div>
+<div class="line">通过IOManager 继承scheduler,通过匿名管道实现协程调度</div>
+<div class="line">    当有任务到达,会唤醒向匿名管道内写入</div>
+<div class="line"> </div>
+<div class="line">IOManager(IO协程调度模块)</div>
+</div><!-- fragment --><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">TimerManager(定时器模块)</div>
+<div class="line"> </div>
+<div class="line">                    1-N</div>
+<div class="line">Timer（定时器类） &lt;-------TimerManager（定时器管理类）</div>
+<div class="line">                             ^</div>
+<div class="line">                             | 1-1</div>
+<div class="line">                             |</div>
+<div class="line">（协程调度器）Scheduler&lt;-----IOManager(epoll)（继承与定时器管理，使用定时器接口） </div>
+<div class="line">                |</div>
+<div class="line">                | 1-&gt;N</div>
+<div class="line">                v</div>
+<div class="line">             Thread（线程类）</div>
+<div class="line">                |</div>
+<div class="line">                | N-&gt;M</div>
+<div class="line">                v</div>
+<div class="line">              Fiber（协程类） </div>
+<div class="line">       </div>
+<div class="line">TimerManager 通过set红黑树管理定时器，通过写入唤醒epoll_wait(),计算最近定时器时间</div>
+<div class="line">并且设置执行，获取定时器过期任务，添加调度器任务列表执行</div>
+</div><!-- fragment --><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">hook(IO函数与socket函数的hook)</div>
+<div class="line"> </div>
+<div class="line">基本IO（read,read......）函数的hook与socket函数hook</div>
+</div><!-- fragment --><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">socket(socket模块)</div>
+<div class="line"> </div>
+<div class="line">    (同主机进程通讯)</div>
+<div class="line">    [UnixAddress]</div>
+<div class="line">          |                     ----[IPv4Address]</div>
+<div class="line">          |        (不同主机通讯) |</div>
+<div class="line">      [Address]----[IPAddress]---</div>
+<div class="line">          |                     |</div>
+<div class="line">          |                     ----[IPv6Address]</div>
+<div class="line">          |</div>
+<div class="line">       [socket]</div>
+<div class="line">        (套接字)   </div>
+<div class="line">        </div>
+<div class="line">        </div>
+<div class="line">封装Address类，封装IPAddress类，封装IPv4Address类，封装IPv6Address类，封装UnixAddress类，</div>
+<div class="line"> </div>
+<div class="line">socket  </div>
+<div class="line">connect  </div>
+<div class="line">accept  bind listen</div>
+<div class="line">read write close        </div>
+</div><!-- fragment --><div class="fragment"><div class="line"> {c++}</div>
+<div class="line"> </div>
+<div class="line">ByteArray 字节压缩模块</div>
+<div class="line"> </div>
+<div class="line">压缩基础数据类型32int uint  64int uint</div>
+<div class="line">使用 7bit 压缩数据 与 Zigzag 压缩数据</div>
+<div class="line">7bit 是将数据循环压缩到小于7bit结束</div>
+<div class="line">    每一次将数据 （数据 &amp; 01111111） | 10000000 得到每一位，存储，然后继续循环</div>
+<div class="line">    直到数据&lt;0x80结束</div>
+<div class="line">    最后吧小于0x80的数据存储</div>
+<div class="line">    </div>
+<div class="line">Zigzag 是将无符号的数据或者有符号的数据都转换为无符号</div>
+<div class="line">    (-数据)&lt;&lt;1位-1</div>
+<div class="line">    如果数据都最后一位是1，那么说明数据一开始就是负数，那么-数据&gt;&gt;1位+1</div>
+<div class="line">    如果数据最后一位是0，那么说明数据一开始就是正数，那么数据&gt;&gt;1位</div>
+<div class="line">    -((-(-2))&lt;&lt;1-1) = 3   101  &gt;&gt; 1  10 +1 = -11 就还原 -2</div>
+<div class="line">            </div>
+<div class="line">            </div>
+<div class="line">ByteArray    | m_root 主节点 用来标准第一个节点</div>
+<div class="line">    |        | m_cur 当前使用节点</div>
+<div class="line">    |--------| m_size ByteArray实体中存储的数据大小</div>
+<div class="line">    |        | m_endian  大小端</div>
+<div class="line">    |        | m_capacity 这一个实体类的大小</div>
+<div class="line">    |        | m_position 当前处理位置</div>
+<div class="line">    |        | m_baseSize 一个节点的大小</div>
+<div class="line">    |       </div>
+<div class="line">    |--------|可以存储未压缩的 8bit 16bit 32bit 64bit</div>
+<div class="line">             |可以存储压缩的  32bit 64bit</div>
+<div class="line">             |可以将节点数据存储到文件</div>
+<div class="line">             |以及读取文件数据</div>
+<div class="line">             |使用tostring</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md39"></a>
+http协议开发</h1>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">HTTP/1.1 -API  格式</div>
+<div class="line"> </div>
+<div class="line">HttpRequest     收请求</div>
+<div class="line">HttpResponse    发请求</div>
+<div class="line"> </div>
+<div class="line">url 格式</div>
+<div class="line">http://www.hhap.cn:80/page/xxx?id=10#fr</div>
+<div class="line">  |         |       |      |     |   |</div>
+<div class="line">http 协议    |       |      |     |   |</div>
+<div class="line">        www.hhap.cn主机名   |     |   |</div>
+<div class="line">                    |      |     |   |</div>
+<div class="line">                80 端口    |      |   |</div>
+<div class="line">                    /page/xxx 路径|   |</div>
+<div class="line">                            id=10 参数|</div>
+<div class="line">                                   #fr 锚点</div>
+<div class="line">                                   </div>
+<div class="line">                    ragel 有限状态机 做http的解析</div>
+<div class="line">                            通过ragel解析http请求</div>
+<div class="line">                                    |</div>
+<div class="line">HttpResponse-&gt;解析HttpResponseParser-|-解析到HttpRequestParser&lt;-HttpRequest</div>
+<div class="line">                                    |</div>
+<div class="line">                              使用回调函数处理请求</div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">封装Tcp_Server 基类</div>
+<div class="line">        |</div>
+<div class="line">        |----------提供绑定(虚函数)</div>
+<div class="line">        |----------提供启动跳转(虚函数)</div>
+<div class="line">        |----------提供handleClient(重点虚函数)</div>
+<div class="line">        |----------提供startAccept(重点虚函数)</div>
+<div class="line"> </div>
+<div class="line">提供 echo_server 测试  ------&gt;   tcp_server</div>
+<div class="line">        |</div>
+<div class="line">        |-------&gt; 重写handleClient,完成回复代码</div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">封装stream流便于 file &amp;&amp; socket</div>
+<div class="line">      |</div>
+<div class="line">      |------提供多种写入读取方式</div>
+<div class="line">      |------提供固定读入写出</div>
+<div class="line"> </div>
+<div class="line">        </div>
+<div class="line">      SocketStream &lt;----- stream</div>
+<div class="line">            ^</div>
+<div class="line">            |</div>
+<div class="line">            |</div>
+<div class="line">            |</div>
+<div class="line">        HttpSession</div>
+<div class="line">            |-------&gt;是server accept 的socket</div>
+<div class="line">            </div>
+<div class="line">提供 http_server 测试 -----&gt;   http_server  </div>
+<div class="line">        |</div>
+<div class="line">        |-------&gt; 重写handleClient,完成回复代码</div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">## Stream 针对文件/socket封装</div>
+<div class="line">read/write // 读指定大小不强制  </div>
+<div class="line">readFixSize/WriteFixSize // 读取指定大小强制</div>
+<div class="line"> </div>
+<div class="line">HttpSession/HttpConnection</div>
+<div class="line">server.accept socket 是 HttpsSession</div>
+<div class="line">client.connect socket 是 HttpConnection</div>
+<div class="line"> </div>
+<div class="line">HttpServer : TcpServer</div>
+<div class="line"> </div>
+<div class="line">                             servlet 的回调函数</div>
+<div class="line">             Servlet  &lt;----- FunctionServlet</div>
+<div class="line">                |</div>
+<div class="line">                |</div>
+<div class="line">        ServletDispatcher</div>
+<div class="line">          Servlet管理类</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md40"></a>
+HH 所需的第三方库</h1>
+<p><a href="http://www.boost.org/users/download/">boost库</a> </p><div class="fragment"><div class="line">http://www.boost.org/users/download/</div>
+<div class="line"> </div>
+<div class="line">tar -xvf boost_1_63_0.tar.bz2</div>
+<div class="line">cd ./boost_1_63_0</div>
+<div class="line">//编译</div>
+<div class="line">./bootstrap.sh</div>
+<div class="line">//安装</div>
+<div class="line">sudo ./b2 install</div>
+</div><!-- fragment --><p><a href="https://github.com/jbeder/yaml-cpp.git">yaml</a> </p><div class="fragment"><div class="line">//拉取仓库</div>
+<div class="line">git clone https://github.com/jbeder/yaml-cpp.git</div>
+<div class="line"> </div>
+<div class="line">cd yaml-cpp # 进入克隆的文件夹</div>
+<div class="line">mkdir build</div>
+<div class="line">cd build</div>
+<div class="line">cmake ..</div>
+<div class="line">make</div>
+<div class="line">sudo make install</div>
+<div class="line">    //默认路径 /usr/local/include/yaml-cpp</div>
+</div><!-- fragment --><p> <a href="https://www.colm.net/open-source/ragel/">ragel</a> </p><div class="fragment"><div class="line">可以自定义下载与安装</div>
+<div class="line">ragel 下载依赖需要先安装 colm</div>
+<div class="line"> </div>
+<div class="line">也可以使用 yum安装</div>
+<div class="line"> </div>
+<div class="line">yum intsall ragel -y;</div>
+</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

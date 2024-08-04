@@ -1,0 +1,14 @@
+<map id="hh::Noncopyable" name="hh::Noncopyable">
+<area shape="rect" id="node1" title="对象无法拷贝,赋值" alt="" coords="5,208,124,235"/>
+<area shape="rect" id="node2" href="$classhh_1_1CASLock.html" title="原子锁" alt="" coords="189,5,288,32"/>
+<area shape="rect" id="node3" href="$classhh_1_1Mutex.html" title="互斥量" alt="" coords="199,56,279,83"/>
+<area shape="rect" id="node4" href="$classhh_1_1NullMutex.html" title="空锁(用于调试)" alt="" coords="187,107,290,133"/>
+<area shape="rect" id="node5" href="$classhh_1_1NullRWMutex.html" title="空读写锁(用于调试)" alt="" coords="177,157,301,184"/>
+<area shape="rect" id="node6" href="$classhh_1_1RWMutex.html" title="读写互斥量" alt="" coords="188,208,289,235"/>
+<area shape="rect" id="node7" href="$classhh_1_1Semaphore.html" title=" " alt="" coords="183,259,294,285"/>
+<area shape="rect" id="node8" href="$classhh_1_1Socket.html" title=" " alt="" coords="197,309,281,336"/>
+<area shape="rect" id="node9" href="$classhh_1_1Spinlock.html" title="自旋锁" alt="" coords="191,360,286,387"/>
+<area shape="rect" id="node10" href="$classhh_1_1http_1_1TcpServer.html" title=" " alt="" coords="172,411,305,437"/>
+<area shape="rect" id="node11" href="$classEchoServer.html" title=" " alt="" coords="377,385,467,412"/>
+<area shape="rect" id="node12" href="$classhh_1_1http_1_1HttpServer.html" title=" " alt="" coords="353,436,491,463"/>
+</map>

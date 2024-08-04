@@ -1,0 +1,6 @@
+<map id="hh::Scheduler::switchTo" name="hh::Scheduler::switchTo">
+<area shape="rect" id="node1" title=" " alt="" coords="5,23,168,50"/>
+<area shape="rect" id="node2" href="$classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="427,23,553,50"/>
+<area shape="rect" id="node3" href="$classhh_1_1Scheduler.html#a370be17c34fc19b5bfe18f1cc3b5095f" title=" " alt="" coords="216,23,379,50"/>
+<area shape="rect" id="node4" href="$classhh_1_1Fiber.html#a99e55a5fbaf5089ec5d6e55c7a1995e4" title="将当前Fiber切换到挂起状态。" alt="" coords="222,74,373,101"/>
+</map>

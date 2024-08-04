@@ -1,0 +1,5 @@
+<map id="hh::LogAppender" name="hh::LogAppender">
+<area shape="rect" id="node1" title=" " alt="" coords="103,5,223,32"/>
+<area shape="rect" id="node2" href="$classhh_1_1FileLogAppender.html" title=" " alt="" coords="5,80,147,107"/>
+<area shape="rect" id="node3" href="$classhh_1_1StdoutLogAppender.html" title=" " alt="" coords="171,80,330,107"/>
+</map>

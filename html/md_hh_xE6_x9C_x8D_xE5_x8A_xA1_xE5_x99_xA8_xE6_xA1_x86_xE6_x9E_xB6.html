@@ -1,0 +1,939 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: HH</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('md_hh_xE6_x9C_x8D_xE5_x8A_xA1_xE5_x99_xA8_xE6_xA1_x86_xE6_x9E_xB6.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title">HH </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1><a class="anchor" id="autotoc_md13"></a>
+开发环境</h1>
+<p>centos7 linux <br  />
+ gcc 9.1.0 <br  />
+ Cmake </p>
+<h1><a class="anchor" id="autotoc_md14"></a>
+项目结构</h1>
+<p>bin &ndash; 二进制文件目录 <br  />
+ build &ndash; 中间文件路径 <br  />
+ cmake &ndash; cmake文件路径 <br  />
+ CMakeLists.txt &ndash; cmake的定义文件 <br  />
+ hh &ndash; 源文件路径 <br  />
+ tests &ndash; 测试代码 </p>
+<h1><a class="anchor" id="autotoc_md15"></a>
+日志系统</h1>
+<p>1） log4j</p>
+<p>作用域 hh::</p>
+<p>Logger(日志器) | |---&mdash;Formotter(日志格式) | |---&mdash;LogLevel(日志级别) | |---&mdash;LogEvent(日志事件) | |---&mdash;LogEventWrap(宏的日志包装类) | Appender(日志输出地) 2） log日志的使用 </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">//初始化日志器</div>
+<div class="line">hh::Logger::ptr logger(new hh::Logger);</div>
+<div class="line">//更改日志格式器</div>
+<div class="line">logger-&gt;setFormotter(new hh::LogFormotter(&quot;%d 123123 %m&quot;));</div>
+<div class="line">//添加日志输出地</div>
+<div class="line">logger-&gt;addAppender(hh::LogAppender::ptr(new hh::FileLogAppender(&quot;bbll.txt&quot;)));</div>
+<div class="line">//初始化事件</div>
+<div class="line">hh::LogEvent::ptr logEvent(new hh::LogEvent(logger,logger-&gt;getLevel(),__FILE__,__LINE__,0,0,0, time(0)));</div>
+<div class="line">//生成日志</div>
+<div class="line">logger-&gt;Log(hh::LogLevel::DEBUG,logEvent);</div>
+</div><!-- fragment --><p> 3）宏的使用 </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">//第一种 宏使用</div>
+<div class="line">hh::Logger::ptr logger(new hh::Logger);</div>
+<div class="line">logger-&gt;addAppender(hh::LogAppender::ptr(new hh::StdoutLogAppender()));</div>
+<div class="line">HH_LOG_INFO(logger, &quot;bsbsbs&quot;);</div>
+<div class="line">    //bsbsbs  ---  2024-05-02  root 334311 jkjk </div>
+<div class="line">HH_LOG_INFO(logger)&lt;&lt;&quot;bsbsbs&quot;  //这种方式</div>
+<div class="line"> </div>
+<div class="line">//第二种 宏使用</div>
+<div class="line">hh::Logger::ptr logger(new hh::Logger);</div>
+<div class="line">logger-&gt;addAppender(hh::LogAppender::ptr(new hh::StdoutLogAppender()));</div>
+<div class="line">HH_LOG_FAT_INFO(logger,&quot;sbsbahbdah  %s %d&quot;,&quot;OK&quot;,123);</div>
+<div class="line">    //2024-05-02  root 334311 jkjk sbsbahbdah  OK 123</div>
+</div><!-- fragment --><p> 3）全局单例模式的使用 &amp; 宏 </p><div class="fragment"><div class="line">{c++}</div>
+<div class="line">   auto i=hh::LoggerMgr::GetInstance()-&gt;getLogger(k);</div>
+<div class="line">   HH_LOG_INFO(i, &quot;1223&quot;);</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md16"></a>
+配置系统</h1>
+<p>作用域 hh::</p>
+<p>ConfigVarBase(配置文件基类) | |---&mdash;ConfigVar:ConfigVarBase(配置器) | |---&mdash;LexicalCast&lt;std::string,std::list&lt;T&gt;&gt;(配置特化类) | |---&mdash;...... | Config(静态配置器) 安装 boost库 </p><pre class="fragment">//下载boost库
+http://www.boost.org/users/download/
+
+tar -xvf boost_1_63_0.tar.bz2
+cd ./boost_1_63_0
+//编译
+./bootstrap.sh
+//安装
+sudo ./b2 install
+</pre><p>Config 通过 yaml <br  />
+ 安装yaml </p><pre class="fragment">//拉取仓库
+git clone https://github.com/jbeder/yaml-cpp.git
+
+cd yaml-cpp # 进入克隆的文件夹
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+    //默认路径 /usr/local/include/yaml-cpp
+</pre><p> 对普通类型进行解析 特化 </p><pre class="fragment">template&lt;class F,class T&gt;
+class LexicalCast{
+public:
+    T operator()(const F&amp; v){
+        return boost::lexical_cast&lt;T&gt;(v);
+    }
+};
+
+template&lt;class T,class FromStr=LexicalCast&lt;std::string,T&gt;
+,class ToStr=LexicalCast&lt;T,std::string&gt;&gt;
+class ConfigVar:public ConfigVarBase{}
+</pre><p> 对vector 进行特化 (set list 单参数都差不多) </p><pre class="fragment">template&lt;class T&gt;
+class LexicalCast&lt;std::string,std::vector&lt;T&gt;&gt; {
+public:
+    std::vector&lt;T&gt; operator()(const std::string &amp;var) {
+        YAML::Node node = YAML::Load(var);
+        typename std::vector&lt;T&gt; vce;
+        for(auto i:node){
+            std::stringstream ss;
+            ss&lt;&lt;i;
+            vce.push_back(LexicalCast&lt;std::string,T&gt;()(ss.str()));
+        }
+        return vce;
+    }
+};
+template&lt;class T&gt;
+class LexicalCast&lt;std::vector&lt;T&gt;,std::string&gt; {
+public:
+    std::string operator()(const std::vector&lt;T&gt;&amp; var){
+        YAML::Node node;
+        std::stringstream ss;
+        for(auto &amp;i:var){
+            node.push_back(YAML::Load(LexicalCast&lt;T,std::string&gt;()(i)));
+        }
+        ss&lt;&lt;node;
+        return ss.str();
+    }
+};
+</pre><p> 对map进行特化 </p><pre class="fragment">template&lt;class T&gt;
+class LexicalCast&lt;std::string,std::map&lt;std::string,T&gt;&gt; {
+public:
+    std::map&lt;std::string,T&gt; operator()(const std::string &amp;var) {
+        YAML::Node node = YAML::Load(var);
+        typename std::map&lt;std::string,T&gt; vce;
+        for(auto i:node){
+            std::stringstream ss;
+            ss.str("");
+            ss&lt;&lt;i.second;
+            vce.insert({i.first.Scalar(),LexicalCast&lt;std::string,T&gt;()(ss.str())});
+        }
+        return vce;
+    }
+};
+template&lt;class T&gt;
+class LexicalCast&lt;std::map&lt;std::string,T&gt;,std::string&gt; {
+public:
+    std::string operator()(const std::map&lt;std::string,T&gt; &amp;var) {
+        YAML::Node node;
+        std::stringstream ss;
+        for (auto &amp;i: var) {
+            node[i.first]=YAML::Load(LexicalCast&lt;T,std::string&gt;()(i.second));
+        }
+        ss &lt;&lt; node;
+        return ss.str();
+    }
+};
+</pre><p> yaml 文件解析 </p><pre class="fragment">  logs:
+    - name: root
+      level: info
+      formatter: "%d&lt;%f:%l&gt;[%c:%p]"
+      appender:
+        - type: FileLogAppender
+          file: log.txt
+        - type: StdoutLogAppender
+    - name: hh
+      level: debug
+      formatter: "%d&lt;%f:%l&gt;[%c:%p]"
+      appender:
+        - type: FileLogAppender
+          file: test.txt
+        - type: StdoutLogAppender
+如果需要读取
+logs[1].appender[0].file
+</pre><p> 配置文件的主旨 约定&gt;配置 <br  />
+ 需在代码中声明，才会读取配置文件 </p><pre class="fragment">hh::ConfigVar&lt;std::string&gt;::ptr str = hh::Config::Lookup&lt;std::string&gt;("logs[1].formatter","asd","asda");
+std::cout&lt;&lt;str-&gt;getValue();
+    //asd
+YAML::Node root = YAML::LoadFile("./log.yml");
+hh::Config::loadFromYaml(root);
+std::cout&lt;&lt;str-&gt;getValue();
+    //%d&lt;%f:%l&gt;[%c:%p]
+
+会根据约定替换配置
+</pre> <h2><a class="anchor" id="autotoc_md17"></a>
+注意配置KEY不区分大小写</h2>
+<p>实现自定义类型 <br  />
+ 自定义类型需要实现 <a class="el" href="classhh_1_1LexicalCast.html">hh::LexicalCast</a> <br  />
+ 实现后可与基本stl嵌套 因为上面已经实现了一下基本的stl </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">class user{</div>
+<div class="line">public:</div>
+<div class="line">    user(){};</div>
+<div class="line">    void setname(const std::string&amp; m_name){</div>
+<div class="line">        this-&gt;name=m_name;</div>
+<div class="line">    }</div>
+<div class="line">    void setage( int m_age){</div>
+<div class="line">        this-&gt;age=m_age;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    const std::string &amp;getName() const {</div>
+<div class="line">        return name;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    int getAge() const {</div>
+<div class="line">        return age;</div>
+<div class="line">    }</div>
+<div class="line">    std::string ToString(){</div>
+<div class="line">        std::stringstream ss;</div>
+<div class="line">        ss&lt;&lt;&quot;name :&quot;&lt;&lt;name&lt;&lt;&quot;age :&quot;&lt;&lt;age;</div>
+<div class="line">        return ss.str();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">private:</div>
+<div class="line">    std::string name;</div>
+<div class="line">    int age=0;</div>
+<div class="line">};</div>
+<div class="line">template&lt;&gt;</div>
+<div class="line">class hh::LexicalCast&lt;std::string,user&gt;{</div>
+<div class="line">public:</div>
+<div class="line">    user operator()(const std::string&amp; var){</div>
+<div class="line">        YAML::Node node=YAML::Load(var);</div>
+<div class="line">        user u;</div>
+<div class="line">        u.setname(node[&quot;name&quot;].as&lt;std::string&gt;());</div>
+<div class="line">        u.setage(node[&quot;age&quot;].as&lt;int&gt;());</div>
+<div class="line">        return u;</div>
+<div class="line">    }</div>
+<div class="line">};</div>
+<div class="line">template&lt;&gt;</div>
+<div class="line">class hh::LexicalCast&lt;user,std::string&gt;{</div>
+<div class="line">public:</div>
+<div class="line">    std::string operator()(const user&amp; u){</div>
+<div class="line">        YAML::Node node;</div>
+<div class="line">        node[&quot;name&quot;]=u.getName();</div>
+<div class="line">        node[&quot;age&quot;]=u.getAge();</div>
+<div class="line">        std::stringstream ss;</div>
+<div class="line">        ss&lt;&lt;node;</div>
+<div class="line">        return ss.str();</div>
+<div class="line">    }</div>
+<div class="line">};</div>
+<div class="line">//使用</div>
+<div class="line">void T(){</div>
+<div class="line">    hh::ConfigVar&lt;user&gt;::ptr user_ =hh::Config::Lookup(&quot;class.user&quot;,user(),&quot;&quot;);</div>
+<div class="line">    hh::ConfigVar&lt;std::map&lt;std::string,user&gt;&gt;::ptr user_map =hh::Config::Lookup&lt;std::map&lt;std::string,user&gt;&gt;(&quot;class.map&quot;,{},&quot;&quot;);</div>
+<div class="line">    hh::ConfigVar&lt;std::vector&lt;user&gt;&gt;::ptr user_vect =hh::Config::Lookup&lt;std::vector&lt;user&gt;&gt;(&quot;class.vector&quot;,{},&quot;&quot;);</div>
+<div class="line">    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)&lt;&lt;user_-&gt;toString();</div>
+<div class="line">    YAML::Node root = YAML::LoadFile(&quot;./log.yml&quot;);</div>
+<div class="line">    hh::Config::loadFromYaml(root);</div>
+<div class="line">    HH_LOG_LEVEL_CHAIN(HH_LOG_ROOT(),hh::LogLevel::INFO)&lt;&lt;user_-&gt;toString();</div>
+<div class="line">    for(auto &amp;i:user_map-&gt;getValue()){</div>
+<div class="line">        std::cout&lt;&lt;i.second.getName();</div>
+<div class="line">        std::cout&lt;&lt;i.second.getAge();</div>
+<div class="line">        std::cout&lt;&lt;std::endl;</div>
+<div class="line">    }</div>
+<div class="line">    for(auto &amp;i:user_vect-&gt;getValue()){</div>
+<div class="line">        std::cout&lt;&lt;i.getName();</div>
+<div class="line">        std::cout&lt;&lt;i.getAge();</div>
+<div class="line">        std::cout&lt;&lt;std::endl;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> 与上面配置的yaml文件格式 </p><div class="fragment"><div class="line">class:</div>
+<div class="line">  user:</div>
+<div class="line">      name: root</div>
+<div class="line">      age: 18</div>
+<div class="line">  map:</div>
+<div class="line">      hh01:</div>
+<div class="line">        name: root</div>
+<div class="line">        age: 18</div>
+<div class="line">      hh02:</div>
+<div class="line">       name: hh</div>
+<div class="line">       age: 20</div>
+<div class="line">  vector:</div>
+<div class="line">    - name: root</div>
+<div class="line">      age: 29</div>
+<div class="line">    - name: hy</div>
+<div class="line">      age: 90</div>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md18"></a>
+配置的事件机制</h2>
+<p>当一个配置发生改变的时候,可以返现通知对应代码或回调 </p><pre class="fragment">给单独的 ConfigVar 添加配置  是回调函数
+user_-&gt;addOcb(10,[](const T&amp; old_valuse,const T&amp; new_valuse){
+   std::cout&lt;&lt;old_valuse&lt;&lt;new_valuse&lt;&lt;std::endl;
+});
+</pre><p> yml配置日志格式 </p><div class="fragment"><div class="line">logs:</div>
+<div class="line">  - name: root</div>
+<div class="line">    level: info</div>
+<div class="line">    formatter: &quot;%d&lt;%f:%l&gt;&quot;</div>
+<div class="line">    appender:</div>
+<div class="line">      - type: FileLogAppender</div>
+<div class="line">        file: ./log.txt</div>
+<div class="line">      - type: StdoutLogAppender</div>
+<div class="line">  - name: hh</div>
+<div class="line">    level: debug</div>
+<div class="line">    formatter: &quot;%d&lt;%f:%l&gt;[%m:%p]&quot;</div>
+<div class="line">    appender:</div>
+<div class="line">      - type: FileLogAppender</div>
+<div class="line">        file: log.txt</div>
+<div class="line">      - type: StdoutLogAppender</div>
+</div><!-- fragment --><p> 使用 </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">hh::Logger::ptr logger = hh::LoggerMgr::GetInstance()-&gt;getLogger(name);</div>
+<div class="line">//或者使用宏的方式 HH_LOG_NAME(name);</div>
+<div class="line">//以前如果name不存在，就会返回m_root，现在返回的是name，但是使用还是m_root</div>
+<div class="line">//会判断name的append是否空，为空使用m_root,当读配置了就会执行name</div>
+<div class="line">std::string str(&quot;init log&quot;);</div>
+<div class="line">HH_LOG_INFO(logger,str);</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md19"></a>
+配置系统整合日志系统使用</h1>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">std::string sb(&quot;root&quot;);</div>
+<div class="line">auto roots=HH_LOG_NAME(sb);</div>
+<div class="line">HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);</div>
+<div class="line">//使用默认的日志</div>
+<div class="line">YAML::Node root = YAML::LoadFile(&quot;/home/hh/HH/bin/conf/log.yml&quot;);</div>
+<div class="line">hh::Config::loadFromYaml(root);</div>
+<div class="line">roots=HH_LOG_NAME(sb);</div>
+<div class="line">HH_LOG_LEVEL_CHAIN(roots,hh::LogLevel::INFO);</div>
+<div class="line">//使用配置文件中的  name为root的配置</div>
+<div class="line">特化了set&lt;log&gt; &amp;&amp; 单log</div>
+</div><!-- fragment --><p> 通过静态初始化为全局Config类生成对应配置，全局静态配置 yaml logs文件的样例 </p><div class="fragment"><div class="line">logs:</div>
+<div class="line">  - name: root</div>
+<div class="line">    level: info</div>
+<div class="line">    formatter: &quot;%d&lt;%f:%l&gt;&quot;</div>
+<div class="line">    appender:</div>
+<div class="line">      - type: FileLogAppender</div>
+<div class="line">        file: ./log.txt</div>
+<div class="line">        level: UNKNOWN</div>
+<div class="line">        formatter: &quot;%d&lt;%f:%l&gt;root[%m:%p]&quot;</div>
+<div class="line">      - type: StdoutLogAppender</div>
+<div class="line">        formatter: &quot;%d&lt;%f:%l&gt;[%m:%p]&quot;</div>
+<div class="line">  - name: hh</div>
+<div class="line">    level: debug</div>
+<div class="line">    formatter: &quot;%d&lt;%f:%l&gt;[%m:%p]&quot;</div>
+<div class="line">    appender:</div>
+<div class="line">      - type: FileLogAppender</div>
+<div class="line">        file: log.txt</div>
+<div class="line">      - type: StdoutLogAppender</div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">//通过配置文件初始化</div>
+<div class="line">YAML::Node root = YAML::LoadFile(&quot;/home/hh/HH/bin/conf/log.yml&quot;);</div>
+<div class="line">hh::Config::loadFromYaml(root);</div>
+<div class="line">//通过name root获取格式器使用</div>
+<div class="line">auto root=HH_LOG_NAME(&quot;root&quot;);</div>
+<div class="line">HH_LOG_LEVEL_CHAIN(root,hh::LogLevel::INFO);</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md20"></a>
+线程库</h1>
+<p>Thread(线程类) ，Mutex(锁......) <br  />
+ 使用的为 <br  />
+ pthread 封装 <br  />
+ pthread pthread_create</p>
+<p>互斥量 mutex 信号量 semaphore</p>
+<p>更改log日志配置线程安全 <br  />
+ </p><pre class="fragment">appender 线程安全  
+logger 线程安全
+</pre><p> 封装锁 <br  />
+ Mutex 互斥量 <br  />
+ RWMutex 读写互斥量 <br  />
+ SpinLock 自旋锁 <br  />
+ NullMutex 空互斥锁 <br  />
+ NullRWMutex 空读写互斥量 <br  />
+ CASlock 乐观锁 解决 log写文件文件删除问题 周期性(1秒)的打开日志文件</p>
+<p>整合log与config文件完毕 提供静态方法序列化内存中的所以配置 </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">hh:Config::Visit([](hh::ConfigVarBase::ptr var){</div>
+<div class="line">    std::cout&lt;&lt;var-&gt;toString()&lt;&lt;std::endl;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> 序列化删除格式以便于反序列回文件 </p><div class="fragment"><div class="line">logs:</div>
+<div class="line">  - name: hh</div>
+<div class="line">    level: UNKNOWN</div>
+<div class="line">    appender:</div>
+<div class="line">      - type: FileLogAppender</div>
+<div class="line">        file: log.txt</div>
+<div class="line">      - type: StdoutLogAppender</div>
+<div class="line">  - name: root</div>
+<div class="line">    level: UNKNOWN</div>
+<div class="line">    appender:</div>
+<div class="line">      - type: StdoutLogAppender</div>
+<div class="line">      - type: FileLogAppender</div>
+<div class="line">        file: log.txt</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md21"></a>
+协程库封装</h1>
+<p>进入协程模块的准备 <br  />
+ 封装断言 中使用函数调用栈序列化以便于后期开发的调试高效</p>
+<h2><a class="anchor" id="autotoc_md22"></a>
+协程管理</h2>
+<p>一个线程对应一个master协程 </p><div class="fragment"><div class="line">Thread ----&gt; Master_Fiber&lt;-----&gt;sub_fiber</div>
+<div class="line">                   ^</div>
+<div class="line">                   |</div>
+<div class="line">                   |</div>
+<div class="line">                   v</div>
+<div class="line">                sub_fiber</div>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md23"></a>
+携程与进程的使用</h2>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">/c++</div>
+<div class="line">// 定义全局日志记录器</div>
+<div class="line">hh::Logger::ptr g_logger = HH_LOG_ROOT();</div>
+<div class="line"> </div>
+<div class="line">/**</div>
+<div class="line"> * 函数func1: 示范了Fiber的使用，通过Fiber::YieldToHold实现协程的挂起和恢复。</div>
+<div class="line"> */</div>
+<div class="line">void func1(){</div>
+<div class="line">    // 开始运行func1</div>
+<div class="line">    HH_LOG_INFO(g_logger,&quot;RUN_IN_ BEGIN&quot;);</div>
+<div class="line">    // 挂起当前Fiber</div>
+<div class="line">    hh::Fiber::YieldToHold();</div>
+<div class="line">    // 恢复运行func1</div>
+<div class="line">    HH_LOG_INFO(g_logger,&quot;RUN_IN_ END&quot;);</div>
+<div class="line">    // 再次挂起当前Fiber</div>
+<div class="line">    hh::Fiber::YieldToHold();</div>
+<div class="line">    // 错误的重复日志条目，应避免在代码中重复或错误的逻辑。</div>
+<div class="line">    HH_LOG_INFO(g_logger,&quot;RUN_IN_ END&quot;)</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">/**</div>
+<div class="line"> * 函数func2: 创建并切换到一个新的Fiber，演示了如何在主Fiber和新创建的Fiber之间进行切换。</div>
+<div class="line"> */</div>
+<div class="line">void func2(){</div>
+<div class="line">    // 获取当前Fiber实例</div>
+<div class="line">    hh::Fiber::GetThis();</div>
+<div class="line">    // 日志记录：main开始</div>
+<div class="line">    HH_LOG_INFO(g_logger, &quot;main begin&quot;)</div>
+<div class="line">    // 创建一个新的Fiber实例func1</div>
+<div class="line">    hh::Fiber::ptr f1(new hh::Fiber(func1));</div>
+<div class="line">    // 第一次切换到f1执行</div>
+<div class="line">    f1-&gt;swapIn();</div>
+<div class="line">    // 日志记录：main首次swapIn</div>
+<div class="line">    HH_LOG_INFO(g_logger, &quot;main swapIn&quot;)</div>
+<div class="line">    // 第二次切换回f1执行</div>
+<div class="line">    f1-&gt;swapIn();</div>
+<div class="line">    // 日志记录存在语法错误，应为&quot;main end}&quot;</div>
+<div class="line">    HH_LOG_INFO(g_logger,&quot;{main end&quot;)</div>
+<div class="line">    // 第三次切换回f1执行</div>
+<div class="line">    f1-&gt;swapIn();</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">/**</div>
+<div class="line"> * 主函数：创建并启动多个线程，每个线程执行func2，演示多线程下Fiber的使用。</div>
+<div class="line"> * @return int 返回程序执行结果，始终为0。</div>
+<div class="line"> */</div>
+<div class="line">int main(){</div>
+<div class="line">    // 设置当前主线程名称为&quot;main&quot;</div>
+<div class="line">    hh::Thread::SetName(&quot;main&quot;);</div>
+<div class="line">    // 存储线程的容器</div>
+<div class="line">    std::vector&lt;hh::Thread::ptr&gt;ps;</div>
+<div class="line">    // 创建并启动3个线程</div>
+<div class="line">    for(int i=0;i&lt;3;i++){</div>
+<div class="line">        ps.push_back(std::make_shared&lt;hh::Thread&gt;(&amp;func2,&quot;name_&quot;+std::to_string(i)));</div>
+<div class="line">    }</div>
+<div class="line">    // 等待所有线程执行完毕</div>
+<div class="line">    for(auto&amp; i:ps){</div>
+<div class="line">        i-&gt;join();</div>
+<div class="line">    }</div>
+<div class="line">    return 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md24"></a>
+协程调度模块scheduler</h1>
+<p>跨进程切换协程 </p><div class="fragment"><div class="line">    1----------N--------M</div>
+<div class="line">scheduler --&gt;thread  --&gt;fiber</div>
+<div class="line">1.类似于线程池，分配一组线程</div>
+<div class="line">2.是一个协程调度器，可以将协程指定到一个线程执行</div>
+</div><!-- fragment --><p> 协程调度核心模块 </p><div class="fragment"><div class="line">run()</div>
+<div class="line">while(一直取任务)  是线程池中的每一个线程运行的方法run</div>
+<div class="line">加锁取出任务</div>
+<div class="line">    判断是否需要指定线程执行 || 是否已经在执行</div>
+<div class="line">    如果没有就取出任务</div>
+<div class="line">判断任务是一个什么   是一个协程？是一个函数？</div>
+<div class="line">1.如果是协程就直接执行</div>
+<div class="line">    使用协程切换到前台 判断状态</div>
+<div class="line">        是准备就绪状态 重新加入任务队列</div>
+<div class="line">        不是结束也不是异常 被打断吧协程状态设置为暂停</div>
+<div class="line">    释放空间    </div>
+<div class="line">2.如果是函数就创建协程执行</div>
+<div class="line">    有空闲直接设置fun</div>
+<div class="line">    没有就创建新协程</div>
+<div class="line">    协程切换到前台 判断状态</div>
+<div class="line">        是准备就绪状态 重新加入任务队列</div>
+<div class="line">        是停止状态和异常 释放空间</div>
+<div class="line">        否则设置为暂停</div>
+<div class="line">3.空闲协程</div>
+<div class="line">    不是停止状态 跳出</div>
+<div class="line">    不是异常不是停止 设置暂停状态        </div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md25"></a>
+IO协程调度模块</h1>
+<div class="fragment"><div class="line">IOManager (epoll) --&gt;scheduler(继承)</div>
+<div class="line">     |</div>
+<div class="line">     |</div>
+<div class="line">     |</div>
+<div class="line">     V</div>
+<div class="line">  idle(重载)</div>
+<div class="line">  </div>
+<div class="line">PutMaessage(msg,) 信号量+1 ，single()</div>
+<div class="line">meassage_queue</div>
+<div class="line">    |</div>
+<div class="line">    |---Thread</div>
+<div class="line">    |---Thread</div>
+<div class="line">        wait()-信号量-1,RecvMessage(msg,)</div>
+<div class="line">异步IO,等待数据返回，epoll_wait</div>
+<div class="line"> </div>
+<div class="line">流程</div>
+<div class="line">poll_wait等待IO事件的发生，当有事件发生时，epoll通知IOManager进行处理。</div>
+<div class="line">PutMaessage()将任务放人meassage_queue(队列)</div>
+<div class="line">通过single()唤醒wait线程进行RecvMessage()执行</div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">void test_fiber() {</div>
+<div class="line">    //所有socket 进行测试</div>
+<div class="line">    int sock = socket(AF_INET, SOCK_STREAM, 0);</div>
+<div class="line">    fcntl(sock, F_SETFL, O_NONBLOCK);</div>
+<div class="line">    sockaddr_in addr;</div>
+<div class="line">    memset(&amp;addr, 0, sizeof(addr));</div>
+<div class="line">    addr.sin_family = AF_INET;</div>
+<div class="line">    addr.sin_port = htons(80);</div>
+<div class="line">    inet_pton(AF_INET, &quot;110.242.68.66&quot;, &amp;addr.sin_addr.s_addr);</div>
+<div class="line">    if(!connect(sock, (const sockaddr*)&amp;addr, sizeof(addr))) {</div>
+<div class="line">    } else if(errno == EINPROGRESS) {</div>
+<div class="line">        HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) &lt;&lt; &quot;add event errno=&quot; &lt;&lt; errno &lt;&lt; &quot; &quot; &lt;&lt; strerror(errno);</div>
+<div class="line">        hh::IOManager::GetThis()-&gt;addEvent(sock, hh::IOManager::READ, [](){</div>
+<div class="line">            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) &lt;&lt; &quot;read callback&quot;;</div>
+<div class="line">        });</div>
+<div class="line">        hh::IOManager::GetThis()-&gt;addEvent(sock, hh::IOManager::WRITE, [&amp;sock](){</div>
+<div class="line">            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) &lt;&lt; &quot;write callback&quot;;</div>
+<div class="line">            //close(sock);</div>
+<div class="line">            hh::IOManager::GetThis()-&gt;addEvent(sock, hh::IOManager::READ);</div>
+<div class="line">        });</div>
+<div class="line">    } else {</div>
+<div class="line">        HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) &lt;&lt; &quot;else &quot; &lt;&lt; errno &lt;&lt; &quot; &quot; &lt;&lt; strerror(errno);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">}</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md26"></a>
+定时器模块</h1>
+<div class="fragment"><div class="line">                    1-N</div>
+<div class="line">Timer（定时器类） &lt;-------TimerManager（定时器管理类）</div>
+<div class="line">                             ^</div>
+<div class="line">                             | 1-1</div>
+<div class="line">                             |</div>
+<div class="line">（协程调度器）Scheduler&lt;-----IOManager(epoll)（继承与定时器管理，使用定时器接口） </div>
+<div class="line">                |</div>
+<div class="line">                | 1-&gt;N</div>
+<div class="line">                v</div>
+<div class="line">             Thread（线程类）</div>
+<div class="line">                |</div>
+<div class="line">                | N-&gt;M</div>
+<div class="line">                v</div>
+<div class="line">              Fiber（协程类） </div>
+<div class="line">       </div>
+<div class="line">TimerManager 通过set红黑树管理定时器，通过写入唤醒epoll_wait(),计算最近定时器时间</div>
+<div class="line">并且设置执行，获取定时器过期任务，添加调度器任务列表执行</div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">hh::Timer::ptr timer;</div>
+<div class="line">// 简单使用</div>
+<div class="line">void test02(){</div>
+<div class="line">    // 创建IOManager对象，并设置线程数</div>
+<div class="line">    hh::IOManager iom(2);</div>
+<div class="line">    //添加定时器</div>
+<div class="line">    timer = iom.addTimer(1000, [](){</div>
+<div class="line">        static int count = 0;</div>
+<div class="line">        HH_LOG_INFO(g_logger, &quot;hello&quot;);</div>
+<div class="line">        if(++count == 4) {</div>
+<div class="line">            //重新设置定时器，设置为500ms，并且设置为重复定时器</div>
+<div class="line">            timer-&gt;reset(500, true);</div>
+<div class="line">        }</div>
+<div class="line">        if(count == 7){</div>
+<div class="line">            // 取消定时器</div>
+<div class="line">            timer-&gt;cancel();</div>
+<div class="line">        }</div>
+<div class="line">    }, true);</div>
+<div class="line">}</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md27"></a>
+HOOK 模块</h1>
+<p>基本IO函数的hook与socket函数hook</p>
+<p>重点是异步变同步 </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">// hook 模块sleep使用不堵塞</div>
+<div class="line">void test01(){</div>
+<div class="line">    hh::IOManager iomanager(1);</div>
+<div class="line">    iomanager.schedule([](){</div>
+<div class="line">        sleep(2);</div>
+<div class="line">        HH_LOG_INFO(g_logger,&quot;1&quot;);</div>
+<div class="line">    });</div>
+<div class="line">    iomanager.schedule([](){</div>
+<div class="line">        sleep(7);</div>
+<div class="line">        HH_LOG_INFO(g_logger,&quot;2&quot;);</div>
+<div class="line">    });</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">// hook 模块socket使用异步变同步</div>
+<div class="line">void test_sock(){</div>
+<div class="line">    int sock = socket(AF_INET, SOCK_STREAM, 0);</div>
+<div class="line">    if (sock &lt; 0) {</div>
+<div class="line">        HH_LOG_ERROR(g_logger, &quot;Failed to create socket&quot;);</div>
+<div class="line">        return;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    sockaddr_in addr;</div>
+<div class="line">    memset(&amp;addr, 0, sizeof(addr));</div>
+<div class="line">    addr.sin_family = AF_INET;</div>
+<div class="line">    addr.sin_port = htons(80);</div>
+<div class="line">    inet_pton(AF_INET, &quot;122.51.206.19&quot;, &amp;addr.sin_addr.s_addr);</div>
+<div class="line"> </div>
+<div class="line">    int rt = connect(sock, (const sockaddr*)&amp;addr, sizeof(addr));</div>
+<div class="line">    if(rt) {</div>
+<div class="line">        HH_LOG_ERROR(g_logger, &quot;Failed to connect&quot;);</div>
+<div class="line">        return;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    const char data[] = &quot;GET / HTTP/1.0\r\n\r\n&quot;;</div>
+<div class="line">    rt = send(sock, data, sizeof(data), 0);</div>
+<div class="line">    if(rt &lt;= 0) {</div>
+<div class="line">        HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR)&lt;&lt; &quot;Failed to send data-=&quot;&lt;&lt;sock;</div>
+<div class="line">        return;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    std::string buff;</div>
+<div class="line">    buff.resize(4096);</div>
+<div class="line"> </div>
+<div class="line">    rt = recv(sock, &amp;buff[0], buff.size(), 0);</div>
+<div class="line">    if(rt &lt;= 0) {</div>
+<div class="line">        HH_LOG_LEVEL_CHAIN(g_logger, hh::LogLevel::ERROR)&lt;&lt; &quot;Failed to receive data&quot;;</div>
+<div class="line">        return;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    buff.resize(rt);</div>
+<div class="line">    HH_LOG_INFO(g_logger, buff);</div>
+<div class="line"> </div>
+<div class="line">    // 关闭 socket</div>
+<div class="line">    close(sock);</div>
+<div class="line">}</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md28"></a>
+socket函数库开发</h1>
+<div class="fragment"><div class="line">(同主机进程通讯)</div>
+<div class="line">[UnixAddress]</div>
+<div class="line">      |                     ----[IPv4Address]</div>
+<div class="line">      |        (不同主机通讯) |</div>
+<div class="line">  [Address]----[IPAddress]---</div>
+<div class="line">      |                     |</div>
+<div class="line">      |                     ----[IPv6Address]</div>
+<div class="line">      |</div>
+<div class="line">   [socket]</div>
+<div class="line">    (套接字)                   </div>
+</div><!-- fragment --><p> 封装Address类，封装IPAddress类，封装IPv4Address类，封装IPv6Address类，封装UnixAddress类，</p>
+<p>socket <br  />
+ connect <br  />
+ accept bind listen read write close</p>
+<p>// 使用 </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">// 通过 hh::Address::lookupAnyIPAddress  通过域名获取address地址</div>
+<div class="line">hh::Address::ptr addr = hh::Address::lookupAnyIPAddress(&quot;www.baidu.com&quot;);</div>
+<div class="line"> </div>
+<div class="line">// 创建socket  创建的tcpsocket</div>
+<div class="line">hh::Socket::ptr sock = hh::Socket::CreateTCP(addr);</div>
+<div class="line">// 设置端口号</div>
+<div class="line">addr-&gt;setPort(80);</div>
+<div class="line">// 连接</div>
+<div class="line">sock-&gt;connect(addr)</div>
+<div class="line"> </div>
+<div class="line">// 发送请求</div>
+<div class="line">std::string buff = &quot;GET / HTTP/1.0\r\n\r\n&quot;;</div>
+<div class="line">int rt = sock-&gt;send(buff.c_str(),buff.size());</div>
+<div class="line"> </div>
+<div class="line">// 直接获取，因为send 和recv 被hook了，我们在hook中已经把异步变成同步了</div>
+<div class="line">char buff2[4096];</div>
+<div class="line">rt = sock-&gt;recv(buff2,sizeof(buff2));</div>
+</div><!-- fragment --><p> 使用 socket 与 address 与 定时器 配置模块 完成一个服务器，客户端向服务器间隔一秒发送一次请求，服务器回复一个响应</p>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">#include &quot;socket.h&quot;</div>
+<div class="line">#include &quot;log.h&quot;</div>
+<div class="line">#include &quot;iomanage.h&quot;</div>
+<div class="line">#include &quot;config.h&quot;</div>
+<div class="line">#include &lt;yaml-cpp/yaml.h&gt;</div>
+<div class="line">static hh::Logger::ptr g_logger = HH_LOG_ROOT();</div>
+<div class="line">static hh::ConfigVar&lt;std::string&gt;::ptr IP;</div>
+<div class="line">static hh::ConfigVar&lt;uint16_t&gt;::ptr PORT;</div>
+<div class="line">// 客户端</div>
+<div class="line">void test_01(){</div>
+<div class="line">    // 初始化ip地址与端口</div>
+<div class="line">    hh::IPAddress::ptr addr = hh::IPAddress::Create(IP-&gt;getValue().c_str(), PORT-&gt;getValue());</div>
+<div class="line">    if(!addr){</div>
+<div class="line">        return;</div>
+<div class="line">    }</div>
+<div class="line">    // 创建socket TCP 连接</div>
+<div class="line">    hh::Socket::ptr sock = hh::Socket::CreateTCP(addr);</div>
+<div class="line">    // 连接</div>
+<div class="line">    if(!sock-&gt;connect(addr)){</div>
+<div class="line">        return;</div>
+<div class="line">    }</div>
+<div class="line">    char buff2[4096];</div>
+<div class="line">    // 直接获取，因为send 和recv 被hook了，我们在hook中已经把异步变成同步了</div>
+<div class="line">    int rt = sock-&gt;recv(buff2,sizeof(buff2));</div>
+<div class="line">    if(rt &lt;= 0){</div>
+<div class="line">        std::cout&lt;&lt;&quot;recv failed&quot;&lt;&lt;std::endl;</div>
+<div class="line">    }else{</div>
+<div class="line">        std::cout&lt;&lt;buff2&lt;&lt;std::endl;</div>
+<div class="line">    }</div>
+<div class="line">    // 关闭连接</div>
+<div class="line">    sock-&gt;close();</div>
+<div class="line">}</div>
+<div class="line">void test(){</div>
+<div class="line">    HH_LOG_INFO(g_logger,IP-&gt;getValue());</div>
+<div class="line">    HH_LOG_FAT_INFO(g_logger,&quot;%u&quot;,PORT-&gt;getValue())</div>
+<div class="line">    // 创建ip地址</div>
+<div class="line">    hh::IPAddress::ptr addr = hh::Address::lookupAnyIPAddress(IP-&gt;getValue());</div>
+<div class="line">    addr-&gt;setPort(PORT-&gt;getValue());</div>
+<div class="line">    // 创建socket TCP 连接</div>
+<div class="line">    hh::Socket::ptr sock = hh::Socket::CreateTCP(addr);</div>
+<div class="line">    // 绑定并且监听</div>
+<div class="line">    sock-&gt;bind(addr);</div>
+<div class="line">    sock-&gt;listen();</div>
+<div class="line">    while(true){</div>
+<div class="line">        // 提取请求</div>
+<div class="line">        hh::Socket::ptr sock2 = sock-&gt;accept();</div>
+<div class="line">        if(sock2){</div>
+<div class="line">            sock2-&gt;send(&quot;hello world\n&quot;, strlen(&quot;hello world\n&quot;));</div>
+<div class="line">            // 获取本地信息</div>
+<div class="line">            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO)&lt;&lt;sock2-&gt;getLocalAddress()-&gt;toString();</div>
+<div class="line">            // 获取远端信息</div>
+<div class="line">            HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO)&lt;&lt;sock2-&gt;getRemoteAddress()-&gt;toString();</div>
+<div class="line">        }else{</div>
+<div class="line">            std::cout&lt;&lt;&quot;accept failed&quot;&lt;&lt;std::endl;</div>
+<div class="line">            break;</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line">int main(){</div>
+<div class="line">    YAML::Node root = YAML::LoadFile(&quot;/home/hh/HH/bin/conf/ip.yml&quot;);</div>
+<div class="line"> </div>
+<div class="line">    // 先约定   因为约定&gt;配置</div>
+<div class="line">    IP =hh::Config::Lookup(&quot;IP.ip&quot;,(std::string)&quot;0.0.0.0&quot;,&quot;&quot;);</div>
+<div class="line">    PORT =hh::Config::Lookup(&quot;IP.port&quot;,(uint16_t)0,&quot;&quot;);</div>
+<div class="line">    // 在加载配置文件</div>
+<div class="line">    hh::Config::loadFromYaml(root);</div>
+<div class="line"> </div>
+<div class="line">    HH_LOG_INFO(g_logger,IP-&gt;getValue());</div>
+<div class="line">    // 创建IOManager</div>
+<div class="line">    hh::IOManager iom;</div>
+<div class="line">    // 加入任务</div>
+<div class="line">    iom.schedule(test);</div>
+<div class="line">    // 同步延时秒</div>
+<div class="line">    sleep(2);</div>
+<div class="line">    // 添加定时器任务，并且循环执行</div>
+<div class="line">    iom.addTimer(1000,test_01, true);</div>
+<div class="line">    return 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md29"></a>
+ByteArray类</h1>
+<div class="fragment"><div class="line">压缩基础数据类型32int uint  64int uint</div>
+<div class="line">使用 7bit 压缩数据 与 Zigzag 压缩数据</div>
+<div class="line">7bit 是将数据循环压缩到小于7bit结束</div>
+<div class="line">    每一次将数据 （数据 &amp; 01111111） | 10000000 得到每一位，存储，然后继续循环</div>
+<div class="line">    直到数据&lt;0x80结束</div>
+<div class="line">    最后吧小于0x80的数据存储</div>
+<div class="line">    </div>
+<div class="line">Zigzag 是将无符号的数据或者有符号的数据都转换为无符号</div>
+<div class="line">    (-数据)&lt;&lt;1位-1</div>
+<div class="line">    如果数据都最后一位是1，那么说明数据一开始就是负数，那么-数据&gt;&gt;1位+1</div>
+<div class="line">    如果数据最后一位是0，那么说明数据一开始就是正数，那么数据&gt;&gt;1位</div>
+<div class="line">    -((-(-2))&lt;&lt;1-1) = 3   101  &gt;&gt; 1  10 +1 = -11 就还原 -2</div>
+</div><!-- fragment --> <div class="fragment"><div class="line">ByteArray    | m_root 主节点 用来标准第一个节点</div>
+<div class="line">    |        | m_cur 当前使用节点</div>
+<div class="line">    |--------| m_size ByteArray实体中存储的数据大小</div>
+<div class="line">    |        | m_endian  大小端</div>
+<div class="line">    |        | m_capacity 这一个实体类的大小</div>
+<div class="line">    |        | m_position 当前处理位置</div>
+<div class="line">    |        | m_baseSize 一个节点的大小</div>
+<div class="line">    |       </div>
+<div class="line">    |--------|可以存储未压缩的 8bit 16bit 32bit 64bit</div>
+<div class="line">             |可以存储压缩的  32bit 64bit</div>
+<div class="line">             |可以将节点数据存储到文件</div>
+<div class="line">             |以及读取文件数据</div>
+<div class="line">             |使用tostring            </div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">int main(int argc, char **argv) {</div>
+<div class="line">    hh::ByteArray::ptr ba(new hh::ByteArray(4096));</div>
+<div class="line">    hh::ByteArray::ptr ba2(new hh::ByteArray(4096));</div>
+<div class="line">    std::vector&lt;int32_t&gt; vec;</div>
+<div class="line">    for (int32_t i = 0; i &lt; 100; ++i) {</div>
+<div class="line">        // 通过未压缩方式存储</div>
+<div class="line">        ba-&gt;writeFint32(i);</div>
+<div class="line">        // 通过压缩方式存储 7bit 与 Zigzag</div>
+<div class="line">        ba2-&gt;writeInt32(i);</div>
+<div class="line">    }</div>
+<div class="line">// 设置偏移量到0</div>
+<div class="line">    ba-&gt;setPosition(0);</div>
+<div class="line">    ba2-&gt;setPosition(0);</div>
+<div class="line"> </div>
+<div class="line">// 读取数据</div>
+<div class="line">    for (int32_t i = 0; i &lt; 100; ++i) {</div>
+<div class="line">        int32_t v = ba-&gt;readFint32();</div>
+<div class="line">        HH_LOG_FAT_INFO(g_logger, &quot;v:= %d  i=%d&quot;, v, i)</div>
+<div class="line">    }</div>
+<div class="line">// 文件存储</div>
+<div class="line">    ba2-&gt;writeToFile(&quot;./test.txt&quot;);</div>
+<div class="line">    hh::ByteArray::ptr ba3(new hh::ByteArray(4096 * 2));</div>
+<div class="line">    // 读取文件</div>
+<div class="line">    ba3-&gt;readFromFile(&quot;./test.txt&quot;);</div>
+<div class="line">    // 因为写入了，所以要设置偏移量为0</div>
+<div class="line">    ba3-&gt;setPosition(0);</div>
+<div class="line">    if (ba3-&gt;toString() == ba2-&gt;toString()) {</div>
+<div class="line">        HH_LOG_INFO(g_logger, &quot;ba3 == ba2&quot;);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    return 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md30"></a>
+http协议开发</h1>
+<p>HTTP/1.1 -API <br  />
+ HttpRequest <br  />
+ HttpResponse <br  />
+ </p><div class="fragment"><div class="line">url: http://www.hhap.cn:80/page/xxx?id=10#fr</div>
+<div class="line">    http 协议</div>
+<div class="line">    www.hhap.cn 主机名</div>
+<div class="line">    80 端口</div>
+<div class="line">    /page/xxx 路径</div>
+<div class="line">    id=10 参数</div>
+<div class="line">    #fr 锚点</div>
+</div><!-- fragment --><p> ragel 有限状态机 做http的解析</p>
+<p><a href="https://www.colm.net/open-source/ragel/">ragel</a> </p><div class="fragment"><div class="line">可以自定义下载与安装</div>
+<div class="line">ragel 下载依赖需要先安装 colm</div>
+<div class="line"> </div>
+<div class="line">也可以使用 yum安装</div>
+<div class="line"> </div>
+<div class="line">yum intsall ragel -y;</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md31"></a>
+TCP_Server</h1>
+<div class="fragment"><div class="line">重点使用了io_manager</div>
+<div class="line"> </div>
+<div class="line">通过两个iomanager 来实现提取accept和工作</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">基于tcp_server 封装了一个EchoServer</div>
+<div class="line">实现发什么显示什么</div>
+</div><!-- fragment --> <div class="fragment"><div class="line"> {c++}</div>
+<div class="line">// tcp_server.h</div>
+<div class="line">protected:</div>
+<div class="line">    virtual void handleClient(Socket::ptr client);</div>
+<div class="line">    // 监听socket</div>
+<div class="line">    virtual void startAccept(Socket::ptr socke);</div>
+<div class="line">//通过实现handleClient来实现处理客户端链接信息</div>
+<div class="line"> </div>
+<div class="line">// 可看echo_server.cc</div>
+<div class="line">// 实现的一个简单的tcp链接，发什么显示什么与HttpRequestParser,实现协议解析</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md32"></a>
+Stream 针对文件/socket封装</h1>
+<p>read/write // 读指定大小不强制 <br  />
+ readFixSize/WriteFixSize // 读取指定大小强制</p>
+<p>HttpSession/HttpConnection server.accept socket 是 HttpsSession client.connect socket 是 HttpConnection</p>
+<p>HttpServer : TcpServer </p><pre class="fragment">                         servlet 的回调函数
+         Servlet  &lt;----- FunctionServlet
+            |
+            |
+    ServletDispatcher
+      Servlet管理类
+</pre> <h1><a class="anchor" id="autotoc_md33"></a>
+收发信息封装</h1>
+<div class="fragment"><div class="line">(服务器accept的连接)</div>
+<div class="line">  HttpSession（核心为recvRequest）</div>
+<div class="line">       |</div>
+<div class="line">       |</div>
+<div class="line">       V</div>
+<div class="line">   SocketStream 基于stream封装的read write，关闭...</div>
+<div class="line">       |</div>
+<div class="line">       V </div>
+<div class="line">     Stream 虚方法read/write 以及实现的readFixSize/wirteFixSize</div>
+<div class="line"> (客户端connect的连接)</div>
+<div class="line">  HttpConnection</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md34"></a>
+分布式协议</h1>
+<h1><a class="anchor" id="autotoc_md35"></a>
+推荐系统</h1>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<map id="hh::StdoutLogAppender" name="hh::StdoutLogAppender">
+<area shape="rect" id="node1" title=" " alt="" coords="5,247,164,273"/>
+<area shape="rect" id="node2" href="$classhh_1_1LogAppender.html" title=" " alt="" coords="25,171,145,197"/>
+<area shape="rect" id="node3" href="$classhh_1_1Mutex.html" title="互斥量" alt="" coords="45,81,125,108"/>
+<area shape="rect" id="node4" href="$classhh_1_1Noncopyable.html" title="对象无法拷贝,赋值" alt="" coords="25,5,144,32"/>
+</map>

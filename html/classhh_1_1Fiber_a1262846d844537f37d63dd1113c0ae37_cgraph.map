@@ -1,0 +1,4 @@
+<map id="hh::Fiber::CallerMainFunc" name="hh::Fiber::CallerMainFunc">
+<area shape="rect" id="node1" title="调用者Fiber执行函数。" alt="" coords="5,5,176,32"/>
+<area shape="rect" id="node2" href="$classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="224,5,351,32"/>
+</map>

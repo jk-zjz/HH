@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: hh::LogAppender类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classhh_1_1LogAppender.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public 类型</a> &#124;
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pro-attribs">Protected 属性</a> &#124;
+<a href="#friends">友元</a> &#124;
+<a href="classhh_1_1LogAppender-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">hh::LogAppender类 参考<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+类 hh::LogAppender 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1LogAppender__inherit__graph.png" border="0" usemap="#ahh_1_1LogAppender_inherit__map" alt="Inheritance graph"/></div>
+<map name="ahh_1_1LogAppender_inherit__map" id="ahh_1_1LogAppender_inherit__map">
+<area shape="rect" title=" " alt="" coords="103,5,223,32"/>
+<area shape="rect" href="classhh_1_1FileLogAppender.html" title=" " alt="" coords="5,80,147,107"/>
+<area shape="rect" href="classhh_1_1StdoutLogAppender.html" title=" " alt="" coords="171,80,330,107"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<div class="dynheader">
+hh::LogAppender 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1LogAppender__coll__graph.png" border="0" usemap="#ahh_1_1LogAppender_coll__map" alt="Collaboration graph"/></div>
+<map name="ahh_1_1LogAppender_coll__map" id="ahh_1_1LogAppender_coll__map">
+<area shape="rect" title=" " alt="" coords="5,171,125,197"/>
+<area shape="rect" href="classhh_1_1Mutex.html" title="互斥量" alt="" coords="25,81,105,108"/>
+<area shape="rect" href="classhh_1_1Noncopyable.html" title="对象无法拷贝,赋值" alt="" coords="6,5,125,32"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public 类型</h2></td></tr>
+<tr class="memitem:af07084e2732e9feec053bf888df39378"><td class="memItemLeft" align="right" valign="top"><a id="af07084e2732e9feec053bf888df39378"></a>
+typedef std::shared_ptr&lt; <a class="el" href="classhh_1_1LogAppender.html">LogAppender</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
+<tr class="separator:af07084e2732e9feec053bf888df39378"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab883a11220c1d175b8880b2b22dbaa8b"><td class="memItemLeft" align="right" valign="top"><a id="ab883a11220c1d175b8880b2b22dbaa8b"></a>
+typedef <a class="el" href="classhh_1_1Mutex.html">Mutex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>MutexType</b></td></tr>
+<tr class="separator:ab883a11220c1d175b8880b2b22dbaa8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:ad66bdc95e442f1eb3cb0b52f81c6e83d"><td class="memItemLeft" align="right" valign="top"><a id="ad66bdc95e442f1eb3cb0b52f81c6e83d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_level</b> (LogLevel::Level val)</td></tr>
+<tr class="separator:ad66bdc95e442f1eb3cb0b52f81c6e83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92ae1c95aeda0f9caa4303022cc226fd"><td class="memItemLeft" align="right" valign="top"><a id="a92ae1c95aeda0f9caa4303022cc226fd"></a>
+LogLevel::Level&#160;</td><td class="memItemRight" valign="bottom"><b>get_level</b> () const</td></tr>
+<tr class="separator:a92ae1c95aeda0f9caa4303022cc226fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2715c36fea80bc71f21e33131f56d181"><td class="memItemLeft" align="right" valign="top"><a id="a2715c36fea80bc71f21e33131f56d181"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>log</b> (std::shared_ptr&lt; <a class="el" href="classhh_1_1Logger.html">Logger</a> &gt; logger, LogLevel::Level level, LogEvent::ptr event)=0</td></tr>
+<tr class="separator:a2715c36fea80bc71f21e33131f56d181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb5befbe3766be3ddf66b953bd089f2"><td class="memItemLeft" align="right" valign="top"><a id="adbb5befbe3766be3ddf66b953bd089f2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setFormatter</b> (LogFormatter::ptr val)</td></tr>
+<tr class="separator:adbb5befbe3766be3ddf66b953bd089f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55713eac99c8e68750c2aeed0fb6371d"><td class="memItemLeft" align="right" valign="top"><a id="a55713eac99c8e68750c2aeed0fb6371d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setFatherFormatter</b> (LogFormatter::ptr val, bool type)</td></tr>
+<tr class="separator:a55713eac99c8e68750c2aeed0fb6371d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad077126c9866861ea44d49f8f32cfc7a"><td class="memItemLeft" align="right" valign="top"><a id="ad077126c9866861ea44d49f8f32cfc7a"></a>
+LogFormatter::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>getFormatter</b> ()</td></tr>
+<tr class="separator:ad077126c9866861ea44d49f8f32cfc7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b8d38785bd5061c243d0ad6f8607bc6"><td class="memItemLeft" align="right" valign="top"><a id="a6b8d38785bd5061c243d0ad6f8607bc6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>getFatherFormatter</b> () const</td></tr>
+<tr class="separator:a6b8d38785bd5061c243d0ad6f8607bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8341b5d4400070ef8afe6f6473bbcdb"><td class="memItemLeft" align="right" valign="top"><a id="ac8341b5d4400070ef8afe6f6473bbcdb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setFatherFormatter</b> (bool val)</td></tr>
+<tr class="separator:ac8341b5d4400070ef8afe6f6473bbcdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected 属性</h2></td></tr>
+<tr class="memitem:add748ddba137fd3553d17cb433597959"><td class="memItemLeft" align="right" valign="top"><a id="add748ddba137fd3553d17cb433597959"></a>
+LogFormatter::ptr&#160;</td><td class="memItemRight" valign="bottom"><b>m_Formatter</b></td></tr>
+<tr class="separator:add748ddba137fd3553d17cb433597959"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf2f2c44f1ef20d64b27199be61f059e"><td class="memItemLeft" align="right" valign="top"><a id="abf2f2c44f1ef20d64b27199be61f059e"></a>
+LogLevel::Level&#160;</td><td class="memItemRight" valign="bottom"><b>m_level</b> = LogLevel::UNKNOWN</td></tr>
+<tr class="separator:abf2f2c44f1ef20d64b27199be61f059e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd683c8a233c01b4495059157598b4f3"><td class="memItemLeft" align="right" valign="top"><a id="acd683c8a233c01b4495059157598b4f3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>FatherFormatter</b> =true</td></tr>
+<tr class="separator:acd683c8a233c01b4495059157598b4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc571ee592aeabb79dfb2d476995c766"><td class="memItemLeft" align="right" valign="top"><a id="acc571ee592aeabb79dfb2d476995c766"></a>
+<a class="el" href="classhh_1_1Mutex.html">MutexType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_mutex</b></td></tr>
+<tr class="separator:acc571ee592aeabb79dfb2d476995c766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+友元</h2></td></tr>
+<tr class="memitem:aff02b76416d2846736b7ecd798921a0a"><td class="memItemLeft" align="right" valign="top"><a id="aff02b76416d2846736b7ecd798921a0a"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>Logger</b></td></tr>
+<tr class="separator:aff02b76416d2846736b7ecd798921a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock">
+<p class="definition">在文件 <a class="el" href="log_8h_source.html">log.h</a> 第 <a class="el" href="log_8h_source.html#l00191">191</a> 行定义.</p>
+</div><hr/>该类的文档由以下文件生成:<ul>
+<li>hh/include/<a class="el" href="log_8h_source.html">log.h</a></li>
+<li>hh/<a class="el" href="log_8cc_source.html">log.cc</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacehh.html">hh</a></li><li class="navelem"><a class="el" href="classhh_1_1LogAppender.html">LogAppender</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

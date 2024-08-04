@@ -1,0 +1,4 @@
+<map id="hh::IPv4Address::IPv4Address" name="hh::IPv4Address::IPv4Address">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,208,32"/>
+<area shape="rect" id="node2" href="$namespacehh.html#ac706ff7cd7f58ec3eb90635313468b26" title="只在小端机器上执行byteswap, 在大端机器上什么都不做" alt="" coords="256,5,440,32"/>
+</map>

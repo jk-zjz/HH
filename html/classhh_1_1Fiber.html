@@ -1,0 +1,632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: hh::Fiber类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classhh_1_1Fiber.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public 类型</a> &#124;
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-static-methods">静态 Public 成员函数</a> &#124;
+<a href="classhh_1_1Fiber-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">hh::Fiber类 参考</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+类 hh::Fiber 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber__inherit__graph.png" border="0" usemap="#ahh_1_1Fiber_inherit__map" alt="Inheritance graph"/></div>
+<map name="ahh_1_1Fiber_inherit__map" id="ahh_1_1Fiber_inherit__map">
+<area shape="rect" title=" " alt="" coords="37,95,110,121"/>
+<area shape="rect" title=" " alt="" coords="5,5,141,47"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<div class="dynheader">
+hh::Fiber 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber__coll__graph.png" border="0" usemap="#ahh_1_1Fiber_coll__map" alt="Collaboration graph"/></div>
+<map name="ahh_1_1Fiber_coll__map" id="ahh_1_1Fiber_coll__map">
+<area shape="rect" title=" " alt="" coords="37,95,110,121"/>
+<area shape="rect" title=" " alt="" coords="5,5,141,47"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">图例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public 类型</h2></td></tr>
+<tr class="memitem:ad4a3aece87342a144b9778fd64a13e0a"><td class="memItemLeft" align="right" valign="top"><a id="ad4a3aece87342a144b9778fd64a13e0a"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>State</b> { <br />
+&#160;&#160;<b>INIT</b>
+, <b>HOLD</b>
+, <b>EXEC</b>
+, <b>TERM</b>
+, <br />
+&#160;&#160;<b>READY</b>
+, <b>EXCEPT</b>
+<br />
+ }</td></tr>
+<tr class="separator:ad4a3aece87342a144b9778fd64a13e0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9883a2781fbd78b1ba6db98fcdc63815"><td class="memItemLeft" align="right" valign="top"><a id="a9883a2781fbd78b1ba6db98fcdc63815"></a>
+typedef std::shared_ptr&lt; <a class="el" href="classhh_1_1Fiber.html">Fiber</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ptr</b></td></tr>
+<tr class="separator:a9883a2781fbd78b1ba6db98fcdc63815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:ab18779b2ae7e756ee092c028964fbdd6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#ab18779b2ae7e756ee092c028964fbdd6">Fiber</a> (std::function&lt; void()&gt; cb, size_t stackSize=0, bool useCaller=false)</td></tr>
+<tr class="memdesc:ab18779b2ae7e756ee092c028964fbdd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fiber类的构造函数  <a href="classhh_1_1Fiber.html#ab18779b2ae7e756ee092c028964fbdd6">更多...</a><br /></td></tr>
+<tr class="separator:ab18779b2ae7e756ee092c028964fbdd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa04d0f05f1a3aed3c2372e594b72e3b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#aa04d0f05f1a3aed3c2372e594b72e3b8">reset</a> (std::function&lt; void()&gt; cb)</td></tr>
+<tr class="separator:aa04d0f05f1a3aed3c2372e594b72e3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58f0985b7da9f49c482b3b8a6eba47a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#a58f0985b7da9f49c482b3b8a6eba47a8">swapIn</a> ()</td></tr>
+<tr class="memdesc:a58f0985b7da9f49c482b3b8a6eba47a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">将当前Fiber切换为执行状态。  <a href="classhh_1_1Fiber.html#a58f0985b7da9f49c482b3b8a6eba47a8">更多...</a><br /></td></tr>
+<tr class="separator:a58f0985b7da9f49c482b3b8a6eba47a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef4d0b5ec62e18d48f63749f0228b1f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#aef4d0b5ec62e18d48f63749f0228b1f2">swapOut</a> ()</td></tr>
+<tr class="memdesc:aef4d0b5ec62e18d48f63749f0228b1f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">从当前Fiber切换回调度器。  <a href="classhh_1_1Fiber.html#aef4d0b5ec62e18d48f63749f0228b1f2">更多...</a><br /></td></tr>
+<tr class="separator:aef4d0b5ec62e18d48f63749f0228b1f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a759469d0af229c5c2c3b15a1c307565a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#a759469d0af229c5c2c3b15a1c307565a">call</a> ()</td></tr>
+<tr class="memdesc:a759469d0af229c5c2c3b15a1c307565a"><td class="mdescLeft">&#160;</td><td class="mdescRight">切换到当前Fiber执行。  <a href="classhh_1_1Fiber.html#a759469d0af229c5c2c3b15a1c307565a">更多...</a><br /></td></tr>
+<tr class="separator:a759469d0af229c5c2c3b15a1c307565a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdd7499a1cbd8e4ece10711763b3c131"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#abdd7499a1cbd8e4ece10711763b3c131">back</a> ()</td></tr>
+<tr class="memdesc:abdd7499a1cbd8e4ece10711763b3c131"><td class="mdescLeft">&#160;</td><td class="mdescRight">从当前Fiber返回到调度器。  <a href="classhh_1_1Fiber.html#abdd7499a1cbd8e4ece10711763b3c131">更多...</a><br /></td></tr>
+<tr class="separator:abdd7499a1cbd8e4ece10711763b3c131"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25b8042c0734995f4738243a6be9c799"><td class="memItemLeft" align="right" valign="top"><a id="a25b8042c0734995f4738243a6be9c799"></a>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>getId</b> () const</td></tr>
+<tr class="separator:a25b8042c0734995f4738243a6be9c799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9261c25a48219f968bb44a680314e14a"><td class="memItemLeft" align="right" valign="top"><a id="a9261c25a48219f968bb44a680314e14a"></a>
+State&#160;</td><td class="memItemRight" valign="bottom"><b>getState</b> () const</td></tr>
+<tr class="separator:a9261c25a48219f968bb44a680314e14a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5abcaf552e4c952cc33da1eae2c0500"><td class="memItemLeft" align="right" valign="top"><a id="aa5abcaf552e4c952cc33da1eae2c0500"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setState</b> (State state)</td></tr>
+<tr class="separator:aa5abcaf552e4c952cc33da1eae2c0500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49c5e17c4792ca1c8c96c59cd9b24277"><td class="memItemLeft" align="right" valign="top"><a id="a49c5e17c4792ca1c8c96c59cd9b24277"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Master_coroutine</b> ()</td></tr>
+<tr class="separator:a49c5e17c4792ca1c8c96c59cd9b24277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3112f268877ddea3a18612d73f7ac621"><td class="memItemLeft" align="right" valign="top"><a id="a3112f268877ddea3a18612d73f7ac621"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Fun_</b> ()</td></tr>
+<tr class="separator:a3112f268877ddea3a18612d73f7ac621"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+静态 Public 成员函数</h2></td></tr>
+<tr class="memitem:af23c1146eb64ddd1b7d17e40a133e06a"><td class="memItemLeft" align="right" valign="top"><a id="af23c1146eb64ddd1b7d17e40a133e06a"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>SetThis</b> (<a class="el" href="classhh_1_1Fiber.html">Fiber</a> *f)</td></tr>
+<tr class="separator:af23c1146eb64ddd1b7d17e40a133e06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abff359c2aada35f55fad222775b102f3"><td class="memItemLeft" align="right" valign="top"><a id="abff359c2aada35f55fad222775b102f3"></a>
+static Fiber::ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3">GetThis</a> ()</td></tr>
+<tr class="memdesc:abff359c2aada35f55fad222775b102f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取当前Fiber对象 &amp;&amp; 没有主协程会创建 <br /></td></tr>
+<tr class="separator:abff359c2aada35f55fad222775b102f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7a0ad0347e852f2f1a6a6efd3cfabd7"><td class="memItemLeft" align="right" valign="top"><a id="ab7a0ad0347e852f2f1a6a6efd3cfabd7"></a>
+static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>GetTotalFibers</b> ()</td></tr>
+<tr class="separator:ab7a0ad0347e852f2f1a6a6efd3cfabd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99e55a5fbaf5089ec5d6e55c7a1995e4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#a99e55a5fbaf5089ec5d6e55c7a1995e4">YieldToHold</a> ()</td></tr>
+<tr class="memdesc:a99e55a5fbaf5089ec5d6e55c7a1995e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">将当前Fiber切换到挂起状态。  <a href="classhh_1_1Fiber.html#a99e55a5fbaf5089ec5d6e55c7a1995e4">更多...</a><br /></td></tr>
+<tr class="separator:a99e55a5fbaf5089ec5d6e55c7a1995e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad797d20f3ee2005ebd05feb9b29c25af"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#ad797d20f3ee2005ebd05feb9b29c25af">YieldToReady</a> ()</td></tr>
+<tr class="memdesc:ad797d20f3ee2005ebd05feb9b29c25af"><td class="mdescLeft">&#160;</td><td class="mdescRight">将当前Fiber切换到就绪状态。  <a href="classhh_1_1Fiber.html#ad797d20f3ee2005ebd05feb9b29c25af">更多...</a><br /></td></tr>
+<tr class="separator:ad797d20f3ee2005ebd05feb9b29c25af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a427fc6d9edd77947a87a7931baf72340"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#a427fc6d9edd77947a87a7931baf72340">MainFunc</a> ()</td></tr>
+<tr class="memdesc:a427fc6d9edd77947a87a7931baf72340"><td class="mdescLeft">&#160;</td><td class="mdescRight">主Fiber执行函数。  <a href="classhh_1_1Fiber.html#a427fc6d9edd77947a87a7931baf72340">更多...</a><br /></td></tr>
+<tr class="separator:a427fc6d9edd77947a87a7931baf72340"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35bbafbedebd13b286d4a464740d67fb"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#a35bbafbedebd13b286d4a464740d67fb">getFiber_id</a> ()</td></tr>
+<tr class="memdesc:a35bbafbedebd13b286d4a464740d67fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取当前Fiber的ID。  <a href="classhh_1_1Fiber.html#a35bbafbedebd13b286d4a464740d67fb">更多...</a><br /></td></tr>
+<tr class="separator:a35bbafbedebd13b286d4a464740d67fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1262846d844537f37d63dd1113c0ae37"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhh_1_1Fiber.html#a1262846d844537f37d63dd1113c0ae37">CallerMainFunc</a> ()</td></tr>
+<tr class="memdesc:a1262846d844537f37d63dd1113c0ae37"><td class="mdescLeft">&#160;</td><td class="mdescRight">调用者Fiber执行函数。  <a href="classhh_1_1Fiber.html#a1262846d844537f37d63dd1113c0ae37">更多...</a><br /></td></tr>
+<tr class="separator:a1262846d844537f37d63dd1113c0ae37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock">
+<p class="definition">在文件 <a class="el" href="fiber_8h_source.html">fiber.h</a> 第 <a class="el" href="fiber_8h_source.html#l00012">12</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="ab18779b2ae7e756ee092c028964fbdd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab18779b2ae7e756ee092c028964fbdd6">&#9670;&nbsp;</a></span>Fiber()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">hh::Fiber::Fiber </td>
+          <td>(</td>
+          <td class="paramtype">std::function&lt; void()&gt;&#160;</td>
+          <td class="paramname"><em>cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>stackSize</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>useCaller</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fiber类的构造函数 </p>
+<p>初始化一个Fiber对象，包括设置回调函数、协程ID、堆栈大小和堆栈内存分配。 通过getcontext和makecontext函数配置协程的上下文环境，以便后续切换到该协程执行。</p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cb</td><td>协程执行的回调函数 </td></tr>
+    <tr><td class="paramname">stackSize</td><td>协程的堆栈大小，如果为0，则使用默认堆栈大小 </td></tr>
+    <tr><td class="paramname">useCaller</td><td>是否使用调用者上下文作为协程的起始点 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00063">63</a> 行定义.</p>
+
+<p class="reference">引用了 <a class="el" href="fiber_8cc_source.html#l00276">CallerMainFunc()</a> , 以及 <a class="el" href="fiber_8cc_source.html#l00247">MainFunc()</a>.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber_ab18779b2ae7e756ee092c028964fbdd6_cgraph.png" border="0" usemap="#aclasshh_1_1Fiber_ab18779b2ae7e756ee092c028964fbdd6_cgraph" alt=""/></div>
+<map name="aclasshh_1_1Fiber_ab18779b2ae7e756ee092c028964fbdd6_cgraph" id="aclasshh_1_1Fiber_ab18779b2ae7e756ee092c028964fbdd6_cgraph">
+<area shape="rect" title="Fiber类的构造函数" alt="" coords="5,31,116,57"/>
+<area shape="rect" href="classhh_1_1Fiber.html#a1262846d844537f37d63dd1113c0ae37" title="调用者Fiber执行函数。" alt="" coords="164,5,335,32"/>
+<area shape="rect" href="classhh_1_1Fiber.html#a427fc6d9edd77947a87a7931baf72340" title="主Fiber执行函数。" alt="" coords="180,56,319,83"/>
+<area shape="rect" href="classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="383,31,509,57"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="abdd7499a1cbd8e4ece10711763b3c131"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdd7499a1cbd8e4ece10711763b3c131">&#9670;&nbsp;</a></span>back()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hh::Fiber::back </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>从当前Fiber返回到调度器。 </p>
+<p>协程切换到后台执行</p>
+<p>本函数用于将执行上下文从当前Fiber切换回调度器所代表的线程。在切换之前，会恢复调度器的Fiber对象。 如果切换上下文失败，则会触发断言。 为调度器切换的 </p>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00159">159</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a759469d0af229c5c2c3b15a1c307565a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a759469d0af229c5c2c3b15a1c307565a">&#9670;&nbsp;</a></span>call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hh::Fiber::call </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>切换到当前Fiber执行。 </p>
+<p>协程切换到执行</p>
+<p>本函数将当前的执行上下文切换到当前Fiber对象所代表的线程中。在切换之前，会设置当前的Fiber对象， 并确保Fiber的状态为执行中（EXEC）。如果切换上下文失败，则会触发断言。 为调度器切换的 </p>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00144">144</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a1262846d844537f37d63dd1113c0ae37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1262846d844537f37d63dd1113c0ae37">&#9670;&nbsp;</a></span>CallerMainFunc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hh::Fiber::CallerMainFunc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>调用者Fiber执行函数。 </p>
+<p>类似于MainFunc，本函数用于执行Fiber的回调函数，并在完成或捕获到异常时更新Fiber状态。 最后，释放Fiber对象并将执行上下文切换回Fiber的原始调用者。 为携程调度器切换的 </p>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00276">276</a> 行定义.</p>
+
+<p class="reference">引用了 <a class="el" href="fiber_8cc_source.html#l00201">GetThis()</a>.</p>
+
+<p class="reference">被这些函数引用 <a class="el" href="fiber_8cc_source.html#l00063">Fiber()</a>.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber_a1262846d844537f37d63dd1113c0ae37_cgraph.png" border="0" usemap="#aclasshh_1_1Fiber_a1262846d844537f37d63dd1113c0ae37_cgraph" alt=""/></div>
+<map name="aclasshh_1_1Fiber_a1262846d844537f37d63dd1113c0ae37_cgraph" id="aclasshh_1_1Fiber_a1262846d844537f37d63dd1113c0ae37_cgraph">
+<area shape="rect" title="调用者Fiber执行函数。" alt="" coords="5,5,176,32"/>
+<area shape="rect" href="classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="224,5,351,32"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber_a1262846d844537f37d63dd1113c0ae37_icgraph.png" border="0" usemap="#aclasshh_1_1Fiber_a1262846d844537f37d63dd1113c0ae37_icgraph" alt=""/></div>
+<map name="aclasshh_1_1Fiber_a1262846d844537f37d63dd1113c0ae37_icgraph" id="aclasshh_1_1Fiber_a1262846d844537f37d63dd1113c0ae37_icgraph">
+<area shape="rect" title="调用者Fiber执行函数。" alt="" coords="164,5,335,32"/>
+<area shape="rect" href="classhh_1_1Fiber.html#ab18779b2ae7e756ee092c028964fbdd6" title="Fiber类的构造函数" alt="" coords="5,5,116,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a35bbafbedebd13b286d4a464740d67fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35bbafbedebd13b286d4a464740d67fb">&#9670;&nbsp;</a></span>getFiber_id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hh::Fiber::getFiber_id </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>获取当前Fiber的ID。 </p>
+<p>如果存在当前Fiber对象，返回其ID；否则返回0。</p>
+<dl class="section return"><dt>返回</dt><dd>uint32_t 当前Fiber的ID，或0表示无Fiber。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00305">305</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a427fc6d9edd77947a87a7931baf72340"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a427fc6d9edd77947a87a7931baf72340">&#9670;&nbsp;</a></span>MainFunc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hh::Fiber::MainFunc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>主Fiber执行函数。 </p>
+<p>本函数用于执行Fiber的回调函数（m_cb），并在执行完成后或捕获到异常时，将Fiber状态更新为终止（TERM）或异常（EXCEPT）。 最后，释放Fiber对象并将其上下文切换回调度器。 为单携程切换的 </p>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00247">247</a> 行定义.</p>
+
+<p class="reference">引用了 <a class="el" href="fiber_8cc_source.html#l00201">GetThis()</a>.</p>
+
+<p class="reference">被这些函数引用 <a class="el" href="fiber_8cc_source.html#l00063">Fiber()</a> , 以及 <a class="el" href="fiber_8cc_source.html#l00118">reset()</a>.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber_a427fc6d9edd77947a87a7931baf72340_cgraph.png" border="0" usemap="#aclasshh_1_1Fiber_a427fc6d9edd77947a87a7931baf72340_cgraph" alt=""/></div>
+<map name="aclasshh_1_1Fiber_a427fc6d9edd77947a87a7931baf72340_cgraph" id="aclasshh_1_1Fiber_a427fc6d9edd77947a87a7931baf72340_cgraph">
+<area shape="rect" title="主Fiber执行函数。" alt="" coords="5,5,144,32"/>
+<area shape="rect" href="classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="192,5,319,32"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber_a427fc6d9edd77947a87a7931baf72340_icgraph.png" border="0" usemap="#aclasshh_1_1Fiber_a427fc6d9edd77947a87a7931baf72340_icgraph" alt=""/></div>
+<map name="aclasshh_1_1Fiber_a427fc6d9edd77947a87a7931baf72340_icgraph" id="aclasshh_1_1Fiber_a427fc6d9edd77947a87a7931baf72340_icgraph">
+<area shape="rect" title="主Fiber执行函数。" alt="" coords="164,31,303,57"/>
+<area shape="rect" href="classhh_1_1Fiber.html#ab18779b2ae7e756ee092c028964fbdd6" title="Fiber类的构造函数" alt="" coords="5,5,116,32"/>
+<area shape="rect" href="classhh_1_1Fiber.html#aa04d0f05f1a3aed3c2372e594b72e3b8" title=" " alt="" coords="5,56,116,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa04d0f05f1a3aed3c2372e594b72e3b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa04d0f05f1a3aed3c2372e594b72e3b8">&#9670;&nbsp;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hh::Fiber::reset </td>
+          <td>(</td>
+          <td class="paramtype">std::function&lt; void()&gt;&#160;</td>
+          <td class="paramname"><em>cb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>协程结束，切换协程方法以便重新激活</p>
+<p>重新设置协程 不为初始化状态 || 终止状态 || 异常状态 可重置 </p>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00118">118</a> 行定义.</p>
+
+<p class="reference">引用了 <a class="el" href="fiber_8cc_source.html#l00247">MainFunc()</a>.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber_aa04d0f05f1a3aed3c2372e594b72e3b8_cgraph.png" border="0" usemap="#aclasshh_1_1Fiber_aa04d0f05f1a3aed3c2372e594b72e3b8_cgraph" alt=""/></div>
+<map name="aclasshh_1_1Fiber_aa04d0f05f1a3aed3c2372e594b72e3b8_cgraph" id="aclasshh_1_1Fiber_aa04d0f05f1a3aed3c2372e594b72e3b8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,116,32"/>
+<area shape="rect" href="classhh_1_1Fiber.html#a427fc6d9edd77947a87a7931baf72340" title="主Fiber执行函数。" alt="" coords="164,5,303,32"/>
+<area shape="rect" href="classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="351,5,477,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a58f0985b7da9f49c482b3b8a6eba47a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58f0985b7da9f49c482b3b8a6eba47a8">&#9670;&nbsp;</a></span>swapIn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hh::Fiber::swapIn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>将当前Fiber切换为执行状态。 </p>
+<p>切换当前线程执行</p>
+<p>本函数用于将当前的Fiber对象切换到执行状态，从调度器的角度来看，相当于将当前的执行上下文从调度器 切换到当前Fiber。在切换之前，会设置当前的Fiber对象，并确保Fiber的状态不是执行中。如果切换上下文 失败，则会触发断言。 为主协程切换的 </p>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00174">174</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aef4d0b5ec62e18d48f63749f0228b1f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef4d0b5ec62e18d48f63749f0228b1f2">&#9670;&nbsp;</a></span>swapOut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hh::Fiber::swapOut </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>从当前Fiber切换回调度器。 </p>
+<p>切换到后台执行</p>
+<p>本函数用于将当前的执行上下文从当前Fiber切换回调度器所代表的线程。在切换之前，会设置调度器的Fiber 对象。如果切换上下文失败，则会触发断言。 为主协程切换的 </p>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00190">190</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a99e55a5fbaf5089ec5d6e55c7a1995e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99e55a5fbaf5089ec5d6e55c7a1995e4">&#9670;&nbsp;</a></span>YieldToHold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hh::Fiber::YieldToHold </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>将当前Fiber切换到挂起状态。 </p>
+<p>本函数首先获取当前执行的Fiber对象，然后检查其状态是否为执行中（EXEC）。如果满足条件，将Fiber状态 保持不变并执行上下文切换到调度器。 </p>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00222">222</a> 行定义.</p>
+
+<p class="reference">引用了 <a class="el" href="fiber_8cc_source.html#l00201">GetThis()</a>.</p>
+
+<p class="reference">被这些函数引用 <a class="el" href="scheduler_8cc_source.html#l00275">hh::Scheduler::idle()</a> , 以及 <a class="el" href="scheduler_8cc_source.html#l00285">hh::Scheduler::switchTo()</a>.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber_a99e55a5fbaf5089ec5d6e55c7a1995e4_cgraph.png" border="0" usemap="#aclasshh_1_1Fiber_a99e55a5fbaf5089ec5d6e55c7a1995e4_cgraph" alt=""/></div>
+<map name="aclasshh_1_1Fiber_a99e55a5fbaf5089ec5d6e55c7a1995e4_cgraph" id="aclasshh_1_1Fiber_a99e55a5fbaf5089ec5d6e55c7a1995e4_cgraph">
+<area shape="rect" title="将当前Fiber切换到挂起状态。" alt="" coords="5,5,156,32"/>
+<area shape="rect" href="classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="204,5,331,32"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber_a99e55a5fbaf5089ec5d6e55c7a1995e4_icgraph.png" border="0" usemap="#aclasshh_1_1Fiber_a99e55a5fbaf5089ec5d6e55c7a1995e4_icgraph" alt=""/></div>
+<map name="aclasshh_1_1Fiber_a99e55a5fbaf5089ec5d6e55c7a1995e4_icgraph" id="aclasshh_1_1Fiber_a99e55a5fbaf5089ec5d6e55c7a1995e4_icgraph">
+<area shape="rect" title="将当前Fiber切换到挂起状态。" alt="" coords="836,56,987,83"/>
+<area shape="rect" href="classhh_1_1Scheduler.html#a308a333e22d04e7281d88ccd4236f8f9" title="空转任务" alt="" coords="641,31,772,57"/>
+<area shape="rect" href="classhh_1_1Scheduler.html#abc762f8308fcf098a5d027646bf5e645" title=" " alt="" coords="625,81,788,108"/>
+<area shape="rect" href="classhh_1_1Scheduler.html#a01206fd19107d3b52e11e56316815605" title=" " alt="" coords="449,31,577,57"/>
+<area shape="rect" href="classhh_1_1Scheduler.html#a56476d47741e42c02f7d86483f7c50ba" title=" " alt="" coords="233,5,401,32"/>
+<area shape="rect" href="classhh_1_1Scheduler.html#acc93d6d72c5ae6c5af894599361c2842" title=" " alt="" coords="249,56,386,83"/>
+<area shape="rect" href="classhh_1_1IOManager.html#a820ea4e8d0c3e6828e3effd4dcf6e04d" title=" " alt="" coords="5,56,185,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad797d20f3ee2005ebd05feb9b29c25af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad797d20f3ee2005ebd05feb9b29c25af">&#9670;&nbsp;</a></span>YieldToReady()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hh::Fiber::YieldToReady </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>将当前Fiber切换到就绪状态。 </p>
+<p>本函数同样首先获取当前执行的Fiber对象，检查其状态是否为执行中（EXEC）。如果满足条件，将Fiber状态更改为就绪（READY） 并执行上下文切换到调度器。 </p>
+
+<p class="definition">在文件 <a class="el" href="fiber_8cc_source.html">fiber.cc</a> 第 <a class="el" href="fiber_8cc_source.html#l00233">233</a> 行定义.</p>
+
+<p class="reference">引用了 <a class="el" href="fiber_8cc_source.html#l00201">GetThis()</a>.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="classhh_1_1Fiber_ad797d20f3ee2005ebd05feb9b29c25af_cgraph.png" border="0" usemap="#aclasshh_1_1Fiber_ad797d20f3ee2005ebd05feb9b29c25af_cgraph" alt=""/></div>
+<map name="aclasshh_1_1Fiber_ad797d20f3ee2005ebd05feb9b29c25af_cgraph" id="aclasshh_1_1Fiber_ad797d20f3ee2005ebd05feb9b29c25af_cgraph">
+<area shape="rect" title="将当前Fiber切换到就绪状态。" alt="" coords="5,5,167,32"/>
+<area shape="rect" href="classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="215,5,341,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>hh/include/<a class="el" href="fiber_8h_source.html">fiber.h</a></li>
+<li>hh/<a class="el" href="fiber_8cc_source.html">fiber.cc</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacehh.html">hh</a></li><li class="navelem"><a class="el" href="classhh_1_1Fiber.html">Fiber</a></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

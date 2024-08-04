@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: tests/httpConnection_test.cc 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('httpConnection__test_8cc_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">httpConnection_test.cc</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by 35148 on 2024/7/25.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;http_connection.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;iomanage.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;log.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">static</span> hh::Logger::ptr g_logger = HH_LOG_ROOT();</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keywordtype">void</span> test2(){</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    hh::http::HttpConnectionPool::ptr pool</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    (<span class="keyword">new</span> <a class="code" href="classhh_1_1http_1_1HttpConnectionPool.html">hh::http::HttpConnectionPool</a>(<span class="stringliteral">&quot;www.sylar.top&quot;</span>,<span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;                                      80,10,3000*10,5));</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="classhh_1_1IOManager.html#a87495f21f0effea9d87f1d027581271f">hh::IOManager::GetThis</a>()-&gt;<a class="code" href="classhh_1_1TimerManager.html#ac902773f422424efcc34638c1ea46069">addTimer</a>(1000,[pool](){</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">auto</span> it = pool-&gt;doGet(<span class="stringliteral">&quot;/&quot;</span>,3000);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keywordflow">if</span>(it){</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            HH_LOG_INFO(g_logger,it-&gt;toString());</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        }</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        },<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> test(){</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">//     hh::IPAddress::ptr ptr = hh::Address::lookupAnyIPAddress(&quot;www.sylar.top:80&quot;);</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">//     if(!ptr){</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//         HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)&lt;&lt;&quot;error lookupAnyIPAddress fail&quot;;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//     }</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//     std::cout&lt;&lt;ptr-&gt;toString()&lt;&lt;std::endl;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//     hh::Socket::ptr sock = hh::Socket::CreateTCP(ptr);</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//     if(!sock-&gt;connect(ptr)){</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//         HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::DEBUG)&lt;&lt;&quot;error connect fail&quot;;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">//         return ;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">//     }</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">//     hh::http::HttpConnection::ptr conn(new hh::http::HttpConnection(sock));</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">//     hh::http::HttpRequest::ptr req(new hh::http::HttpRequest);</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">//     req-&gt;setPath(&quot;/blog/&quot;);</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">//     req-&gt;setHeader(&quot;Host&quot;,&quot;www.sylar.top&quot;);</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//     std::cout&lt;&lt;&quot;req:&quot;&lt;&lt;req-&gt;toString()&lt;&lt;std::endl;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">//    conn-&gt;sendRequest(req);</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//    hh::http::HttpResponse::ptr sharedPtr = conn-&gt;recvResponse();</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">//    if(sharedPtr){</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"></span><span class="comment">//    }</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">//    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO)&lt;&lt;&quot;===============================&quot;;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">//    std::map&lt;std::string,std::string&gt;head;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">//    auto r = hh::http::HttpConnection::DoGet(&quot;http://www.sylar.top/blog/&quot;,1000);</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">//    HH_LOG_LEVEL_CHAIN(g_logger,hh::LogLevel::INFO) &lt;&lt; &quot;result=&quot; &lt;&lt; (int)r-&gt;result</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">//                             &lt;&lt; &quot; error=&quot; &lt;&lt; r-&gt;error</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">//                             &lt;&lt; &quot; rsp=&quot; &lt;&lt; (r-&gt;response ? r-&gt;response-&gt;toString() : &quot;&quot;);</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    test2();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">int</span> main(<span class="keywordtype">int</span> args,<span class="keywordtype">char</span> ** argv){</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="classhh_1_1IOManager.html">hh::IOManager</a> iom(2);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    iom.schedule(test);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="ttc" id="aclasshh_1_1IOManager_html"><div class="ttname"><a href="classhh_1_1IOManager.html">hh::IOManager</a></div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8h_source.html#l00015">iomanage.h:15</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_a87495f21f0effea9d87f1d027581271f"><div class="ttname"><a href="classhh_1_1IOManager.html#a87495f21f0effea9d87f1d027581271f">hh::IOManager::GetThis</a></div><div class="ttdeci">static IOManager * GetThis()</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00261">iomanage.cc:261</a></div></div>
+<div class="ttc" id="aclasshh_1_1TimerManager_html_ac902773f422424efcc34638c1ea46069"><div class="ttname"><a href="classhh_1_1TimerManager.html#ac902773f422424efcc34638c1ea46069">hh::TimerManager::addTimer</a></div><div class="ttdeci">Timer::ptr addTimer(uint64_t interval, std::function&lt; void()&gt; cb, bool recurring=false)</div><div class="ttdef"><b>Definition:</b> <a href="timer_8cc_source.html#l00116">timer.cc:116</a></div></div>
+<div class="ttc" id="aclasshh_1_1http_1_1HttpConnectionPool_html"><div class="ttname"><a href="classhh_1_1http_1_1HttpConnectionPool.html">hh::http::HttpConnectionPool</a></div><div class="ttdef"><b>Definition:</b> <a href="http__connection_8h_source.html#l00090">http_connection.h:90</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><b>httpConnection_test.cc</b></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+<map id="hh::Fiber::YieldToHold" name="hh::Fiber::YieldToHold">
+<area shape="rect" id="node1" title="将当前Fiber切换到挂起状态。" alt="" coords="5,5,156,32"/>
+<area shape="rect" id="node2" href="$classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3" title="获取当前Fiber对象 &amp;&amp; 没有主协程会创建" alt="" coords="204,5,331,32"/>
+</map>

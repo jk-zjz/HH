@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: hh/include/fiber.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('fiber_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">fiber.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by 35148 on 2024/5/23.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//协程模块开发</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef HH_FIBER_H</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define HH_FIBER_H</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;thread.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;ucontext.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehh.html">hh</a> {</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classhh_1_1Fiber.html">   12</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classhh_1_1Fiber.html">Fiber</a> : <span class="keyword">public</span> std::enable_shared_from_this&lt;Fiber&gt; {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">typedef</span> std::shared_ptr&lt;Fiber&gt; ptr;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">enum</span> State {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            INIT,   <span class="comment">// 初始化状态</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            HOLD,   <span class="comment">// 暂停或等待状态</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            EXEC,   <span class="comment">// 执行状态</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            TERM,   <span class="comment">// 终止或结束状态</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            READY,  <span class="comment">// 准备就绪状态</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            EXCEPT  <span class="comment">// 异常或错误状态</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        };</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="comment">//为创建主协程做的构造函数</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classhh_1_1Fiber.html">Fiber</a>();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="comment">//子协程的构造函数</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;       <a class="code" href="classhh_1_1Fiber.html">Fiber</a>(std::function&lt;<span class="keywordtype">void</span>()&gt; cb, <span class="keywordtype">size_t</span> stackSize=0, <span class="keywordtype">bool</span> useCaller=<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="comment">//协程的析构函数</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        ~<a class="code" href="classhh_1_1Fiber.html">Fiber</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classhh_1_1Fiber.html#aa04d0f05f1a3aed3c2372e594b72e3b8">reset</a>(std::function&lt;<span class="keywordtype">void</span>()&gt; cb);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classhh_1_1Fiber.html#a58f0985b7da9f49c482b3b8a6eba47a8">swapIn</a>();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classhh_1_1Fiber.html#aef4d0b5ec62e18d48f63749f0228b1f2">swapOut</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classhh_1_1Fiber.html#a759469d0af229c5c2c3b15a1c307565a">call</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classhh_1_1Fiber.html#abdd7499a1cbd8e4ece10711763b3c131">back</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        uint64_t getId()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_id; }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        State getState()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_state; }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="comment">//设置当前协程</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> SetThis(<a class="code" href="classhh_1_1Fiber.html">Fiber</a>* f);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="comment">// 获取当前正在执行的Fiber对象的智能指针</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">static</span> Fiber::ptr <a class="code" href="classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3">GetThis</a>();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="comment">// 获取当前系统中总的Fiber数量</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">static</span> uint64_t GetTotalFibers();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">// 将当前Fiber让出执行权，转到持有（HOLD）状态</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classhh_1_1Fiber.html#a99e55a5fbaf5089ec5d6e55c7a1995e4">YieldToHold</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="comment">// 将当前Fiber让出执行权，转到就绪（READY）状态等待下一次调度</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classhh_1_1Fiber.html#ad797d20f3ee2005ebd05feb9b29c25af">YieldToReady</a>();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="comment">//执行方法</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classhh_1_1Fiber.html#a427fc6d9edd77947a87a7931baf72340">MainFunc</a>();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">static</span> uint32_t <a class="code" href="classhh_1_1Fiber.html#a35bbafbedebd13b286d4a464740d67fb">getFiber_id</a>();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="comment">//多协程调用主协程</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classhh_1_1Fiber.html#a1262846d844537f37d63dd1113c0ae37">CallerMainFunc</a>();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">void</span> setState(State state) { m_state = state; }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">bool</span> Master_coroutine(){<span class="keywordflow">return</span> m_stack==<span class="keyword">nullptr</span> || m_cb==<span class="keyword">nullptr</span>;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">bool</span> Fun_(){<span class="keywordflow">return</span> m_cb==<span class="keyword">nullptr</span>;}</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        std::function&lt;void()&gt; m_cb;         <span class="comment">//真正执行的函数</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        ucontext_t m_ctx;                   <span class="comment">//协程</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        State m_state=INIT;                 <span class="comment">//协程状态</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        uint64_t m_id=0;                    <span class="comment">//协程id</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        uint32_t m_stackSize=0;              <span class="comment">//协程栈空间</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordtype">void</span> * m_stack=<span class="keyword">nullptr</span>;               <span class="comment">//协程栈空间</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    };</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//HH_FIBER_H</span></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html"><div class="ttname"><a href="classhh_1_1Fiber.html">hh::Fiber</a></div><div class="ttdef"><b>Definition:</b> <a href="fiber_8h_source.html#l00012">fiber.h:12</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_a1262846d844537f37d63dd1113c0ae37"><div class="ttname"><a href="classhh_1_1Fiber.html#a1262846d844537f37d63dd1113c0ae37">hh::Fiber::CallerMainFunc</a></div><div class="ttdeci">static void CallerMainFunc()</div><div class="ttdoc">调用者Fiber执行函数。</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00276">fiber.cc:276</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_a35bbafbedebd13b286d4a464740d67fb"><div class="ttname"><a href="classhh_1_1Fiber.html#a35bbafbedebd13b286d4a464740d67fb">hh::Fiber::getFiber_id</a></div><div class="ttdeci">static uint32_t getFiber_id()</div><div class="ttdoc">获取当前Fiber的ID。</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00305">fiber.cc:305</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_a427fc6d9edd77947a87a7931baf72340"><div class="ttname"><a href="classhh_1_1Fiber.html#a427fc6d9edd77947a87a7931baf72340">hh::Fiber::MainFunc</a></div><div class="ttdeci">static void MainFunc()</div><div class="ttdoc">主Fiber执行函数。</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00247">fiber.cc:247</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_a58f0985b7da9f49c482b3b8a6eba47a8"><div class="ttname"><a href="classhh_1_1Fiber.html#a58f0985b7da9f49c482b3b8a6eba47a8">hh::Fiber::swapIn</a></div><div class="ttdeci">void swapIn()</div><div class="ttdoc">将当前Fiber切换为执行状态。</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00174">fiber.cc:174</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_a759469d0af229c5c2c3b15a1c307565a"><div class="ttname"><a href="classhh_1_1Fiber.html#a759469d0af229c5c2c3b15a1c307565a">hh::Fiber::call</a></div><div class="ttdeci">void call()</div><div class="ttdoc">切换到当前Fiber执行。</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00144">fiber.cc:144</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_a99e55a5fbaf5089ec5d6e55c7a1995e4"><div class="ttname"><a href="classhh_1_1Fiber.html#a99e55a5fbaf5089ec5d6e55c7a1995e4">hh::Fiber::YieldToHold</a></div><div class="ttdeci">static void YieldToHold()</div><div class="ttdoc">将当前Fiber切换到挂起状态。</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00222">fiber.cc:222</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_aa04d0f05f1a3aed3c2372e594b72e3b8"><div class="ttname"><a href="classhh_1_1Fiber.html#aa04d0f05f1a3aed3c2372e594b72e3b8">hh::Fiber::reset</a></div><div class="ttdeci">void reset(std::function&lt; void()&gt; cb)</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00118">fiber.cc:118</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_abdd7499a1cbd8e4ece10711763b3c131"><div class="ttname"><a href="classhh_1_1Fiber.html#abdd7499a1cbd8e4ece10711763b3c131">hh::Fiber::back</a></div><div class="ttdeci">void back()</div><div class="ttdoc">从当前Fiber返回到调度器。</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00159">fiber.cc:159</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_abff359c2aada35f55fad222775b102f3"><div class="ttname"><a href="classhh_1_1Fiber.html#abff359c2aada35f55fad222775b102f3">hh::Fiber::GetThis</a></div><div class="ttdeci">static Fiber::ptr GetThis()</div><div class="ttdoc">获取当前Fiber对象 &amp;&amp; 没有主协程会创建</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00201">fiber.cc:201</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_ad797d20f3ee2005ebd05feb9b29c25af"><div class="ttname"><a href="classhh_1_1Fiber.html#ad797d20f3ee2005ebd05feb9b29c25af">hh::Fiber::YieldToReady</a></div><div class="ttdeci">static void YieldToReady()</div><div class="ttdoc">将当前Fiber切换到就绪状态。</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00233">fiber.cc:233</a></div></div>
+<div class="ttc" id="aclasshh_1_1Fiber_html_aef4d0b5ec62e18d48f63749f0228b1f2"><div class="ttname"><a href="classhh_1_1Fiber.html#aef4d0b5ec62e18d48f63749f0228b1f2">hh::Fiber::swapOut</a></div><div class="ttdeci">void swapOut()</div><div class="ttdoc">从当前Fiber切换回调度器。</div><div class="ttdef"><b>Definition:</b> <a href="fiber_8cc_source.html#l00190">fiber.cc:190</a></div></div>
+<div class="ttc" id="anamespacehh_html"><div class="ttname"><a href="namespacehh.html">hh</a></div><div class="ttdef"><b>Definition:</b> <a href="address_8cc_source.html#l00011">address.cc:11</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_5d5ff01e585378b80dafb53c48ce5158.html">hh</a></li><li class="navelem"><a class="el" href="dir_edbfbefeaef409cf691626cff8589c80.html">include</a></li><li class="navelem"><b>fiber.h</b></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

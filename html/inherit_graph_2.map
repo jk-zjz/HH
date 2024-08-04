@@ -1,0 +1,8 @@
+<map id="类继承关系图" name="类继承关系图">
+<area shape="rect" id="node1" href="$classhh_1_1Address.html" title=" " alt="" coords="5,81,97,108"/>
+<area shape="rect" id="node2" href="$classhh_1_1IPAddress.html" title=" " alt="" coords="167,31,271,57"/>
+<area shape="rect" id="node5" href="$classhh_1_1UnixAddress.html" title=" " alt="" coords="159,81,278,108"/>
+<area shape="rect" id="node6" href="$classhh_1_1UnknownAddress.html" title=" " alt="" coords="145,132,292,159"/>
+<area shape="rect" id="node3" href="$classhh_1_1IPv4Address.html" title=" " alt="" coords="340,5,459,32"/>
+<area shape="rect" id="node4" href="$classhh_1_1IPv6Address.html" title=" " alt="" coords="340,56,459,83"/>
+</map>

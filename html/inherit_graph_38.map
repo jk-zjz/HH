@@ -1,0 +1,5 @@
+<map id="类继承关系图" name="类继承关系图">
+<area shape="rect" id="node1" href="$classhh_1_1LogAppender.html" title=" " alt="" coords="5,31,125,57"/>
+<area shape="rect" id="node2" href="$classhh_1_1FileLogAppender.html" title=" " alt="" coords="182,5,323,32"/>
+<area shape="rect" id="node3" href="$classhh_1_1StdoutLogAppender.html" title=" " alt="" coords="173,56,332,83"/>
+</map>

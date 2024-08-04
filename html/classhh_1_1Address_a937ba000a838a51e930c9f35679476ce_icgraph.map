@@ -1,0 +1,5 @@
+<map id="hh::Address::lookup" name="hh::Address::lookup">
+<area shape="rect" id="node1" title="查找给定主机名对应的IP地址，并将结果存入输出向量中。" alt="" coords="275,31,413,57"/>
+<area shape="rect" id="node2" href="$classhh_1_1Address.html#aa67b395c6291c4caeb6b0852d9e6566f" title=" " alt="" coords="35,5,197,32"/>
+<area shape="rect" id="node3" href="$classhh_1_1Address.html#a0b02e7148b247b7a81870ce38c0ee928" title=" " alt="" coords="5,56,227,83"/>
+</map>

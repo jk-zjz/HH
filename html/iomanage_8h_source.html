@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HH: hh/include/iomanage.h 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">HH
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('iomanage_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">iomanage.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by 35148 on 2024/6/6.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef HH_IOMANAGE_H</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define HH_IOMANAGE_H</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;scheduler.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;timer.h&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehh.html">hh</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classhh_1_1IOManager.html">   15</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classhh_1_1IOManager.html">IOManager</a> : <span class="keyword">public</span> <a class="code" href="classhh_1_1Scheduler.html">Scheduler</a>,<span class="keyword">public</span> <a class="code" href="classhh_1_1TimerManager.html">TimerManager</a>{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">typedef</span> std::shared_ptr&lt;IOManager&gt; ptr;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classhh_1_1RWMutex.html">RWMutex</a> <a class="code" href="classhh_1_1RWMutex.html">RWMutexType</a>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="comment">//事件</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">enum</span> Event {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            NONE = 0x0, <span class="comment">//无事件</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            READ = 0x1, <span class="comment">//读事件</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            WRITE = 0x4 <span class="comment">//写事件</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        };</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="comment">//FD上下文   FD指的是epoll文件描述符</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">struct </span>FdContext {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keyword">typedef</span> <a class="code" href="classhh_1_1Mutex.html">Mutex</a> <a class="code" href="classhh_1_1Mutex.html">MutexType</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="comment">//事件上下文</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="structhh_1_1IOManager_1_1FdContext_1_1EventContext.html">   30</a></span>&#160;            <span class="keyword">struct </span><a class="code" href="structhh_1_1IOManager_1_1FdContext_1_1EventContext.html">EventContext</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                <a class="code" href="classhh_1_1Scheduler.html">Scheduler</a> *scheduler = <span class="keyword">nullptr</span>; <span class="comment">//协程调度器</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                Fiber::ptr fiber;               <span class="comment">//协程</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                std::function&lt;void()&gt; cb;       <span class="comment">//回调函数</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            };</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="structhh_1_1IOManager_1_1FdContext_1_1EventContext.html">EventContext</a> &amp; getEventContext(Event event);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordtype">void</span> resetEventContext(<a class="code" href="structhh_1_1IOManager_1_1FdContext_1_1EventContext.html">EventContext</a>&amp; eventContext);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordtype">void</span> triggerEvent(Event event);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <a class="code" href="structhh_1_1IOManager_1_1FdContext_1_1EventContext.html">EventContext</a> read;                  <span class="comment">//读事件</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <a class="code" href="structhh_1_1IOManager_1_1FdContext_1_1EventContext.html">EventContext</a> write;                 <span class="comment">//写事件</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <a class="code" href="classhh_1_1Mutex.html">MutexType</a> mutex;                    <span class="comment">//互斥锁</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordtype">int</span> fd = 0;                         <span class="comment">//FD句柄</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            Event events = NONE;                <span class="comment">//事件状态</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        };</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">void</span> fdcontextReset(<span class="keywordtype">int</span> size);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classhh_1_1IOManager.html#a820ea4e8d0c3e6828e3effd4dcf6e04d">IOManager</a>(<span class="keywordtype">int</span> threads = 1, <span class="keywordtype">bool</span> use_caller = <span class="keyword">true</span>, <span class="keyword">const</span> std::string &amp;name = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classhh_1_1IOManager.html#a8911a0d0ac1e5299b46e68755de09c10">~IOManager</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment">//添加事件</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classhh_1_1IOManager.html#aad8e7871c1e962247b4c3334949cbdb0">addEvent</a>(<span class="keywordtype">int</span> fd, Event event, std::function&lt;<span class="keywordtype">void</span>()&gt; cb = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="comment">//删除事件</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classhh_1_1IOManager.html#ad4eb56d47cf27fe0b1b0af2230046ae5">delEvent</a>(<span class="keywordtype">int</span> fd, Event event);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="comment">//取消事件---&gt;不是删除而是强制触发事件</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classhh_1_1IOManager.html#af38d0bd1c3ac8e3abb7f49a6272bd405">cancelEvent</a>(<span class="keywordtype">int</span> fd, Event event);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">//取消所有事件</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classhh_1_1IOManager.html#af10568cc6a84931f18b4c4288cbdd404">cancelAll</a>(<span class="keywordtype">int</span> fd);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">static</span> <a class="code" href="classhh_1_1IOManager.html">IOManager</a> *<a class="code" href="classhh_1_1IOManager.html#a87495f21f0effea9d87f1d027581271f">GetThis</a>();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">void</span> tickle() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classhh_1_1IOManager.html#ae72bf1450906e8ab518793b8bf1cc7d3">idle</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classhh_1_1IOManager.html#ab58c26b893cc8add674fd00901cfcb23">stopping</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classhh_1_1IOManager.html#ab58c26b893cc8add674fd00901cfcb23">stopping</a>(uint64_t &amp;timeout);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classhh_1_1IOManager.html#adbf66da09817f09bfb4189023c771702">onTimerInsertedAtFront</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">int</span> m_EpollFd = 0;                                  <span class="comment">//epoll文件描述符</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">int</span> m_TickleFd[2];                                  <span class="comment">//用于唤醒epoll的文件描述符</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="classhh_1_1RWMutex.html">RWMutexType</a> m_RWMutex;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        std::vector&lt;FdContext *&gt; m_fdContexts;              <span class="comment">//FD上下文</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        std::atomic&lt;size_t&gt; m_pendingEventCount = {0};    <span class="comment">//等待处理的事件数量</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    };</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//HH_IOMANAGE_H</span></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html"><div class="ttname"><a href="classhh_1_1IOManager.html">hh::IOManager</a></div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8h_source.html#l00015">iomanage.h:15</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_a820ea4e8d0c3e6828e3effd4dcf6e04d"><div class="ttname"><a href="classhh_1_1IOManager.html#a820ea4e8d0c3e6828e3effd4dcf6e04d">hh::IOManager::IOManager</a></div><div class="ttdeci">IOManager(int threads=1, bool use_caller=true, const std::string &amp;name=&quot;&quot;)</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00018">iomanage.cc:18</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_a87495f21f0effea9d87f1d027581271f"><div class="ttname"><a href="classhh_1_1IOManager.html#a87495f21f0effea9d87f1d027581271f">hh::IOManager::GetThis</a></div><div class="ttdeci">static IOManager * GetThis()</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00261">iomanage.cc:261</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_a8911a0d0ac1e5299b46e68755de09c10"><div class="ttname"><a href="classhh_1_1IOManager.html#a8911a0d0ac1e5299b46e68755de09c10">hh::IOManager::~IOManager</a></div><div class="ttdeci">~IOManager() override</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00046">iomanage.cc:46</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_aad8e7871c1e962247b4c3334949cbdb0"><div class="ttname"><a href="classhh_1_1IOManager.html#aad8e7871c1e962247b4c3334949cbdb0">hh::IOManager::addEvent</a></div><div class="ttdeci">int addEvent(int fd, Event event, std::function&lt; void()&gt; cb=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00077">iomanage.cc:77</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_ab58c26b893cc8add674fd00901cfcb23"><div class="ttname"><a href="classhh_1_1IOManager.html#ab58c26b893cc8add674fd00901cfcb23">hh::IOManager::stopping</a></div><div class="ttdeci">bool stopping() override</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00317">iomanage.cc:317</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_ad4eb56d47cf27fe0b1b0af2230046ae5"><div class="ttname"><a href="classhh_1_1IOManager.html#ad4eb56d47cf27fe0b1b0af2230046ae5">hh::IOManager::delEvent</a></div><div class="ttdeci">bool delEvent(int fd, Event event)</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00142">iomanage.cc:142</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_adbf66da09817f09bfb4189023c771702"><div class="ttname"><a href="classhh_1_1IOManager.html#adbf66da09817f09bfb4189023c771702">hh::IOManager::onTimerInsertedAtFront</a></div><div class="ttdeci">void onTimerInsertedAtFront() override</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00430">iomanage.cc:430</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_ae72bf1450906e8ab518793b8bf1cc7d3"><div class="ttname"><a href="classhh_1_1IOManager.html#ae72bf1450906e8ab518793b8bf1cc7d3">hh::IOManager::idle</a></div><div class="ttdeci">void idle() override</div><div class="ttdoc">空转任务</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00329">iomanage.cc:329</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_af10568cc6a84931f18b4c4288cbdd404"><div class="ttname"><a href="classhh_1_1IOManager.html#af10568cc6a84931f18b4c4288cbdd404">hh::IOManager::cancelAll</a></div><div class="ttdeci">bool cancelAll(int fd)</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00219">iomanage.cc:219</a></div></div>
+<div class="ttc" id="aclasshh_1_1IOManager_html_af38d0bd1c3ac8e3abb7f49a6272bd405"><div class="ttname"><a href="classhh_1_1IOManager.html#af38d0bd1c3ac8e3abb7f49a6272bd405">hh::IOManager::cancelEvent</a></div><div class="ttdeci">bool cancelEvent(int fd, Event event)</div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8cc_source.html#l00181">iomanage.cc:181</a></div></div>
+<div class="ttc" id="aclasshh_1_1Mutex_html"><div class="ttname"><a href="classhh_1_1Mutex.html">hh::Mutex</a></div><div class="ttdoc">互斥量</div><div class="ttdef"><b>Definition:</b> <a href="thread_8h_source.html#l00194">thread.h:194</a></div></div>
+<div class="ttc" id="aclasshh_1_1RWMutex_html"><div class="ttname"><a href="classhh_1_1RWMutex.html">hh::RWMutex</a></div><div class="ttdoc">读写互斥量</div><div class="ttdef"><b>Definition:</b> <a href="thread_8h_source.html#l00263">thread.h:263</a></div></div>
+<div class="ttc" id="aclasshh_1_1Scheduler_html"><div class="ttname"><a href="classhh_1_1Scheduler.html">hh::Scheduler</a></div><div class="ttdef"><b>Definition:</b> <a href="scheduler_8h_source.html#l00016">scheduler.h:16</a></div></div>
+<div class="ttc" id="aclasshh_1_1TimerManager_html"><div class="ttname"><a href="classhh_1_1TimerManager.html">hh::TimerManager</a></div><div class="ttdef"><b>Definition:</b> <a href="timer_8h_source.html#l00047">timer.h:47</a></div></div>
+<div class="ttc" id="anamespacehh_html"><div class="ttname"><a href="namespacehh.html">hh</a></div><div class="ttdef"><b>Definition:</b> <a href="address_8cc_source.html#l00011">address.cc:11</a></div></div>
+<div class="ttc" id="astructhh_1_1IOManager_1_1FdContext_1_1EventContext_html"><div class="ttname"><a href="structhh_1_1IOManager_1_1FdContext_1_1EventContext.html">hh::IOManager::FdContext::EventContext</a></div><div class="ttdef"><b>Definition:</b> <a href="iomanage_8h_source.html#l00030">iomanage.h:30</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_5d5ff01e585378b80dafb53c48ce5158.html">hh</a></li><li class="navelem"><a class="el" href="dir_edbfbefeaef409cf691626cff8589c80.html">include</a></li><li class="navelem"><b>iomanage.h</b></li>
+    <li class="footer">制作者 <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>
