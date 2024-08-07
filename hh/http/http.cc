@@ -150,6 +150,16 @@ namespace hh {
             return ss.str();
         }
 
+        void HttpRequest::init() {
+            std::string conn = getHeader("connection");
+            if(!conn.empty()) {
+                if(strcasecmp(conn.c_str(), "keep-alive") == 0) {
+                    m_close = false;
+                } else {
+                    m_close = true;
+                }
+            }
+        }
         HttpResponse::HttpResponse(uint8_t version, bool close):
         m_version(version),
         m_close(close),

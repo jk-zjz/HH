@@ -103,7 +103,7 @@ namespace hh {
             if (cur == this)
                 SetThis(nullptr);
         }
-        HH_LOG_FAT_DEBUG(g_logger, "~Fiber,%d", m_id);
+//        HH_LOG_FAT_WARN(g_logger, "~Fiber,%d", m_id);
     }
 
 
