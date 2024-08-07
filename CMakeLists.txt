@@ -7,7 +7,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # 设置生成的可执行文件的输出目录
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined")
+set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O3 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined")
 # 查找yaml库
 find_package(yaml-cpp REQUIRED)
 find_package(Boost COMPONENTS url REQUIRED)
@@ -23,7 +23,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # 设置生成的可执行文件的输出目录
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined")
+set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O3 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined")
 
 # 查找yaml库
 find_package(yaml-cpp REQUIRED)
@@ -71,6 +71,7 @@ add_test_executable(echo_server examples/echo_server.cc)
 add_test_executable(httpserver_test tests/httpserver_test.cc)
 add_test_executable(httpConnection_test tests/httpConnection_test.cc)
 add_test_executable(httpUrl_test tests/httpUrl_test.cc)
+add_test_executable(my_http_server samples/my_http_server.cc)
 
 # 如果需要安装可执行文件，可以添加如下代码
 # install(TARGETS log_test config_test ... DESTINATION bin)
