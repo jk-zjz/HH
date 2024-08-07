@@ -9,14 +9,13 @@ namespace hh{
         }
         HttpRequest::ptr HttpSession::recvRequest() {
             HttpRequestParser::ptr parser(new HttpRequestParser);
-            uint64_t buff_size = HttpRequestParser::getHttpRequestBufferSize();
+            uint64_t buff_size = HttpRequestParser::getHttpRequestMaxBodySize();
             //uint64_t buff_size = 100;
             std::shared_ptr<char> buffer(
                     new char[buff_size], [](char* ptr){
                         delete[] ptr;
                     });
             char* data = buffer.get();
-            // 处理完请求体数据，剩余的数据长度
             int offset = 0;
             do {
                 int len = read(data + offset, buff_size - offset);
@@ -53,7 +52,6 @@ namespace hh{
                     len = length;
                 }
                 length -= offset;
-                // 在请求体中的的数据长度-解析剩余的长度，如果>0 说明还有，需要强制读取完
                 if(length > 0) {
                     if(readFixSize(&body[len], length) <= 0) {
                         close();
@@ -63,6 +61,7 @@ namespace hh{
                 parser->getData()->setBody(body);
             }
 
+            parser->getData()->init();
             return parser->getData();
         }
 

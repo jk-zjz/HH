@@ -301,6 +301,7 @@ namespace hh {
             T getCookieAs(const std::string &key, const T &def = T()) {
                 return getAs(m_cookies, key, def);
             }
+            void init();
         private:
         private:
             HttpMethod m_method;    // 请求方法

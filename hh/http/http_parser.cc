@@ -39,14 +39,14 @@ namespace hh {
             struct _RequestSizeInit {
                 _RequestSizeInit(){
                     s_http_request_buffer_size = g_http_request_buffer_size->getValue();
-                    s_http_request_max_body_size = g_http_response_max_body_size->getValue();
+                    s_http_request_max_body_size = g_http_request_max_body_size->getValue();
                     s_http_response_buffer_size = g_http_response_buffer_size->getValue();
                     s_http_response_max_body_size = g_http_response_max_body_size->getValue();
                     g_http_request_buffer_size->addOcb(
                             [](const uint64_t& old_value, const uint64_t& new_value){
                                 s_http_request_buffer_size = new_value;
                             });
-                    g_http_response_max_body_size->addOcb(
+                    g_http_request_max_body_size->addOcb(
                             [](const uint64_t& old_value, const uint64_t& new_value){
                                 s_http_request_max_body_size = new_value;
                             });

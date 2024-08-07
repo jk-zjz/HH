@@ -1,0 +1,222 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "HH",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "HttpParser_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HttpParser_test-Debug-48f0696020741ca70022.json",
+					"name" : "HttpParser_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Tcp_server_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Tcp_server_test-Debug-627d29e7db3eaf3f31f1.json",
+					"name" : "Tcp_server_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "address_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-address_test-Debug-71ddffd24f3fedd7bc34.json",
+					"name" : "address_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "bytearray_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-bytearray_test-Debug-1c7c43b7e736cf3d05fd.json",
+					"name" : "bytearray_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "common_objs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-common_objs-Debug-b367870ac806ca3cae93.json",
+					"name" : "common_objs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "config_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-config_test-Debug-dff24f6ab0a95e23a169.json",
+					"name" : "config_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "echo_server::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-echo_server-Debug-fa859b0ffae498be13bc.json",
+					"name" : "echo_server",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hook_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hook_test-Debug-81ad8903c7ce9e87c695.json",
+					"name" : "hook_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "httpConnection_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-httpConnection_test-Debug-f9f7a5b10e1cff676e95.json",
+					"name" : "httpConnection_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "httpUrl_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-httpUrl_test-Debug-1ed9501e409c628fb488.json",
+					"name" : "httpUrl_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "http_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-http_test-Debug-4a1ad0efe47dfc0acc97.json",
+					"name" : "http_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "httpserver_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-httpserver_test-Debug-2a0ee8bdcef7c452b4a1.json",
+					"name" : "httpserver_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "iomanager_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-iomanager_test-Debug-b35c99302a54d4fc9bb2.json",
+					"name" : "iomanager_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "log_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-log_test-Debug-d963a1fab80d9dc960e1.json",
+					"name" : "log_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "my_http_server::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-my_http_server-Debug-96b61b36fa9842f2defa.json",
+					"name" : "my_http_server",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "pthread_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-pthread_test-Debug-4d0a84fe8d751e1b7a96.json",
+					"name" : "pthread_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "scheduler_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-scheduler_test-Debug-1223c1ad4e0b7a49754a.json",
+					"name" : "scheduler_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "socket_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-socket_test-Debug-23df89dad90fd0580eb7.json",
+					"name" : "socket_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "utils_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-utils_test-Debug-397de9d137f83130ee9d.json",
+					"name" : "utils_test",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/hh/HH/cmake-build-debug",
+		"source" : "/home/hh/HH"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
